@@ -45,7 +45,7 @@ const Hero = () => {
               Short & medium term furnished rentals
             </Typography>
             <p>
-              For when it's not a vacation but you don't want to sign the lease.
+              For when it's longer than a vacation but you don't want to sign the lease.
             </p>
             <Button
               variant="contained"

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {Paper, Box, Typography, Divider} from "@material-ui/core/";
+import {Paper, Box, Typography, Divider, Container, Button} from "@material-ui/core/";
 import Card from './Card';
 import remoteWork from '../vector-icons/green/remote-work.svg'
 import selectingHome from '../vector-icons/green/many-homes.svg'
@@ -10,7 +10,7 @@ import controlSettings from '../vector-icons/green/control-settings.svg'
 import payment from '../vector-icons/green/transfer-money.svg'
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: " 2rem auto",
+    margin: theme.spacing(1.5),
     padding: "1em",
     maxWidth: "90vw",
     backgroundColor: theme.palette.background.default,
@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
+  },
+  ownerLearnMoreWrapper: {
+    width: '1005',
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -80,7 +85,10 @@ const ForUsers = () => {
               imgTitle="Make your listings stand out"
               cardTitle="Exposure"
               cardContent="Get views on aCasa and your listings everywhere for maximum exposure."
-              imgStyling={{ backgroundPosition: "0 15px ", backgroundRepeat: 'no-repeat' }}
+              imgStyling={{
+                backgroundPosition: "0 15px ",
+                backgroundRepeat: "no-repeat",
+              }}
             />
             <Card
               img={controlSettings}
@@ -98,6 +106,15 @@ const ForUsers = () => {
               cardContent="You decide the payment process and we take NO FEES."
               imgStyling={{ backgroundPosition: "0 -35px " }}
             />
+          </Box>
+          <Box className={classes.ownerLearnMoreWrapper}>
+            <Button
+              variant="contained"
+              color="primary"
+              href="#"
+            >
+              Learn More
+            </Button>
           </Box>
         </Box>
       </Paper>

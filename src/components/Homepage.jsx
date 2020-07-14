@@ -3,24 +3,16 @@ import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import Hero from './Hero';
 import ForUsers from './ForUsers';
+import SearchBar from './SearchBar';
+import MainContentWrapper from './MainContentWrapper';
 
 const useStyles = makeStyles((theme) => ({
-  hero: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    margin: "0 5em",
-    paddingTop: '2em',
-    alignItems: "center",
-    fontFamily: theme.typography.special,
-    color: theme.palette.primary.dark,
-  },
-  heroImg: {
-    justifySelf: "center",
-    maxWidth: 500,
-  },
-  button: {
-    fontFamily: theme.typography.special,
-  },
+  main: { 
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems:'center',
+    width: '100%',
+  }
 }));
 
 const Homepage = () => {
@@ -28,8 +20,11 @@ const Homepage = () => {
 
     return (
       <>
-        <Hero/>
-        <ForUsers/>
+        <Hero />
+        <MainContentWrapper>
+          <SearchBar />
+          <ForUsers />
+        </MainContentWrapper>
       </>
     );
 }

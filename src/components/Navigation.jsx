@@ -2,10 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-import MenuIcon from "@material-ui/icons/Menu";
 import logo from "../theme/logo-big.webp";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     fontFamily: theme.typography.special,
     // color: theme.palette.primary.main,
+  },
+  menuLink: {
+    marginRight: theme.spacing(2),
+    fontFamily: theme.typography.special,
+    color: theme.palette.primary.main,
   },
   logo: { width: 50 },
   title: {
@@ -56,6 +61,15 @@ export default function MenuAppBar() {
             >
               Post a Home
             </Button>
+            <Link href="#">
+              <Typography
+                variant="h6"
+                component="span"
+                className={classes.menuLink}
+              >
+                Log In
+              </Typography>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>
