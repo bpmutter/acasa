@@ -5,6 +5,9 @@ import Card from './Card';
 import remoteWork from '../vector-icons/green/remote-work.svg'
 import selectingHome from '../vector-icons/green/many-homes.svg'
 import directCommunication from '../vector-icons/green/conversation.svg'
+import shareNews from '../vector-icons/green/news-megaphone.svg'
+import controlSettings from '../vector-icons/green/control-settings.svg'
+import payment from '../vector-icons/green/transfer-money.svg'
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: " 2rem auto",
@@ -35,12 +38,7 @@ const ForUsers = () => {
     <>
       <Paper className={classes.container}>
         <Box className={classes.sectionWrapper}>
-          <Typography
-            variant="h4"
-            component="h3"
-            className={classes.title}
-            //   gutterBottom
-          >
+          <Typography variant="h4" component="h3" className={classes.title}>
             For Renters
           </Typography>
           <Box className={classes.cardWrapper}>
@@ -49,15 +47,14 @@ const ForUsers = () => {
               imgAlt="woman working remotely vector art"
               imgTitle="Remote worker"
               cardTitle="Digital Nomad Friendly"
-              cardContent="Flexible options perfect for digital nomads."
+              cardContent="Flexible options and relevant info perfect for digital nomads."
             />
             <Card
               img={selectingHome}
               imgAlt="many types of homes vector art"
               imgTitle="Selecting a home"
               imgStyling={{
-                backgroundPostion: "bottom center",
-                backgroundColor: "black",
+                backgroundPosition: "bottom center",
               }}
               cardTitle="Diverse Selection"
               cardContent="A broad selection of housing options all around the world."
@@ -73,35 +70,33 @@ const ForUsers = () => {
         </Box>
         <Divider />
         <Box className={classes.sectionWrapper}>
-          <Typography
-            variant="h4"
-            component="h3"
-            className={classes.title}
-            //   gutterBottom
-          >
+          <Typography variant="h4" component="h3" className={classes.title}>
             For Owners
           </Typography>
           <Box className={classes.cardWrapper}>
             <Card
-              img={remoteWork}
-              imgAlt="woman working remotely vector art"
-              imgTitle="remote work"
-              cardTitle="Nomad Friendly"
-              cardContent="Perfect for digital nomads on the go."
+              img={shareNews}
+              imgAlt="man standing out from crowd vector art"
+              imgTitle="Make your listings stand out"
+              cardTitle="Exposure"
+              cardContent="Get views on aCasa and your listings everywhere for maximum exposure."
+              imgStyling={{ backgroundPosition: "0 15px ", backgroundRepeat: 'no-repeat' }}
             />
             <Card
-              img={remoteWork}
-              imgAlt="woman working remotely vector art"
-              imgTitle="remote work"
-              cardTitle="Nomad Friendly"
-              cardContent="Perfect for digital nomads on the go."
+              img={controlSettings}
+              imgAlt="woman controlling settings vector art"
+              imgTitle="Control the experience"
+              cardTitle="Full Control"
+              cardContent="Once we connect you with the prospect, you control the whole process."
+              imgStyling={{ backgroundPosition: "0 -25px " }}
             />
             <Card
-              img={remoteWork}
-              imgAlt="woman working remotely vector art"
-              imgTitle="remote work"
-              cardTitle="Nomad Friendly"
-              cardContent="Perfect for digital nomads on the go."
+              img={payment}
+              imgAlt="two people exchanging money vector are"
+              imgTitle="Exchanging payment"
+              cardTitle="Your Payment Process"
+              cardContent="You decide the payment process and we take NO FEES."
+              imgStyling={{ backgroundPosition: "0 -35px " }}
             />
           </Box>
         </Box>

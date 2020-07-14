@@ -8,32 +8,36 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 325,
+    height: 250,
+    margin: "1em",
+  },
+  title: {
+    fontFamily: theme.typography.special,
+    color: theme.palette.primary.dark,
+  },
+  img: {
+    height: 140,
+    backgroundPosition: ' 0 -7px',
+    backgroundSize: 'cover', 
 
+    width: '100%'
+  }
+
+}));
 
 export default function ImgMediaCard({img, imgTitle, imgAlt, imgStyling, cardTitle, cardContent, buttonLink, buttonContent  }) {
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      maxWidth: 325,
-      height: 250,
-      margin: "1em",
-    },
-    title: {
-      fontFamily: theme.typography.special,
-      color: theme.palette.primary.dark,
-    },
-    media: {backgroundColor: 'black'}
-  }));
+  
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-        <CardMedia
-          component="img"
-          alt={imgAlt}
-          height="140"
-          image={img}
-          title={imgTitle}
-        />
+        <div  title={imgTitle} alt={imgAlt}
+          className={classes.img}
+          style={{backgroundImage: `url(${img})`, ...imgStyling}}
+        ></div>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
             {cardTitle}
