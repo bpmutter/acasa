@@ -8,14 +8,15 @@ const useStyles = makeStyles(theme=>({
     //add styles
     root: {
         backgroundColor: theme.palette.secondary.light,
-        height: 60,
-        padding: '0 2rem'
+        flexFlow: 'column',
+        // minHeight: 60,
     },
     contact: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height: '100%'
+        height: '100%',
+        
     },
     ghIcon: { 
         margin: '0 .25rem',

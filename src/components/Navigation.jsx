@@ -50,7 +50,7 @@ export default function MenuAppBar() {
             <img src={logo} alt="aCasa logo" className={classes.logo} />
           </IconButton>
           <Typography variant="h4" component="h2" className={classes.title}>
-            aCasa
+            <Link href="/">aCasa</Link>
           </Typography>
 
           <div>
