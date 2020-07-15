@@ -77,7 +77,7 @@ export default function UserProfileInfo({user}){
                 color="primary"
                 className={classes.button}
               >
-                Contact {user.first_name} 
+                Contact Me! 
               </Button>
             </Box>
 

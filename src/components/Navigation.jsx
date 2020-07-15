@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import logo from "../theme/logo-big.webp";
+import SignUpModal from './SignUpModal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,15 +62,7 @@ export default function MenuAppBar() {
             >
               Post a Home
             </Button>
-            <Link href="#">
-              <Typography
-                variant="h6"
-                component="span"
-                className={classes.menuLink}
-              >
-                Log In
-              </Typography>
-            </Link>
+            <SignUpModal/>
           </div>
         </Toolbar>
       </AppBar>
