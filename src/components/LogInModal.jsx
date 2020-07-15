@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Link, Typography } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
-import SignUp from './SignUp';
+import LogIn from "./LogIn";
 
 const useStyles = makeStyles((theme) => ({
   modalContent: {
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyModal() {
   const classes = useStyles();
-//   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -48,19 +47,18 @@ export default function MyModal() {
         className={classes.buttonLink}
         onClick={handleOpen}
         >
-          Sign Up
+          Log In
         </Typography>
       </Link>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="aCasa sign in"
-        aria-describedby="sign in to aCasa here"
+        aria-labelledby="aCasa log in"
+        aria-describedby="log into your aCasa account here"
         disableAutoFocus={true}
-        // className={classes.modal}
       >
         <div className={classes.modalContent}>
-          <SignUp/>
+          <LogIn/>
         </div>
       </Modal>
     </>

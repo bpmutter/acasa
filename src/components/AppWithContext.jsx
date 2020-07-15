@@ -11,25 +11,30 @@ import firebaseConfig from "../config/firebaseConfig";
 firebase.initializeApp(firebaseConfig);
 
 const AppContext = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
+    const loggedInFromLS = JSON.parse(localStorage.getItem('loggedIn'))
+    const [loggedIn, setLoggedIn] = useState(loggedInFromLS);
+
     const logIn = (user) => {
       //TODO
         //get user information from the DB using info provided in 'user' here
         //set context to reflect this
         setLoggedIn(true)
+        localStorage.setItem('loggedIn', true)
     }
     const logOut = () => {
       firebase.auth().signOut();
       setLoggedIn(false);
+      localStorage.setItem('loggedIn', false)
     }
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        console.log(user)
+    // firebase.auth().onAuthStateChanged(function (user) {
+    //   if (user) {
+    //     console.log(user)
         
-      } else {
-        console.log('bummer....')
-      }
-    });
+    //   } else {
+    //     console.log('bummer....')
+    //   }
+    // });
+
 
     const context = { loggedIn, logIn, logOut };
 

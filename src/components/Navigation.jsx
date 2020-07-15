@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,7 +8,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import logo from "../theme/logo-big.webp";
 import SignUpModal from './SignUpModal';
-
+import ProfileMenu from './ProfileMenu';
+import appContext from './Context';
+import LogInModal from "./LogInModal";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,12 +34,22 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
   },
+  rightNav: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileMenu: { 
+    fontSize: '1.5rem'
+  }
 }));
 
 export default function MenuAppBar() {
   const classes = useStyles();
 
+  const { loggedIn } = useContext(appContext)
 
+  console.log(loggedIn)
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -54,7 +66,7 @@ export default function MenuAppBar() {
             <Link href="/">aCasa</Link>
           </Typography>
 
-          <div>
+          <div className={classes.rightNav}>
             <Button
               variant="contained"
               color="primary"
@@ -62,7 +74,14 @@ export default function MenuAppBar() {
             >
               Post a Home
             </Button>
-            <SignUpModal/>
+            {loggedIn ? (
+              <ProfileMenu className={classes.profileMenu} />
+            ) : (
+              <>
+              <SignUpModal />
+              <LogInModal/>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>

@@ -21,20 +21,20 @@ const useStyles = makeStyles((theme) => ({
   title: {
       fontFamily: theme.typography.special,
       color: theme.palette.primary.dark,
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   }
 }));
 
-const SignUp = () => {
-    // The component's Local state.
-    // state = {
-    //     isSignedIn: false, // Local signed-in state.
-    // };
-  const classes = useStyles();
-  const {loggedIn, logIn, logOut} = useContext(context);
+const LogIn = () => {
 
-  // Configure FirebaseUI.
+  const classes = useStyles();
+  const {loggedIn, logIn} = useContext(context);
+
   const uiConfig = {
-    // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
     // We will display Google and Facebook as auth providers.
     signInOptions: [
@@ -52,22 +52,6 @@ const SignUp = () => {
     },
   };
 
-//   const unregisterAuthObserver = firebase
-//       .auth()
-//       .onAuthStateChanged((user) => (user ? login );
-//   // Listen to the Firebase Auth state and set the local state.
-//   componentDidMount() {
-//     this.unregisterAuthObserver = firebase
-//       .auth()
-//       .onAuthStateChanged((user) => this.setState({ isSignedIn: !!user }));
-//   }
-
-//   // Make sure we un-register Firebase observers when the component unmounts.
-//   componentWillUnmount() {
-//     this.unregisterAuthObserver();
-//   }
-
-
     return (
       <Box>
         <div
@@ -84,10 +68,7 @@ const SignUp = () => {
         </div>
         {!loggedIn ? (
           <div>
-            <p>Sign up with one of the following methods:</p>
-            <Typography variant="p" component="p" color="textSecondary">
-              NOTE: You only need to sign up if you want to post a listing. If you're just looking for for your next home, you can browse and message the host without an account.
-            </Typography>
+            <p>Log in with one of the following methods:</p>
             <StyledFirebaseAuth
               uiConfig={uiConfig}
               firebaseAuth={firebase.auth()}
@@ -96,10 +77,13 @@ const SignUp = () => {
         ) : (
           <div>
             <p>
-              Welcome {firebase.auth().currentUser.displayName}! You are now
+              Welcome back! You are now
               signed in!
             </p>
-            <Button onClick={() => logOut()}>Go to Profile</Button>
+            <div className={classes.buttonWrapper}>
+              <Button href="/profile">Go to Profile</Button>
+              <Button href="/post">Post a Home</Button>
+            </div>
           </div>
         )}
       </Box>
@@ -107,4 +91,4 @@ const SignUp = () => {
   
 }
 
-export default SignUp;
+export default LogIn;
