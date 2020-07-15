@@ -1,12 +1,3 @@
-const admin = require("firebase-admin");
-
-const serviceAccount = require("../../../acasa-283314-89475ee8458c.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://acasa-bd3af.firebaseio.com"
-});
-
 const firebaseConfig = {
   apiKey: "AIzaSyAF9WtnzV6ZcalwDz_tXxbS2PNDLUkET-8",
   authDomain: "acasa-bd3af.firebaseapp.com",
@@ -18,8 +9,6 @@ const firebaseConfig = {
   measurementId: "G-T7F7CH36QN",
 };
 
-const db = admin.firestore();
 
-export {db};
 
 export default firebaseConfig;

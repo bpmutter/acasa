@@ -17,6 +17,9 @@ function App() {
           <Route path="/users/:username">
             <UserPage/>
           </Route>
+          <Route path="/testing">
+            {/* <Testing/> */}
+          </Route>
           <Route path="*">
             <p>404...aww snapp</p>
           </Route>

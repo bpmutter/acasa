@@ -30,7 +30,7 @@ const SignUp = () => {
     //     isSignedIn: false, // Local signed-in state.
     // };
   const classes = useStyles();
-  const {loggedIn, logIn, logOut} = useContext(context);
+  const {loggedIn, logIn, logOut, signUp} = useContext(context);
 
   // Configure FirebaseUI.
   const uiConfig = {
@@ -45,27 +45,11 @@ const SignUp = () => {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
         console.log('auth result::', authResult)
-        console.log("redirect url::", redirectUrl);
-        logIn(authResult);
+        signUp(authResult);
         return false;
       }
     },
   };
-
-//   const unregisterAuthObserver = firebase
-//       .auth()
-//       .onAuthStateChanged((user) => (user ? login );
-//   // Listen to the Firebase Auth state and set the local state.
-//   componentDidMount() {
-//     this.unregisterAuthObserver = firebase
-//       .auth()
-//       .onAuthStateChanged((user) => this.setState({ isSignedIn: !!user }));
-//   }
-
-//   // Make sure we un-register Firebase observers when the component unmounts.
-//   componentWillUnmount() {
-//     this.unregisterAuthObserver();
-//   }
 
 
     return (
