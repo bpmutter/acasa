@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles, Link, Typography } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
-
+import SignUp from './SignUp';
 
 const useStyles = makeStyles((theme) => ({
   modalContent: {
@@ -42,12 +42,12 @@ export default function MyModal() {
 
   return (
     <>
-      <Link href="#">
+      <Link href="#sign-up">
         <Typography variant="h6" component="span" 
         className={classes.buttonLink}
         onClick={handleOpen}
         >
-          Log In
+          Sign Up
         </Typography>
       </Link>
       <Modal
@@ -59,17 +59,7 @@ export default function MyModal() {
         // className={classes.modal}
       >
         <div className={classes.modalContent}>
-          <Typography 
-            id="log-in-title" 
-            className={classes.title}
-            variant="h4"
-            component="h3"
-          >
-            Log In
-          </Typography>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
+          <SignUp/>
         </div>
       </Modal>
     </>
