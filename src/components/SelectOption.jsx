@@ -18,30 +18,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectOption({labelText, name, options, changeHandler}) {
+export default function SelectOption({labelText, name, options, formSetter}) {
   const classes = useStyles();
-  const [state, setState] = useState({
-    age: "",
-    name: "hai",
-  });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
+  const [value, setValue ] = useState();
+
+  const handleChange = e => {
+    e.preventDefault();
+    setValue(e.target.value);
+    formSetter(value)
   };
 
   return (
     <div className={classes.root}>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="outlined-age-native-simple" color="secondary">
+        <InputLabel htmlFor={name} color="secondary">
           {labelText}
         </InputLabel>
         <Select
           native
-          value={state.age}
+          value={value}
           onChange={handleChange}
           label={labelText}
           inputProps={{

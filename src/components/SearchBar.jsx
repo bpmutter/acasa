@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Paper, makeStyles, Typography} from '@material-ui/core';
 import GoogleMapsSearchBox from './GoogleMapsSearchBox';
 import SelectOption from './SelectOption';
@@ -35,20 +35,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 const SearchBar = () => {
     const classes = useStyles();
-
+    const [location, setLocation] = useState();
+    const [homeType, setHomeType] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    
+    const search = e => {
+      e.preventDefault();
+      const query = {location, homeType, startDate, endDate};
+      //TODO: create some stuff to process data and query DB with it....
+      console.log(query);
+    }
     return (
       <Paper className={classes.root}>
-        <Typography variant="h5" component="h3" className={classes.title}>Find Your Next Home</Typography>
-        <form className={classes.form}>
-          <GoogleMapsSearchBox />
-          <SelectOption labelText="Home Type" />
-          <DateSelector labelText="Start Date" />
-          <DateSelector labelText="End Date" />
+        <Typography variant="h5" component="h3" className={classes.title}>
+          Find Your Next Home
+        </Typography>
+        <form className={classes.form} onSubmit={search}>
+          <GoogleMapsSearchBox formSetter={setLocation} />
+          <SelectOption labelText="Home Type" formSetter={setHomeType} />
+          <DateSelector labelText="Start Date" formSetter={setStartDate} />
+          <DateSelector labelText="End Date" formSetter={setEndDate} />
           <Button
             className={classes.searchButton}
             variant="contained"
             color="primary"
             href="#"
+            onClick={search}
           >
             <SearchIcon />
           </Button>
