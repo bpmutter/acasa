@@ -13,8 +13,13 @@ import ContentPaper from './ContentPaper';
 import LanguageInput from './LanguagesInput';
 import GoogleMapsAutoComplete from './GoogleMapsSearchBox';
 const useStyles = makeStyles((theme) => ({
-  root: {
-    //
+  title: {
+    fontFamily: theme.typography.special,
+    color: theme.palette.primary.main
+  },
+  form: {
+    padding: theme.spacing(1),
+    maxWidth: 500
   },
   textInput: {
     width: 300
@@ -60,10 +65,15 @@ export default function EditProfile(){
     return (
       <MainContentWrapper>
         <ContentPaper>
-          <Typography variant="h4" component="h3" color="primary">
+          <Typography
+            variant="h4"
+            component="h3"
+            color="primary"
+            className={classes.title}
+          >
             Edit Account Info
           </Typography>
-          <form className={classes.root} noValidate autoComplete="off">
+          <form className={classes.form} noValidate autoComplete="off">
             <div className={classes.primaryInfo}>
               <div>
                 <TextField
@@ -86,8 +96,16 @@ export default function EditProfile(){
             </div>
             <Divider className={classes.sectionDivider} />
             <div className={classes.contact}>
-              <Typography variant="h5" component="h3" color="primary">
+              <Typography
+                variant="h5"
+                component="h3"
+                color="primary"
+                className={classes.title}
+              >
                 Contact Information
+              </Typography>
+              <Typography variant="p" component="p" color="textSecondary">
+                Prospective guests can use these methods to contact you.{" "}
               </Typography>
               <div>
                 <TextField
@@ -96,7 +114,7 @@ export default function EditProfile(){
                   type="email"
                   color="secondary"
                   className={classes.textInput}
-                  helperText="This email is just for guests to contact you. It will not affect your login account"
+                  helperText="This email is just for guests to contact you. It will not affect your login account."
                   required
                 />
               </div>
@@ -130,8 +148,17 @@ export default function EditProfile(){
             </div>
             <Divider className={classes.sectionDivider} />
             <div className={classes.additionalInfo}>
-              <Typography variant="h5" component="h3" color="primary">
+              <Typography
+                variant="h5"
+                component="h3"
+                color="primary"
+                className={classes.title}
+              >
                 Additional Information
+              </Typography>
+              <Typography variant="p" component="p" color="textSecondary">
+                Add a bit more information for prospective guests to have a
+                better idea of who you are and why they should stay with you.
               </Typography>
               <div>
                 <TextField

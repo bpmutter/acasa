@@ -29,9 +29,11 @@ export default function LayoutTextFields({formSetter}) {
   }
   const submitHandler = () => {
     let langArr = input.split(",");
-    console.log(input)
-    langArr = langArr.map(lang => lang.trim());
-    setLanguages(langArr);
+    if(langArr[0] !== ""){
+      langArr = langArr.map((lang) => lang.trim());
+      setLanguages(langArr);
+    }
+    
 
   }
   return (
