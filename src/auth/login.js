@@ -9,7 +9,6 @@ export default async function login(userId){
     if (!doc.exists) {
         console.log('No such document!');
     } else {
-        console.log('Document data:', doc.data());
         return doc.data();
     }
 }

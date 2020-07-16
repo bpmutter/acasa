@@ -119,6 +119,7 @@ export default function GoogleMapsAutoComplete({formSetter}) {
           {...params}
           label="Search locations"
           variant="outlined"
+          color="secondary"
           fullWidth
         />
       )}

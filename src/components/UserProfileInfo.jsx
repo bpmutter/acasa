@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
+    width: '100%'
+  },
+  primaryInfoWrapper: { 
+    display: 'flex', justifyContent: 'space-between', width: '100%'
   },
   title: {
     fontFamily: theme.typography.special,
@@ -42,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserProfileInfo({user}){
     const classes = useStyles();
-    // const month = getMonth()
-    const dateJoined = format(user.date_added, "MMMM d, yyyy");
+    //TODO: fix the date joined to work via date added
+    const dateJoined = 'Nov 2, 1994'//format(user.date_added, "MMMM d, yyyy");
     return (
       <ContentPaper style={{ width: "100%" }}>
         <Box className={classes.wrapper}>
@@ -54,7 +58,7 @@ export default function UserProfileInfo({user}){
             className={classes.profilePicture}
           />
           <Box className={classes.mainProfileContent}>
-            <Box className={classes.primaryInfoWrapper} style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box className={classes.primaryInfoWrapper}>
               <Box>
                 <Typography
                   variant="p"
@@ -82,7 +86,7 @@ export default function UserProfileInfo({user}){
             </Box>
 
             <Box className={classes.secondaryInfoWrapper}>
-              {user.location.city && user.location.country && (
+              {user.location && user.location.city && user.location.country && (
                 <Typography
                   variant="p"
                   component="p"
@@ -93,7 +97,7 @@ export default function UserProfileInfo({user}){
                   {user.location.city}, {user.location.country}
                 </Typography>
               )}
-              {user.languages.length && (
+              { user.languages && user.languages.length && (
                 <Typography
                   variant="p"
                   component="p"
