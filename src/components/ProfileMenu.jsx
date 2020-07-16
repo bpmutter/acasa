@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
+import Link from "@material-ui/core/Link";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -49,6 +50,8 @@ export default function CustomizedMenus(buttonStyles) {
     setAnchorEl(null);
   };
 
+  
+
   return (
     <div>
       <IconButton
@@ -68,12 +71,12 @@ export default function CustomizedMenus(buttonStyles) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={()=><Redirect to="/profile"/>}>
-          <ListItemIcon>
-            <PersonIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </MenuItem>
+          <MenuItem>
+            <ListItemIcon>
+              <PersonIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <InboxIcon fontSize="small" />

@@ -4,7 +4,7 @@ import UserProfileInfo from './UserProfileInfo';
 import UserListings from './UserListings';
 import data from '../testData';
 import getUser from '../queries/getUserByUserName';
-import {useParams} from 'react-router-dom';
+import {useParams, Redirect} from 'react-router-dom';
 const ben = data.ben;
 const listings = data.listings;
 
@@ -21,7 +21,13 @@ export default function UserPage(){
     // const user = getUser(username);
     console.log('USER in state:',user);
     const userVal = user || ben;
+    if(user === null){ 
+        return(<div>
+            <Redirect to="/404"/>
+        </div>)
+    }
     return(
+
         <MainContentWrapper>
             <UserProfileInfo
                 user={userVal}

@@ -4,6 +4,9 @@ import Homepage from './Homepage';
 import UserPage from './UserPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from './Footer';
+import ProtectedRoute from './ProtectedRoute';
+import Profile from './Profile';
+
 function App() {
   return (
     <>
@@ -13,6 +16,9 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <Homepage />
+          </Route>
+          <Route path="/profile">
+            <Profile/>
           </Route>
           <Route path="/users/:username">
             <UserPage/>
