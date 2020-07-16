@@ -5,6 +5,7 @@ import UserListings from './UserListings';
 import data from '../testData';
 import getUser from '../queries/getUserByUserName';
 import {useParams, Redirect} from 'react-router-dom';
+import dateFormatter from '../utils.js/dateFormatter';
 const ben = data.ben;
 const listings = data.listings;
 
@@ -15,6 +16,9 @@ export default function UserPage(){
     useEffect(()=>{
        (async()=> {
            const userFromUsername = await getUser(username);
+           if(userFromUsername){
+               userFromUsername.joined = dateFormatter(userFromUsername.date_added);
+           }
            setUser(userFromUsername) 
         })();
     },[username])

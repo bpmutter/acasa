@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import firebase from 'firebase';
+import context from './Context';
 function PrivateRoute({ children, ...rest }) {
-  const uid = firebase.auth().currentUser.uid;
+  const {loggedIn} = useContext(context);
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        uid ? (
+        loggedIn ? (
           children
         ) : (
           <Redirect

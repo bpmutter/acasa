@@ -2,6 +2,7 @@ import React from 'react';
 import ContentPaper from './ContentPaper';
 import {makeStyles, Box, Avatar, Typography, Button} from '@material-ui/core';
 import {format} from 'date-fns'
+import dateFormatter from '../utils.js/dateFormatter';
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -46,8 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserProfileInfo({user}){
     const classes = useStyles();
-    //TODO: fix the date joined to work via date added
-    const dateJoined = 'Nov 2, 1994'//format(user.date_added, "MMMM d, yyyy");
+
     return (
       <ContentPaper style={{ width: "100%" }}>
         <Box className={classes.wrapper}>
@@ -66,7 +66,7 @@ export default function UserProfileInfo({user}){
                   color="textSecondary"
                   className={classes.joinDate}
                 >
-                  Joined {dateJoined}
+                  Joined {user.joined}
                 </Typography>
                 <Typography
                   variant="h3"

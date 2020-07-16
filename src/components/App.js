@@ -6,32 +6,35 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Footer from './Footer';
 import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
+import ProfileSettings from "./ProfileSettings";
 
 function App() {
   return (
     <>
-    <div style={{minHeight:'92vh'}}>
-      <Navigation />
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Homepage />
-          </Route>
-          <Route path="/profile">
-            <Profile/>
-          </Route>
-          <Route path="/users/:username">
-            <UserPage/>
-          </Route>
-          <Route path="/testing">
-            {/* <Testing/> */}
-          </Route>
-          <Route path="*">
-            <p>404...aww snapp</p>
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+      <div style={{ minHeight: "92vh" }}>
+        <Navigation />
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              <Homepage />
+            </Route>
+
+            <ProtectedRoute exact path="/profile">
+              <Profile />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/profile/settings">
+              <ProfileSettings />
+            </ProtectedRoute>
+            <Route path="/users/:username">
+              <UserPage />
+            </Route>
+            <Route path="/testing">{/* <Testing/> */}</Route>
+            <Route path="*">
+              <p>404...aww snapp</p>
+            </Route>
+          </Switch>
+        </Router>
+      </div>
       <Footer />
     </>
   );

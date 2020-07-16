@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GoogleMapsAutoComplete({formSetter}) {
+export default function GoogleMapsAutoComplete({formSetter, variant, label}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
@@ -117,8 +117,8 @@ export default function GoogleMapsAutoComplete({formSetter}) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search locations"
-          variant="outlined"
+          label={label ||"Search locations"}
+          variant={variant || "outlined"}
           color="secondary"
           fullWidth
         />

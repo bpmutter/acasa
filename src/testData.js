@@ -1,10 +1,10 @@
 
 const ben = {
-  first_name: "Ben",
-  last_name: "Perlmutter",
+  first_name: "Homer",
+  last_name: "Simpson",
   date_added: new Date(),
   profile_picture:
-    "https://avatars0.githubusercontent.com/u/57849986?s=400&u=8897665d835d70b9b506b44e525eebcf0de3053e&v=4",
+    "https://okdiario.com/img/2019/09/05/mejores-frases-de-homer-simpson-655x368.jpg",
   location: {
     city: "Medellin",
     country: "Colombia",
