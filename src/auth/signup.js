@@ -1,5 +1,5 @@
 import db from '../config/firestoreDb';
-
+import firebase from 'firebase';
 
 
 export default async function createUserInDb(authResult){
@@ -7,8 +7,8 @@ export default async function createUserInDb(authResult){
         additionalUserInfo: { isNewUser, profile},
       } = authResult;
 
-      console.log('SIGN UP INFOOO::', isNewUser, profile);
-      
+      console.log('SIGN UP INFOOO::', authResult);
+      const uid = firebase.auth().currentUser.uid;
       const newUser = {};
 
       //create unique username with timestamp
@@ -33,21 +33,20 @@ export default async function createUserInDb(authResult){
       newUser.date_added = creationTime;
       newUser.date_updated = creationTime;
       newUser.oAuthInfo = profile;
+      newUser.uid = uid;
 
 
       let userId = null;
-      if(!isNewUser){
-        const res = await db
-          .collection("users")
-          .add(newUser)
-          .then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            userId = docRef.id;
-            console.log('user id::',userId)
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-          });
+      if(isNewUser){
+          console.log('if entered....')
+        try{ 
+
+            const res = await db.collection("users").doc(uid).set(newUser);
+            console.log('res is....', res)
+        }catch(err){ console.error(err)
+        }
+        userId = uid;
+
         
       }
       console.log('user id before return', userId)

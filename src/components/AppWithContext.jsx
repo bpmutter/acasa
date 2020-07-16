@@ -9,36 +9,44 @@ import firebase from 'firebase'
 import logoutFirebase from '../auth/logout';
 import signupFirebase from '../auth/signup';
 import '../config/firebaseApp'
+import loginFirebase from '../auth/login';
+import loginOnPageLoadFirebase from '../auth/loginOnPageLoad';
 
 const AppContext = () => {
     const loggedInFromLS = JSON.parse(localStorage.getItem('loggedIn'))
     const [loggedIn, setLoggedIn] = useState(loggedInFromLS);
+    const [user, setUser] = useState({})
     const [errors, setErrors] = useState([]);
 
     const signUp = async (authResult) => {
       const userId = await signupFirebase(authResult);
       if(userId){
-        logIn(userId);
+        logIn();
       } else{
         setErrors(["It looks like there is already an account using this email. Log in with that account or choose a new log in method", ...errors]);
-        
       } 
     }
-    const logIn = (userId) => {
-      //TODO
-        //get user information from the DB using info provided in 'user' here
-        //set context to reflect this
-        setLoggedIn(true)
-        localStorage.setItem('loggedIn', true)
+    const logIn = async () => {
+        const user  = await loginFirebase();
+        setUser(user);
+        setLoggedIn(true);
+        localStorage.setItem('loggedIn', true);
     }
     const logOut = () => {
-      // firebase.auth().signOut();
       logoutFirebase()
       setLoggedIn(false);
       localStorage.setItem('loggedIn', false)
     }
+    if(loggedIn){
+      loginOnPageLoadFirebase();
+      // firebase.auth().onAuthStateChanged( async function(user) {
+      //   if (user) {      
+      //     await login()
+      //   } 
+      // });
+    }
 
-    const context = { loggedIn, logIn, logOut, signUp };
+    const context = { user, loggedIn, logIn, logOut, signUp };
 
     return (
       <Context.Provider value={context}>
