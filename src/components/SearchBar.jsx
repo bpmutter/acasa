@@ -5,25 +5,30 @@ import SelectOption from './SelectOption';
 import DateSelector from './DateSelector';
 import { Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import hometypes from "../hometypes.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
     padding: theme.spacing(1),
-    maxWidth: "90vw",
+    width: '85%',
     backgroundColor: theme.palette.background.default,
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
-    paddingBottom: theme.spacing(.5),
+    paddingBottom: theme.spacing(1.5),
   },
   form: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: 'space-evenly',
     flexWrap: 'wrap',
     width: '100%'
+  },
+  hometype: {
+    marginLeft: '1em',
   },
   searchButton: {
     display: "inline-flex",
@@ -39,7 +44,6 @@ const SearchBar = () => {
     const [homeType, setHomeType] = useState();
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    
     const search = e => {
       e.preventDefault();
       const query = {location, homeType, startDate, endDate};
@@ -53,7 +57,10 @@ const SearchBar = () => {
         </Typography>
         <form className={classes.form} onSubmit={search}>
           <GoogleMapsSearchBox formSetter={setLocation} />
-          <SelectOption labelText="Home Type" formSetter={setHomeType} />
+          <SelectOption labelText="Home Type" formSetter={setHomeType}
+            className={classes.hometype}
+            options={hometypes}
+          />
           <DateSelector labelText="Start Date" formSetter={setStartDate} />
           <DateSelector labelText="End Date" formSetter={setEndDate} />
           <Button

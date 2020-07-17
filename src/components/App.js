@@ -7,6 +7,7 @@ import Footer from './Footer';
 import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
 import ProfileSettings from "./ProfileSettings";
+import CreateListing from './CreateListing';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute exact path="/profile/settings">
               <ProfileSettings />
+            </ProtectedRoute>
+            <ProtectedRoute path="/create-listing">
+              <CreateListing/>
             </ProtectedRoute>
             <Route path="/users/:username">
               <UserPage />

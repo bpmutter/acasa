@@ -62,7 +62,7 @@ export default function EditProfile(){
     const [snackbar, setSnackbar] = useState({
       msg: null,
       severity: null,
-    })
+    });
   
   // TODO: refactor to put in another component...just throwing code elsewhere
   // was causing problems...i think it might have to do w fact that this uses

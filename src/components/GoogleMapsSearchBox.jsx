@@ -36,6 +36,7 @@ export default function GoogleMapsAutoComplete({
                  inputVal,
                  defaultValue,
                  helperText,
+                 required
                }) {
                  const classes = useStyles();
                  const [value, setValue] = React.useState(null);
@@ -135,6 +136,7 @@ export default function GoogleMapsAutoComplete({
                          fullWidth
                          defaultValue={inputValue}
                          helperText={helperText}
+                         required={required}
                        />
                      )}
                      renderOption={(option) => {

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-block'
   },
   formControl: {
-    marginLeft: theme.spacing(1.5),
+    // marginLeft: theme.spacing(1.5),
     marginRight: theme.spacing(1.5),
     minWidth: 140,
   },
@@ -18,20 +18,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectOption({labelText, name, options, formSetter}) {
+export default function SelectOption({labelText, name, options, required, formSetter, defaultValue}) {
+
   const classes = useStyles();
 
-  const [value, setValue ] = useState();
-
+  const [value, setValue ] = useState(defaultValue);
   const handleChange = e => {
     e.preventDefault();
     setValue(e.target.value);
-    formSetter(value)
+    if(formSetter){
+      formSetter(e.target.value)
+    }
   };
 
   return (
     <div className={classes.root}>
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} required={required}>
         <InputLabel htmlFor={name} color="secondary">
           {labelText}
         </InputLabel>
@@ -40,15 +42,13 @@ export default function SelectOption({labelText, name, options, formSetter}) {
           value={value}
           onChange={handleChange}
           label={labelText}
-          inputProps={{
-            name: name,
-          }}
+          name={name}
           color="secondary"
         >
           <option aria-label="None" value="" />
           {options &&
             options.map((option) => (
-              <option value={option.value}>{option.text}</option>
+              <option value={option.value}>{option.label}</option>
             ))}
         </Select>
       </FormControl>

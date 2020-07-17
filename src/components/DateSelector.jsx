@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
 }));
-export default function DatePickers({labelText, formSetter}) {
+export default function DatePickers({labelText, formSetter, required, defaultValue, helperText}) {
   const classes = useStyles();
   
   const changeHandler = e => {
@@ -23,10 +23,12 @@ export default function DatePickers({labelText, formSetter}) {
   return (
     <form className={classes.container} noValidate>
       <TextField
-        id="date"
         label={labelText}
         type="date"
         color="secondary"
+        required={required}
+        defaultValue={defaultValue}
+        helperText={helperText}
         onChange={changeHandler}
         className={classes.textField}
         InputLabelProps={{
