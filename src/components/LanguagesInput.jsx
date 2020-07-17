@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function LayoutTextFields({formSetter}) {
+export default function LayoutTextFields({formSetter, name, value}) {
   const classes = useStyles();
 
-  const [input, setInput] = useState();
+  const [input, setInput] = useState(value);
   const [languages, setLanguages] = useState([]);
 
   const changeHandler = (e) => { 
@@ -32,6 +32,7 @@ export default function LayoutTextFields({formSetter}) {
     if(langArr[0] !== ""){
       langArr = langArr.map((lang) => lang.trim());
       setLanguages(langArr);
+      formSetter(langArr)
     }
     
 
@@ -42,6 +43,7 @@ export default function LayoutTextFields({formSetter}) {
         <TextField
           id="languages-input"
           label="Languages"
+          name={name}
           helperText="Please separate with commas and hit the 'Add' button"
           value={input}
           onChange={changeHandler}

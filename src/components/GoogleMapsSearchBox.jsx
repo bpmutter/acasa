@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function GoogleMapsAutoComplete({formSetter, variant, label}) {
+export default function GoogleMapsAutoComplete({formSetter, variant, label, inputVal}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(null);
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState(inputVal);
   const [options, setOptions] = React.useState([]);
   const loaded = React.useRef(false);
 

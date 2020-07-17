@@ -34,6 +34,7 @@ export default async function createUserInDb(authResult){
       newUser.date_updated = creationTime;
       newUser.oAuthInfo = profile;
       newUser.uid = uid;
+      newUser.contact.email = profile.email;
 
 
       let userId = null;
