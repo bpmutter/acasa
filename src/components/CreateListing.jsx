@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import useInput from '../utils/useInputHook';
 import MainContentWrapper from "./MainContentWrapper";
+import logo from "../theme/logo-big.webp";
+
 import {
   makeStyles,
   TextField,
@@ -25,9 +27,19 @@ import hometypes from "../hometypes.json";
 
 
 const useStyles = makeStyles((theme) => ({
+  titleLogoWrapper: {
+      display: 'flex',
+      alignItems: 'center',
+      flexDirection: 'column',
+      paddingBottom: theme.spacing(2),
+  },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
+  },
+  logo: {
+    width: 50,
+    paddingBottom: theme.spacing(1),
   },
   form: {
     padding: theme.spacing(1),
@@ -35,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textInput: {
     width: 300,
-    margin: '.5rem 0'
+    margin: ".5rem 0",
   },
   sectionDivider: {
     marginTop: theme.spacing(2),
@@ -82,14 +94,19 @@ export default function CreateListing(){
       <>
         <MainContentWrapper>
           <ContentPaper>
-            <Typography
-              variant="h4"
-              component="h3"
-              color="primary"
-              className={classes.title}
-            >
-              Create Listing
-            </Typography>
+            <div className={classes.titleLogoWrapper}>
+              <img src={logo} alt="aCasa logo" className={classes.logo} />
+              <Typography
+                variant="h4"
+                component="h3"
+                color="primary"
+                align="center"
+                className={classes.title}
+              >
+                Create Listing
+              </Typography>
+            </div>
+
             <form className={classes.form} noValidate onSubmit={createListing}>
               <div className={classes.primaryInfo}>
                 <Typography
@@ -350,7 +367,7 @@ export default function CreateListing(){
                       }
                     />
                   </div>
-                  <div style={{paddingTop: 12}}>
+                  <div style={{ paddingTop: 12 }}>
                     <Checkbox label={"LGBTQ+ Friendly"} name="lgbtq" />
                   </div>
                 </FormGroup>

@@ -9,13 +9,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
+import SettingsIcon from "@material-ui/icons/Settings";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonIcon from "@material-ui/icons/Person";
-import { Redirect } from "react-router-dom";
-
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -71,18 +69,36 @@ export default function CustomizedMenus(buttonStyles) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <Link href="/profile" color="inherit" underline="none">
           <MenuItem>
             <ListItemIcon>
               <PersonIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </MenuItem>
-        <MenuItem>
+        </Link>
+        <Link href="/profile/settings" color="inherit" underline="none">
+          <MenuItem>
+            <ListItemIcon>
+              <SettingsIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </MenuItem>
+        </Link>
+        <Link href="/create-listing" color="inherit" underline="none">
+          <MenuItem>
+            <ListItemIcon>
+              <AddCircleIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Create Listing" />
+          </MenuItem>
+        </Link>
+        {/* <MenuItem>
           <ListItemIcon>
             <InboxIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Messages" />
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={logOut}>
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />

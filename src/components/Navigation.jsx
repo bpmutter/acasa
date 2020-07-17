@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     fontFamily: theme.typography.special,
-    // color: theme.palette.primary.main,
   },
   menuLink: {
     marginRight: theme.spacing(2),
@@ -59,6 +58,7 @@ export default function MenuAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            href="/"
           >
             <img src={logo} alt="aCasa logo" className={classes.logo} />
           </IconButton>
@@ -67,15 +67,19 @@ export default function MenuAppBar() {
           </Typography>
 
           <div className={classes.rightNav}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.menuButton}
-            >
-              Post a Home
-            </Button>
+            
             {loggedIn ? (
-              <ProfileMenu className={classes.profileMenu} />
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.menuButton}
+                  href="/create-listing"
+                >
+                  Post a Home
+                </Button>
+                <ProfileMenu className={classes.profileMenu} />
+            </>
             ) : (
               <>
               <SignUpModal />

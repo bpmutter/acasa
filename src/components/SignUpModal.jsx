@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Link, Typography } from "@material-ui/core";
+import { makeStyles, Link, Typography , Button} from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import SignUp from './SignUp';
 
@@ -20,11 +20,15 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
-    cursor: 'pointer'
+    cursor: "pointer",
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    fontFamily: theme.typography.special,
   },
   title: {
     fontFamily: theme.typography.special,
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
   },
 }));
 
@@ -43,14 +47,24 @@ export default function MyModal() {
 
   return (
     <>
-      <Link>
-        <Typography variant="h6" component="span" 
-        className={classes.buttonLink}
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.menuButton}
         onClick={handleOpen}
+      >
+        Sign Up
+      </Button>
+      {/* <Link>
+        <Typography
+          variant="h6"
+          component="span"
+          className={classes.buttonLink}
+          onClick={handleOpen}
         >
           Sign Up
         </Typography>
-      </Link>
+      </Link> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -60,7 +74,7 @@ export default function MyModal() {
         // className={classes.modal}
       >
         <div className={classes.modalContent}>
-          <SignUp/>
+          <SignUp />
         </div>
       </Modal>
     </>
