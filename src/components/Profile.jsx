@@ -3,7 +3,7 @@ import MainContentWrapper from "./MainContentWrapper";
 import UserProfileInfo from "./UserProfileInfo";
 import UserListings from "./UserListings";
 import data from "../testData";
-import getUser from "../queries/getUserProfileByAuth";
+import getUser from "../queries/users/getUserProfileByAuth";
 import db from "../config/firestoreDb";
 import { format } from "date-fns";
 import firebase from 'firebase';

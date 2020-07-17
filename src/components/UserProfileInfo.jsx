@@ -86,7 +86,7 @@ export default function UserProfileInfo({user}){
             </Box>
 
             <Box className={classes.secondaryInfoWrapper}>
-              {user.location && user.location.city && user.location.country && (
+              {user.location && user.location.description && (
                 <Typography
                   variant="p"
                   component="p"
@@ -94,7 +94,7 @@ export default function UserProfileInfo({user}){
                   className={classes.secondaryInfo}
                 >
                   <span className={classes.bold}>Location:</span>{" "}
-                  {user.location.city}, {user.location.country}
+                  {user.location.description}
                 </Typography>
               )}
               { user.languages && user.languages.length && (

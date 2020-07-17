@@ -1,4 +1,4 @@
-import db from "../config/firestoreDb";
+import db from "../../config/firestoreDb";
 
 export default async function getUserByUserName(username){ 
     const res = await db.collection('users').where('username', '==', username).get();

@@ -3,7 +3,7 @@ import MainContentWrapper from './MainContentWrapper';
 import UserProfileInfo from './UserProfileInfo';
 import UserListings from './UserListings';
 import data from '../testData';
-import getUser from '../queries/getUserByUserName';
+import getUser from '../queries/users/getUserByUserName';
 import {useParams, Redirect} from 'react-router-dom';
 import dateFormatter from '../utils.js/dateFormatter';
 const ben = data.ben;

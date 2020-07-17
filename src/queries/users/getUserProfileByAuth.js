@@ -1,4 +1,4 @@
-import db from "../config/firestoreDb";
+import db from "../../config/firestoreDb";
 import firebase from 'firebase';
 export default async function getUserByUidAuth(stateSetterCb) {
 
