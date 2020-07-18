@@ -62,19 +62,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UploadOneImage({multiple}){
+export default function UploadOneImage({multiple, required, formSetter}){
     const id = uuid();
     const [imgUrl, setImgUrl] = useState("");
     const [progress, setProgress] = useState(0);
     const classes = useStyles();
     const fileHandler = async e => {
         const file = e.currentTarget.files[0];
-
+        const setter = inputVal => {
+          setImgUrl(inputVal);
+          if(formSetter) formSetter(inputVal)
+        }
         if(file){ 
           setImgUrl('loading')
-          await uploadFile(file, "listings", setImgUrl, setProgress);         
+          await uploadFile(file, "listings", setter, setProgress);
         }
-    }
+    }        
+        
+    
     
     return (
       <div>
@@ -88,7 +93,7 @@ export default function UploadOneImage({multiple}){
             onChange={fileHandler}
           />
           <label htmlFor={`upload-img-${id}`}>
-            <ThemeButton>Upload Image</ThemeButton>
+            <ThemeButton>Upload Image{required ? "*" : null}</ThemeButton>
           </label>
         </div>
 

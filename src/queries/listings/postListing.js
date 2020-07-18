@@ -4,14 +4,14 @@ import firebase from 'firebase';
 export default function postListing(listing){
   const {title, type, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
-                        max_guests, wifi_speed, rules, pets, lgbtq, living_with_host 
+                        max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img 
                       } = listing;
   if(!title || !location || !type || !start_date 
-    || !bedrooms || !bathrooms || !max_guests){ 
+    || !bedrooms || !bathrooms || !max_guests || !primary_img){ 
     return {
       "message":{
         type: "error", 
-        content: "Missing a required field."
+        content: "Missing one or more required fields."
       }
     }
   }
@@ -24,7 +24,7 @@ export default function postListing(listing){
   const newListing = {title, type, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, id, living_with_host,
-                        created_at: timestamp, updated_at: timestamp,
+                        created_at: timestamp, updated_at: timestamp, primary_img
                     }
 
   firebase.auth().onAuthStateChanged(async function (user) {
@@ -48,6 +48,7 @@ export default function postListing(listing){
                 type: "success",
                 content: "Your Listing has been successfully posted.",
               },
+              redirectId: id
             };
 
         } catch(err){

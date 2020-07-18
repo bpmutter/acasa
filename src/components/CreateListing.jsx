@@ -9,20 +9,22 @@ import {
   Typography,
   Button,
   Divider,
-  FormGroup
+  FormGroup, InputAdornment
 } from "@material-ui/core";
+import WifiIcon from "@material-ui/icons/Wifi";
 import format from "date-fns/format";
+import {Redirect} from 'react-router-dom';
 import Snackbar from "./Snackbar";
 import Checkbox from './Checkbox';
 import DateSelector from './DateSelector';
 import RadioGroup from './RadioGroup';
 import SelectOption from './SelectOption';
 import ContentPaper from "./ContentPaper";
-// import LanguageInput from './LanguagesInput';
 import GoogleMapsAutoComplete from "./GoogleMapsSearchBox";
 import SelectMultiple from './SelectMultiple';
 import hometypes from "../hometypes.json";
 import postListingToDb from '../queries/listings/postListing';
+import UploadOneImage from './UploadOneImage';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,13 +107,12 @@ export default function CreateListing(){
     const [rules, setRules] = useState([]);
     const [pets, setPets] = useState([]);
     const [lgbtq, setLgbtq] = useState(false);
-
-    
-
-
+    const [primary_img, setPrimaryImage] = useState("")
+    const [disableSubmit, setDisableSubmit] = useState(false);
 
     const createListing = async (e) => {
         e.preventDefault();
+        console.log('wasssuppppppp')
         if(!shared){
           setLivingWithHost(false);
           setRoommates("");
@@ -145,11 +146,19 @@ export default function CreateListing(){
                         location, location_description: location_description.value, shared, 
                         roommates: roommatesInt, living_with_host, bedrooms: bedroomsInt, 
                         bathrooms: bathroomsInt, max_guests: maxGuestsInt, wifi_speed: wifiInt, 
-                        rules, pets, lgbtq 
+                        rules, pets, lgbtq, primary_img
                       }
         console.log(listing);
         const res = await postListingToDb(listing);
-        console.log(res)
+        console.log('res msg::', res);
+        if(res) {
+          setSnackbar({severity: res.message.type, msg: res.message.content})
+          return(
+            <div>
+              <Redirect to={`/listings/${res.id}`}/>
+            </div>
+          )
+        }
     }
     
     return (
@@ -208,6 +217,11 @@ export default function CreateListing(){
                     className={classes.textInput}
                     defaultValue={price.value}
                     onChange={price.onChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
+                    }}
                     required
                     helperText="NOTE: You can negotiate price with guests once they've contacted you. "
                   />
@@ -396,6 +410,13 @@ export default function CreateListing(){
                       type="number"
                       label="Wifi speed (Mbps)"
                       color="secondary"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <WifiIcon color="secondary" />
+                          </InputAdornment>
+                        ),
+                      }}
                       className={classes.textInput}
                       defaultValue={wifi_speed.value}
                       onChange={wifi_speed.onChange}
@@ -442,6 +463,18 @@ export default function CreateListing(){
                     />
                   </div>
                 </FormGroup>
+              </div>
+              <Divider className={classes.sectionDivider} />
+              <div className={classes.images}>
+                <Typography
+                  variant="h5"
+                  component="h3"
+                  color="primary"
+                  className={classes.title}
+                >
+                  Images
+                </Typography>
+                <UploadOneImage formSetter={setPrimaryImage} required={true}/>
               </div>
               <div className={classes.buttonWrapper}>
                 <Button
