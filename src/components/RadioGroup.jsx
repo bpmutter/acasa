@@ -13,9 +13,11 @@ export default function RadioButtonsGroup({defaultValue, formLabel, ariaLabel, n
     setValue(e.target.value);
     if (formSetter) {
       if(options[0].value === "true" && options[1].value === 'false'){
-        const boolVal = e.target.value === "true";
-        formSetter(boolVal);
+        // const boolVal = e.target.value === "true";
+        formSetter(e.target.value === "true");
+        return;
       }
+      formSetter(value);
       
     } 
   };

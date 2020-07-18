@@ -17,6 +17,7 @@ export default function DatePickers({labelText, formSetter, required, defaultVal
   
   const changeHandler = e => {
     e.preventDefault();
+    console.log('date',e.target.value)
     formSetter(e.target.value)
 
   }

@@ -40,6 +40,8 @@ export default async function createUserInDb({uid, firstName, lastName, email, p
  
   try {
     const res = await db.collection("users").doc(uid).update(user);
+    //const listingRes = await db.collection('listings').where('owner.uid', '==', uid);
+    //TODO: UPDATE OWNER TO THE NEW INFO FOR LISTINGS
     return {
       message: {
         type: "success",

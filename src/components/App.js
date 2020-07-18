@@ -8,6 +8,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Profile from './Profile';
 import ProfileSettings from "./ProfileSettings";
 import CreateListing from './CreateListing';
+import Testing from './Testing';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
             <Route path="/users/:username">
               <UserPage />
             </Route>
-            <Route path="/testing">{/* <Testing/> */}</Route>
+            <Route path="/testing"><Testing/></Route>
             <Route path="*">
               <p>404...aww snapp</p>
             </Route>

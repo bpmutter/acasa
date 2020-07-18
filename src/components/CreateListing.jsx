@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import useInput from '../utils/useInputHook';
 import MainContentWrapper from "./MainContentWrapper";
 import logo from "../theme/logo-big.webp";
-
+import dateParse from "date-fns/parse";
 import {
   makeStyles,
   TextField,
@@ -17,13 +17,12 @@ import Checkbox from './Checkbox';
 import DateSelector from './DateSelector';
 import RadioGroup from './RadioGroup';
 import SelectOption from './SelectOption';
-import firebase from "firebase";
-import db from "../config/firestoreDb";
 import ContentPaper from "./ContentPaper";
 // import LanguageInput from './LanguagesInput';
 import GoogleMapsAutoComplete from "./GoogleMapsSearchBox";
 import SelectMultiple from './SelectMultiple';
 import hometypes from "../hometypes.json";
+import postListingToDb from '../queries/listings/postListing';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +63,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let todayStr = format(Date.now(), "y-MM-d");
+const oneToTenOptions = [
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
+  { value: 10, label: "10+" },
+];
+
 export default function CreateListing(){ 
 
     const classes = useStyles();
@@ -72,24 +85,73 @@ export default function CreateListing(){
       msg: null,
       severity: null,
     });
+    
+    const title = useInput("");
+    const [type, setType] = useState("");
+    const price = useInput("");
+    const [publish_now, setPublishNow] = useState(true);
+    const description = useInput("");
+    const [start_date, setStartDate] = useState(todayStr);
+    const [end_date, setEndDate] = useState("");    
+    const [location, setLocation] = useState({});    
+    const location_description = useInput("");
     const [shared, setShared] = useState(true);
+    const [living_with_host, setLivingWithHost] = useState(false)
+    const [roommates, setRoommates] = useState("");
+    const [bedrooms, setBedrooms] = useState("");
+    const [bathrooms, setBathrooms] = useState("");
+    const [max_guests, setMaxGuests] = useState("");
+    const wifi_speed = useInput("");
+    const [rules, setRules] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [lgbtq, setLgbtq] = useState(false);
 
-    const createListing = async () => {
-        //do stuff
+    
+
+
+
+    const createListing = async (e) => {
+        e.preventDefault();
+        if(!shared){
+          setLivingWithHost(false);
+          setRoommates("");
+        }
+        const priceInt = parseInt(price.value)
+        const bathroomsInt = parseInt(bathrooms);
+        const bedroomsInt = parseInt(bedrooms);
+        const maxGuestsInt = parseInt(max_guests);
+        let roommatesInt = "";
+        if(roommates) roommatesInt = parseInt(roommates)
+        let wifiInt = "";
+        if(wifi_speed.value) wifiInt = parseInt(wifi_speed.value);
+
+        //TODO add data converters
+        const startDateObj = dateParse(
+          start_date,
+          'yyyy-MM-dd',
+          new Date()
+        );
+        let endDate = "";
+        if(end_date){
+          endDate = dateParse(
+          start_date,
+          'yyyy-MM-dd',
+          new Date()
+        );
+        }
+
+        const listing = {title: title.value, type, price: priceInt, active: publish_now,
+                        start_date: startDateObj, end_date: endDate,
+                        location, location_description: location_description.value, shared, 
+                        roommates: roommatesInt, living_with_host, bedrooms: bedroomsInt, 
+                        bathrooms: bathroomsInt, max_guests: maxGuestsInt, wifi_speed: wifiInt, 
+                        rules, pets, lgbtq 
+                      }
+        console.log(listing);
+        const res = await postListingToDb(listing);
+        console.log(res)
     }
-    let todayStr = format(Date.now(), 'y-MM-d');
-    const oneToTenOptions = [
-      { value: 1, label: "1" },
-      { value: 2, label: "2" },
-      { value: 3, label: "3" },
-      { value: 4, label: "4" },
-      { value: 5, label: "5" },
-      { value: 6, label: "6" },
-      { value: 7, label: "7" },
-      { value: 8, label: "8" },
-      { value: 9, label: "9" },
-      { value: 10, label: "10+" },
-    ];
+    
     return (
       <>
         <MainContentWrapper>
@@ -122,6 +184,8 @@ export default function CreateListing(){
                     name="title"
                     label="Listing Title"
                     color="secondary"
+                    defaultValue={title.value}
+                    onChange={title.onChange}
                     className={classes.textInput}
                     required
                   />
@@ -132,6 +196,7 @@ export default function CreateListing(){
                     labelText={"Property Type"}
                     name="type"
                     options={hometypes}
+                    formSetter={setType}
                   />
                 </div>
                 <div>
@@ -141,6 +206,8 @@ export default function CreateListing(){
                     label="Price per Month in Dollars"
                     color="secondary"
                     className={classes.textInput}
+                    defaultValue={price.value}
+                    onChange={price.onChange}
                     required
                     helperText="NOTE: You can negotiate price with guests once they've contacted you. "
                   />
@@ -152,6 +219,7 @@ export default function CreateListing(){
                     name="active"
                     required={true}
                     defaultValue="true"
+                    formSetter={setPublishNow}
                     className={classes.textInput}
                     options={[
                       { value: "true", label: "Yes" },
@@ -163,6 +231,8 @@ export default function CreateListing(){
                   <TextField
                     name="description"
                     label="Property Description"
+                    defaultValue={description.value}
+                    onChange={description.onChange}
                     multiline
                     rows={4}
                     color="secondary"
@@ -185,14 +255,14 @@ export default function CreateListing(){
                   labelText="Start Date"
                   defaultValue={todayStr}
                   required={true}
-                  formSetter={(val) => val}
+                  formSetter={setStartDate}
                 />
                 <DateSelector
                   className={classes.textInput}
                   labelText="End Date"
                   required={false}
                   helperText="Only include if there is a fixed end date for the availability"
-                  formSetter={(val) => val}
+                  formSetter={setEndDate}
                 />
               </div>
               <Divider className={classes.sectionDivider} />
@@ -210,13 +280,15 @@ export default function CreateListing(){
                   label="Location"
                   name="location"
                   required
-                  formSetter={(val) => val}
+                  formSetter={setLocation}
                   className={classes.textInput}
                 />
                 <TextField
                   name="location_description"
                   label="Location Description"
                   multiline
+                  defaultValue={location_description.value}
+                  onChange={location_description.onChange}
                   rows={4}
                   color="secondary"
                   style={{ width: "100%" }}
@@ -247,8 +319,7 @@ export default function CreateListing(){
                     ]}
                   />
                 </div>
-                {console.log("shared::", shared)}
-                {shared && (
+                {shared === true && (
                   <FormGroup
                     row
                     style={{ display: "flex", alignItems: "center" }}
@@ -258,6 +329,8 @@ export default function CreateListing(){
                         required={true}
                         labelText={"Roommates"}
                         name="roommates"
+                        //TODO add state setter
+                        formSetter={setRoommates}
                         options={oneToTenOptions}
                         className={classes.textInput}
                       />
@@ -266,6 +339,7 @@ export default function CreateListing(){
                       <Checkbox
                         label={"Living with Host"}
                         name="living_with_host"
+                        formSetter={setLivingWithHost}
                         className={classes.textInput}
                       />
                     </div>
@@ -277,6 +351,7 @@ export default function CreateListing(){
                       required={true}
                       labelText={"Bedrooms"}
                       name="bedrooms"
+                      formSetter={setBedrooms}
                       options={oneToTenOptions}
                     />
                   </div>
@@ -285,14 +360,7 @@ export default function CreateListing(){
                       required={true}
                       labelText={"Bathrooms"}
                       name="bathrooms"
-                      options={oneToTenOptions}
-                    />
-                  </div>
-                  <div>
-                    <SelectOption
-                      required={true}
-                      labelText={"Bathrooms"}
-                      name="bathrooms"
+                      formSetter={setBathrooms}
                       options={oneToTenOptions}
                     />
                   </div>
@@ -301,6 +369,7 @@ export default function CreateListing(){
                       required={true}
                       labelText={"Max Guests"}
                       name="max_guests"
+                      formSetter={setMaxGuests}
                       options={oneToTenOptions}
                     />
                   </div>
@@ -328,6 +397,8 @@ export default function CreateListing(){
                       label="Wifi speed (Mbps)"
                       color="secondary"
                       className={classes.textInput}
+                      defaultValue={wifi_speed.value}
+                      onChange={wifi_speed.onChange}
                     />
                   </div>
                   <div>
@@ -339,9 +410,7 @@ export default function CreateListing(){
                         "No smoking",
                       ]}
                       label="House Rules"
-                      formSetter={(val) =>
-                        console.log("select multi val::", val)
-                      }
+                      formSetter={setRules}
                     />
                   </div>
                 </FormGroup>
@@ -362,13 +431,15 @@ export default function CreateListing(){
                         "Reptiles",
                       ]}
                       label="Pets"
-                      formSetter={(val) =>
-                        console.log("select multi val::", val)
-                      }
+                      formSetter={setPets}
                     />
                   </div>
                   <div style={{ paddingTop: 12 }}>
-                    <Checkbox label={"LGBTQ+ Friendly"} name="lgbtq" />
+                    <Checkbox
+                      label={"LGBTQ+ Friendly"}
+                      name="lgbtq"
+                      formSetter={setLgbtq}
+                    />
                   </div>
                 </FormGroup>
               </div>
@@ -377,7 +448,8 @@ export default function CreateListing(){
                   variant="contained"
                   color="primary"
                   className={classes.submitButton}
-                  onClick={createListing}
+                  // onSubmit={createListing}
+                  type="submit"
                 >
                   Post Listing!
                 </Button>
