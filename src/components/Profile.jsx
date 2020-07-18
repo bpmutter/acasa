@@ -14,7 +14,11 @@ const listings = data.listings;
 
 export default function UserPage() {
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    first_name: '',
+    languages: [],
+    contact: {}
+  });
 
   useEffect(() => {
   //   TODO: refactor to put in another component...just throwing code elsewhere
@@ -38,7 +42,7 @@ export default function UserPage() {
   });
   }, []);
 
-  const userVal = user || ben;
+  const userVal = user;
   // console.log('user val::',userVal.date_added.toDateString())
   
   return (
