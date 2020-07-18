@@ -1,12 +1,18 @@
 import React from 'react';
 import ContentPaper from './ContentPaper';
-import {makeStyles, Box, Avatar, Typography, Button} from '@material-ui/core';
+import {makeStyles, Box, Avatar, Typography, Button, IconButton} from '@material-ui/core';
 import {format} from 'date-fns'
-import dateFormatter from '../utils.js/dateFormatter';
+import dateFormatter from '../utils/dateFormatter';
+import SettingsIcon from "@material-ui/icons/Settings";
+
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     padding: theme.spacing(2),
+    display: 'flex',
+  },
+  settingsButton: {
+    position: 'absolute'
   },
   profilePicture: {
     width: 325,
@@ -39,13 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     fontFamily: theme.typography.special,
-    display: 'inline-block',
+    display: 'inline-flex',
+    alignItems: 'center',
     position: 'static',
     height: 40,
+
   },
 }));
 
-export default function UserProfileInfo({user}){
+export default function UserProfileInfo({user, profile}){
     const classes = useStyles();
 
     return (
@@ -80,8 +88,9 @@ export default function UserProfileInfo({user}){
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                href={profile ? "/profile/settings" : "#"}
               >
-                Contact Me! 
+                <>{profile ? <> <SettingsIcon style={{paddingRight: '.25em'}}/> Settings </>: 'Contact Me!'}</>
               </Button>
             </Box>
 
@@ -97,7 +106,7 @@ export default function UserProfileInfo({user}){
                   {user.location.description}
                 </Typography>
               )}
-              { user.languages && user.languages.length && (
+              {user.languages && user.languages.length && (
                 <Typography
                   variant="p"
                   component="p"

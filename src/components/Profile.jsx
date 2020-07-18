@@ -7,7 +7,7 @@ import getUser from "../queries/users/getUserProfileByAuth";
 import db from "../config/firestoreDb";
 import { format } from "date-fns";
 import firebase from 'firebase';
-import dateFormatter from "../utils.js/dateFormatter";
+import dateFormatter from "../utils/dateFormatter";
 const ben = data.ben;
 const listings = data.listings;
 

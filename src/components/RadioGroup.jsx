@@ -11,11 +11,9 @@ export default function RadioButtonsGroup({defaultValue, formLabel, ariaLabel, n
   const handleChange = (e) => {
     
     setValue(e.target.value);
-    setValue(e.target.value === "true");
     if (formSetter) {
       if(options[0].value === "true" && options[1].value === 'false'){
         const boolVal = e.target.value === "true";
-        console.log("boolVal::", boolVal);
         formSetter(boolVal);
       }
       
@@ -34,7 +32,7 @@ export default function RadioButtonsGroup({defaultValue, formLabel, ariaLabel, n
         row
       >
         {options.map(option=>(
-            <FormControlLabel value={option.value} control={<Radio />} label={option.label} />
+            <FormControlLabel value={option.value} control={<Radio checked={value===option.value}/>} label={option.label} />
 
         ))}
 

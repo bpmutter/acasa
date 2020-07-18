@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   chip: {
     margin: 2,
+    backgroundColor: theme.palette.secondary
   },
   noLabel: {
     marginTop: theme.spacing(3),
@@ -51,18 +52,21 @@ function getStyles(option, optionName, theme) {
   };
 }
 
-export default function MultipleSelect({label, options, formSetter}) {
+export default function MultipleSelect({label, name, options, formSetter, defaultValue = []}) {
   const classes = useStyles();
   const theme = useTheme();
   const [optionName, setOptionName] = React.useState([]);
 
+  useEffect(()=>{
+    setOptionName(defaultValue)
+  }, [defaultValue.length])
+
   const handleChange = (e) => {
     setOptionName(e.target.value);
     if(formSetter){
-        formSetter(e.target.value)
+      formSetter(e.target.value)
     }
   };
-
 
   return (
     <div>
@@ -70,7 +74,9 @@ export default function MultipleSelect({label, options, formSetter}) {
         <InputLabel>{label}</InputLabel>
         <Select
           multiple
+          name={name}
           value={optionName}
+          defaultValue={defaultValue}
           onChange={handleChange}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (

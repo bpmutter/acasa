@@ -1,7 +1,6 @@
 import React, {useState, useContext} from "react";
 import AppContext from "./Context";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import Link from "@material-ui/core/Link";

@@ -67,7 +67,15 @@ export default function MenuAppBar() {
           </Typography>
 
           <div className={classes.rightNav}>
-            
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.menuButton}
+              href="/search"
+            >
+              Discover Homes
+            </Button>
+
             {loggedIn ? (
               <>
                 <Button
@@ -76,14 +84,14 @@ export default function MenuAppBar() {
                   className={classes.menuButton}
                   href="/create-listing"
                 >
-                  Post a Home
+                  Create Listing
                 </Button>
                 <ProfileMenu className={classes.profileMenu} />
-            </>
+              </>
             ) : (
               <>
-              <SignUpModal />
-              <LogInModal/>
+                <SignUpModal />
+                <LogInModal />
               </>
             )}
           </div>

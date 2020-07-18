@@ -5,7 +5,7 @@ import UserListings from './UserListings';
 import data from '../testData';
 import getUser from '../queries/users/getUserByUserName';
 import {useParams, Redirect} from 'react-router-dom';
-import dateFormatter from '../utils.js/dateFormatter';
+import dateFormatter from '../utils/dateFormatter';
 const ben = data.ben;
 const listings = data.listings;
 
