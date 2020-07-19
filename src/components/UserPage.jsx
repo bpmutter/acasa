@@ -20,18 +20,16 @@ export default function UserPage(){
     });
     const { username } = useParams();
     useEffect(()=>{
-        if(user.uid){
-            (async()=> {
-                const userFromUsername = await getUser(username);
-                if(userFromUsername){
-                    userFromUsername.joined = dateFormatter(userFromUsername.date_added);
-                }
-                setUser(userFromUsername) 
-             })();
-        }
+        
+        (async()=> {
+            const userFromUsername = await getUser(username);
+            if(userFromUsername){
+                userFromUsername.joined = dateFormatter(userFromUsername.date_added);
+            }
+            setUser(userFromUsername) 
+        })();
+        
     },[username])
-    // const user = getUser(username);
-    console.log('USER in state:',user);
     const userVal = user;
     if(user === null){ 
         return(<div>

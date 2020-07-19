@@ -1,0 +1,22 @@
+[
+    {
+        "value": "everything",
+        "label": "Everything"
+    },
+    {
+        "value": "apartment",
+        "label": "Apartment"
+    },
+    {
+        "value": "house",
+        "label": "House"
+    },
+    {
+        "value": "studio",
+        "label": "Studio"
+    },
+    {
+        "value": "townhouse",
+        "label": "Townhouse"
+    }
+]

@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentPaper from './ContentPaper';
-import {makeStyles, Box, Avatar, Typography, Button, IconButton} from '@material-ui/core';
+import {makeStyles, Box, Avatar, Typography, Button, CircularProgress} from '@material-ui/core';
 import {format} from 'date-fns'
 import dateFormatter from '../utils/dateFormatter';
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     padding: theme.spacing(2),
-    display: 'flex',
   },
   settingsButton: {
     position: 'absolute'
@@ -23,7 +22,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
-    width: '100%'
+    width: '100%',
+    minHeight: 250,
+  },
+  progress: {
+    alignSelf: 'center',
+    justifySelf: 'center',
+    margin: theme.spacing(10),
   },
   primaryInfoWrapper: { 
     display: 'flex', justifyContent: 'space-between', width: '100%'
@@ -66,79 +71,85 @@ export default function UserProfileInfo({user, profile, username}){
             className={classes.profilePicture}
           />
           <Box className={classes.mainProfileContent}>
-            <Box className={classes.primaryInfoWrapper}>
-              <Box>
-                <Typography
-                  variant="p"
-                  component="p"
-                  color="textSecondary"
-                  className={classes.joinDate}
-                >
-                  Joined {user.joined}
-                </Typography>
-                <Typography
-                  variant="h3"
-                  component="h1"
-                  className={classes.title}
-                >
-                  {user.first_name} {user.last_name}
-                </Typography>
-              </Box>
-              { profile ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  href={"/profile/settings"}
-                >
-                  <SettingsIcon style={{paddingRight: '.25em'}}/> Settings 
-                </Button>
-              ) : (
-                <ContactModal userToContact={user} username={username}/> 
-              )}
-            </Box>
-
-            <Box className={classes.secondaryInfoWrapper}>
-              {user.location && user.location.description && (
-                <Typography
-                  variant="p"
-                  component="p"
-                  color="textPrimary"
-                  className={classes.secondaryInfo}
-                >
-                  <span className={classes.bold}>Location:</span>{" "}
-                  {user.location.description}
-                </Typography>
-              )}
-              {user.languages && user.languages.length && (
-                <Typography
-                  variant="p"
-                  component="p"
-                  color="textPrimary"
-                  className={classes.secondaryInfo}
-                >
-                  <span className={classes.bold}>Languages:</span>{" "}
-                  {user.languages.join(", ")}
-                </Typography>
-              )}
-              {user.bio && (
-                <Typography
-                  variant="p"
-                  component="p"
-                  color="textPrimary"
-                  className={classes.secondaryInfo}
-                >
-                  <span
-                    className={classes.bold}
-                    style={{ display: "block", marginBottom: ".25em" }}
+            {!user.username ? ( 
+              <CircularProgress className={classes.progress} size={100}/>
+            ):(  
+              <>
+              <Box className={classes.primaryInfoWrapper}>
+                <Box>
+                  <Typography
+                    variant="p"
+                    component="p"
+                    color="textSecondary"
+                    className={classes.joinDate}
                   >
-                    About {user.first_name}:
-                  </span>
-                  {user.bio}
-                </Typography>
-              )}
-            </Box>
-          </Box>
+                    Joined {user.joined}
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                    component="h1"
+                    className={classes.title}
+                  >
+                    {user.first_name} {user.last_name}
+                  </Typography>
+                </Box>
+                { profile ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    href={"/profile/settings"}
+                  >
+                    <SettingsIcon style={{paddingRight: '.25em'}}/> Settings 
+                  </Button>
+                ) : (
+                  <ContactModal userToContact={user} username={username}/> 
+                )}
+              </Box>
+
+              <Box className={classes.secondaryInfoWrapper}>
+                {user.location && user.location.description && (
+                  <Typography
+                    variant="p"
+                    component="p"
+                    color="textPrimary"
+                    className={classes.secondaryInfo}
+                  >
+                    <span className={classes.bold}>Location:</span>{" "}
+                    {user.location.description}
+                  </Typography>
+                )}
+                {user.languages && user.languages.length && (
+                  <Typography
+                    variant="p"
+                    component="p"
+                    color="textPrimary"
+                    className={classes.secondaryInfo}
+                  >
+                    <span className={classes.bold}>Languages:</span>{" "}
+                    {user.languages.join(", ")}
+                  </Typography>
+                )}
+                {user.bio && (
+                  <Typography
+                    variant="p"
+                    component="p"
+                    color="textPrimary"
+                    className={classes.secondaryInfo}
+                  >
+                    <span
+                      className={classes.bold}
+                      style={{ display: "block", marginBottom: ".25em" }}
+                    >
+                      About {user.first_name}:
+                    </span>
+                    {user.bio}
+                  </Typography>
+                )}
+              </Box>
+              </>
+            )}
+          </Box> 
         </Box>
       </ContentPaper>
     );

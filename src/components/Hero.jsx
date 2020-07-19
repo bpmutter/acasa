@@ -42,7 +42,7 @@ const Hero = () => {
               component="h1"
               style={{ fontFamily: "inherit" }}
             >
-              Short & medium term furnished rentals
+              Medium-term furnished rentals
             </Typography>
             <p>
               For when it's longer than a vacation but you don't want to sign the lease.

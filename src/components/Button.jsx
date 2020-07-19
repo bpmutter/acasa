@@ -4,7 +4,9 @@ import {Button, makeStyles} from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     button: { 
         fontFamily: theme.typography.special,
-
+        padding: theme.spacing(2),
+        maxHeight: 50,
+        textAlign: 'center'
     }
 }))
 
@@ -16,7 +18,7 @@ export default function ThemeButton({children, ...props}){
         className={classes.button}
         variant="contained"
         color="primary"
-        component="span"
+        component="div"
       >
         {children}
       </Button>

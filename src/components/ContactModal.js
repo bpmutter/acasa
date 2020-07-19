@@ -73,7 +73,7 @@ export default function ContactModal({userToContact, username}){
 
   return (
     <>
-      <ThemeButton onClick={handleOpen}>Contact {user.first_name}</ThemeButton>
+      <ThemeButton onClick={handleOpen} style={{padding: '.5em'}}>Contact {user.first_name}</ThemeButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -94,7 +94,13 @@ export default function ContactModal({userToContact, username}){
             </Typography>
           </div>
           {!user.contact.email && (
-            <div style={{display: 'flex', justifyContent: 'center', margin: '2em'}}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "2em",
+              }}
+            >
               <CircularProgress color="secondary" />
             </div>
           )}
@@ -108,7 +114,10 @@ export default function ContactModal({userToContact, username}){
                     </ListItemIcon>
                     <ListItemText
                       primary={
-                        <Link href={`mailto:${user.contact.email}`}>
+                        <Link
+                          href={`mailto:${user.contact.email}`}
+                          target="_blank"
+                        >
                           {user.contact.email}
                         </Link>
                       }
