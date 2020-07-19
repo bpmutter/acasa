@@ -43,23 +43,23 @@ export default function postListing(listing){
 
         try{ 
             const res = await db.collection('listings').doc(id).set(newListing);
-            return {
+            return ({
               message: {
                 type: "success",
                 content: "Your Listing has been successfully posted.",
               },
               redirectId: id
-            };
+            });
 
         } catch(err){
             console.error(err);
-            return {
+            return ({
               message: {
                 type: "error",
                 content:
                   "There was an error posting your listing. Please try again later.",
               },
-            };
+            });
         }
     }
   });

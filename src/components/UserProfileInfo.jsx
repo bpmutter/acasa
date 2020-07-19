@@ -4,7 +4,7 @@ import {makeStyles, Box, Avatar, Typography, Button, IconButton} from '@material
 import {format} from 'date-fns'
 import dateFormatter from '../utils/dateFormatter';
 import SettingsIcon from "@material-ui/icons/Settings";
-
+import ContactModal from './ContactModal';
 const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserProfileInfo({user, profile}){
+export default function UserProfileInfo({user, profile, username}){
     const classes = useStyles();
 
     return (
@@ -84,14 +84,18 @@ export default function UserProfileInfo({user, profile}){
                   {user.first_name} {user.last_name}
                 </Typography>
               </Box>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                href={profile ? "/profile/settings" : "#"}
-              >
-                <>{profile ? <> <SettingsIcon style={{paddingRight: '.25em'}}/> Settings </>: 'Contact Me!'}</>
-              </Button>
+              { profile ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  href={"/profile/settings"}
+                >
+                  <SettingsIcon style={{paddingRight: '.25em'}}/> Settings 
+                </Button>
+              ) : (
+                <ContactModal userToContact={user} username={username}/> 
+              )}
             </Box>
 
             <Box className={classes.secondaryInfoWrapper}>

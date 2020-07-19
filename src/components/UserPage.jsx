@@ -11,16 +11,24 @@ const listings = data.listings;
 
 export default function UserPage(){
     //do stuff
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(
+        {
+      first_name: "",
+      languages: [],
+      contact: {},
+      uid: ''
+    });
     const { username } = useParams();
     useEffect(()=>{
-       (async()=> {
-           const userFromUsername = await getUser(username);
-           if(userFromUsername){
-               userFromUsername.joined = dateFormatter(userFromUsername.date_added);
-           }
-           setUser(userFromUsername) 
-        })();
+        if(user.uid){
+            (async()=> {
+                const userFromUsername = await getUser(username);
+                if(userFromUsername){
+                    userFromUsername.joined = dateFormatter(userFromUsername.date_added);
+                }
+                setUser(userFromUsername) 
+             })();
+        }
     },[username])
     // const user = getUser(username);
     console.log('USER in state:',user);
@@ -35,6 +43,7 @@ export default function UserPage(){
         <MainContentWrapper>
             <UserProfileInfo
                 user={userVal}
+                username={username}
             />
             <UserListings user={userVal} listings={listings}/>
 

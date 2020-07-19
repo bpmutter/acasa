@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
     backgroundColor: theme.palette.background.default,
+    position: 'relative',
+    zIndex: -1,
   },
   heroImg: {
     justifySelf: "center",

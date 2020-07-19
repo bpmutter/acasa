@@ -1,14 +1,28 @@
 import React from 'react';
-import UploadOneImage from './UploadOneImage';
-import ThemeButton from './Button'
+
 import MainContentWrapper from './MainContentWrapper';
 import ContentPaper from './ContentPaper';
-
+import ContactModal from './ContactModal';
 export default function Testing(){
+
+    const demoUser = {
+      first_name: "Ben",
+      last_name: "Perlmutter",
+      profile_picture:
+        "https://lh3.googleusercontent.com/a-/AOh14Gg9WbJE0awcv_EPhlqHyIMSTqLbvbSdjzmXOunEcQ",
+      contact: {
+        email: "ben@perlmutter.io",
+        whatsapp: "+1 (914) 589-5304",
+        phone: "+1 (914) 589-5304",
+        website: "ben.perlmutter.io",
+      },
+    };
     return (
       <MainContentWrapper>
         <ContentPaper style={{ padding: "3em", width: 800, minHeight: 500 }}>
-          <UploadOneImage />
+          
+          <ContactModal userToContact={demoUser}/>
+
         </ContentPaper>
       </MainContentWrapper>
     );
