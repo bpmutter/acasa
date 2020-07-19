@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Divider,
+  CircularProgress,
 } from "@material-ui/core";
 import Snackbar from './Snackbar';
 import firebase from 'firebase';
@@ -19,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main
+  },
+  progressWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
   },
   form: {
     padding: theme.spacing(1),
@@ -153,7 +160,12 @@ export default function EditProfile(){
           >
             Edit Account Info
           </Typography>
-          {user.uid && (
+          {!user.uid ?(  
+            <div className={classes.progressWrapper}>
+              <CircularProgress size={100}/> 
+            </div>
+          
+          ): (
             <form className={classes.form} noValidate onSubmit={updateProfile}>
               <div className={classes.primaryInfo}>
                 <div>
