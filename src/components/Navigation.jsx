@@ -14,6 +14,8 @@ import LogInModal from "./LogInModal";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    position: "relative",
+    zIndex: 1,
   },
   appBar: {
     backgroundColor: theme.palette.secondary.main,
@@ -34,13 +36,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
   rightNav: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
-  profileMenu: { 
-    fontSize: '1.5rem'
-  }
+  profileMenu: {
+    fontSize: "1.5rem",
+  },
 }));
 
 export default function MenuAppBar() {
