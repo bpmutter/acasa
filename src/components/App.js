@@ -15,8 +15,8 @@ function App() {
   return (
     <>
       <div style={{ minHeight: "92vh" }}>
-        <Navigation />
         <Router>
+        <Navigation />
           <Switch>
             <Route path="/" exact>
               <Homepage />

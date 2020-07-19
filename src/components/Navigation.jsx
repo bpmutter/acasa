@@ -11,6 +11,10 @@ import SignUpModal from './SignUpModal';
 import ProfileMenu from './ProfileMenu';
 import appContext from './Context';
 import LogInModal from "./LogInModal";
+import MobileNavMenu from './MobileNavMenu';
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -47,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { loggedIn } = useContext(appContext)
 
@@ -68,6 +74,10 @@ export default function MenuAppBar() {
           </Typography>
 
           <div className={classes.rightNav}>
+            {smallScreen ?(
+              <MobileNavMenu/>
+             ):(<>
+
             <Button
               variant="contained"
               color="primary"
@@ -76,7 +86,6 @@ export default function MenuAppBar() {
             >
               Discover Homes
             </Button>
-
             {loggedIn ? (
               <>
                 <Button
@@ -95,6 +104,7 @@ export default function MenuAppBar() {
                 <LogInModal />
               </>
             )}
+            </>)}          
           </div>
         </Toolbar>
       </AppBar>

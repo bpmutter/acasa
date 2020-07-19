@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.white,
     [theme.breakpoints.down('sm')]: {
       backgroundColor: 'rgba(255,255,255,.7)',
-      width: '100%'
+      width: '100%',
+      paddingBottom: theme.spacing(5),
     }
   },
   title: {
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(3),
+      width: 150,
+    },
   },
 }));
 const SearchBar = () => {

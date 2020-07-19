@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.dark,
     backgroundColor: theme.palette.background.default,
     [theme.breakpoints.down("md")]: {
-      paddingTop: theme.spacing(15),
+      paddingTop: theme.spacing(20),
     },
     [theme.breakpoints.down("sm")]: {
       display: "flex",
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
       paddingBottom: theme.spacing(6),
+      width: '100%'
     },
   },
   heroImg: {
@@ -33,10 +34,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
-    // zIndex: -1
+    [theme.breakpoints.down("md")]: {
+      marginBottom: theme.spacing(5),
+      height: 250,
+      width: 'auto'
+    },
+
     [theme.breakpoints.down("sm")]: {
-      width: '100%',
-      paddingBottom: theme.spacing(10),
+      width: 300,
+      // paddingBottom: theme.spacing(10),
     },
   },
   button: {
