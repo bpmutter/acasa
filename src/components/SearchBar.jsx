@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
     padding: theme.spacing(2),
-    width: '65%',
+    width: "65%",
     backgroundColor: theme.palette.background.white,
-    [theme.breakpoints.down('sm')]: {
-      backgroundColor: 'rgba(255,255,255,.7)',
-      width: '100%',
+    [theme.breakpoints.down("sm")]: {
+      backgroundColor: "rgba(255,255,255,.7)",
+      width: "100%",
       paddingBottom: theme.spacing(5),
-    }
+    },
   },
   title: {
     fontFamily: theme.typography.special,
@@ -30,12 +30,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    width: '100%'
+    justifyContent: "space-evenly",
+    flexWrap: "wrap",
+    width: "100%",
+  },
+  dateSelect: {
+    [theme.breakpoints.down("xs")]: {
+      paddingTop: theme.spacing(1.5),
+    },
   },
   hometype: {
-    marginLeft: '1em',
+    marginLeft: "1em",
   },
   searchButton: {
     display: "inline-flex",
@@ -43,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down("md")]: {
       marginTop: theme.spacing(3),
       width: 150,
     },
@@ -72,8 +77,15 @@ const SearchBar = () => {
           <IconButton>
             <MyLocationIcon />
           </IconButton>
-          <GoogleMapsSearchBox formSetter={setLocation} required/>
-          <DateSelector labelText="Start Date" formSetter={setStartDate} defaultValue={todayStr} required/>
+          <GoogleMapsSearchBox formSetter={setLocation} required />
+          <span className={classes.dateSelect}>
+            <DateSelector
+              labelText="Start Date"
+              formSetter={setStartDate}
+              defaultValue={todayStr}
+              required
+            />
+          </span>
           <SelectOption
             labelText="Home Type"
             formSetter={setHomeType}

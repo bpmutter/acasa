@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       flexDirection: "column-reverse",
       paddingTop: theme.spacing(12),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0),
       paddingBottom: theme.spacing(6),
       width: '100%'
     },
@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
       // paddingBottom: theme.spacing(10),
     },
   },
+  heroText: {
+    padding: theme.spacing(1.5)
+  },
   button: {
     fontFamily: theme.typography.special,
   },
@@ -56,7 +59,7 @@ const Hero = () => {
     return (
       <>
         <Box className={classes.hero}>
-          <Box>
+          <Box className={classes.heroText}>
             <Typography
               variant="h5"
               component="p"
