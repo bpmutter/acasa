@@ -1,7 +1,7 @@
 import db from "../config/firestoreDb";
 import firebase from 'firebase';
 
-export default async function login(userId){
+export default async function login(){
     const uid = firebase.auth().currentUser.uid;
     
     const userRef = db.collection('users').doc(uid);
@@ -9,6 +9,7 @@ export default async function login(userId){
     if (!doc.exists) {
         console.log('No such document!');
     } else {
-        return doc.data();
+        const docData = doc.data()
+        return docData;
     }
 }

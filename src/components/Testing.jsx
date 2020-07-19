@@ -1,10 +1,22 @@
 import React from 'react';
-
+import {makeStyles} from '@material-ui/core';
 import MainContentWrapper from './MainContentWrapper';
 import ContentPaper from './ContentPaper';
 import ContactModal from './ContactModal';
-export default function Testing(){
 
+const useStyles = makeStyles((theme) => ({
+  light: {
+    backgroundColor: theme.palette.primary.light,
+  },
+  main: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  dark: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+}));
+export default function Testing(){
+  const classes = useStyles();
     const demoUser = {
       first_name: "Ben",
       last_name: "Perlmutter",
@@ -22,7 +34,7 @@ export default function Testing(){
         <ContentPaper style={{ padding: "3em", width: 800, minHeight: 500 }}>
           
           <ContactModal userToContact={demoUser}/>
-
+  
         </ContentPaper>
       </MainContentWrapper>
     );

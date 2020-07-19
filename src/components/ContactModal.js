@@ -63,13 +63,13 @@ export default function ContactModal({userToContact, username}){
   };
 
   useEffect(()=>{
-    if(user.contact.email === undefined){
+    if(!user.contact.email){
         (async ()=>{
             const userInfo = await getUserByUserName(username);
             setUser(userInfo);
         })()
     }
-  },[user.contact, user.uid])
+  },[user.contact, username])
 
   return (
     <>

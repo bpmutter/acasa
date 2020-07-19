@@ -8,15 +8,36 @@ const useStyles = makeStyles((theme) => ({
   hero: {
     display: "grid",
     gridTemplateColumns: "1.25fr 1fr",
-    padding: "2em 5em 0",
+    padding: "6em 5em 0",
     alignItems: "center",
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
     backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down("md")]: {
+      paddingTop: theme.spacing(15),
+    },
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column-reverse",
+      paddingTop: theme.spacing(12),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      paddingBottom: theme.spacing(6),
+    },
   },
   heroImg: {
-    justifySelf: "center",
-    maxWidth: 500,
+    // justifySelf: "center",
+    width: 500,
+    opacity: 0.8,
+    height: 300,
+    backgroundPosition: "center",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    // zIndex: -1
+    [theme.breakpoints.down("sm")]: {
+      width: '100%',
+      paddingBottom: theme.spacing(10),
+    },
   },
   button: {
     fontFamily: theme.typography.special,
@@ -56,13 +77,13 @@ const Hero = () => {
               Get Started
             </Button>
           </Box>
-          <Box>
-            <img
+          <div className={classes.heroImg} style={{backgroundImage: `url(${womanMountainHome})`}}>
+            {/* <img
               className={classes.heroImg}
               src={womanMountainHome}
               alt="vector art of woman with mountain"
-            />
-          </Box>
+            /> */}
+          </div>
         </Box>
         <Divider />
       </>

@@ -7,11 +7,15 @@ import SearchBar from './SearchBar';
 import MainContentWrapper from './MainContentWrapper';
 
 const useStyles = makeStyles((theme) => ({
-  main: { 
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems:'center',
+  searchWrapper: { 
+    position: 'absolute',
+    zIndex: 1,
     width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    left: '50%',
+    transform: 'translate(-50%, 0)'
   }
 }));
 
@@ -20,9 +24,11 @@ const Homepage = () => {
 
     return (
       <>
+        <div className={classes.searchWrapper}>
+          <SearchBar />
+        </div>
         <Hero />
         <MainContentWrapper>
-          <SearchBar />
           <ForUsers />
         </MainContentWrapper>
       </>

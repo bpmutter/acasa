@@ -160,12 +160,11 @@ export default function EditProfile(){
           >
             Edit Account Info
           </Typography>
-          {!user.uid ?(  
+          {!user.uid ? (
             <div className={classes.progressWrapper}>
-              <CircularProgress size={100}/> 
+              <CircularProgress size={100} />
             </div>
-          
-          ): (
+          ) : (
             <form className={classes.form} noValidate onSubmit={updateProfile}>
               <div className={classes.primaryInfo}>
                 <div>
@@ -302,26 +301,26 @@ export default function EditProfile(){
                   />
                 </div>
                 <div>
-                  {user.location.description && (
-                    <GoogleMapsAutoComplete
-                      variant="standard"
-                      label="Location"
-                      name="location"
-                      inputVal={location.description}
-                      defaultValue={
-                        user.location.description
-                          ? user.location.description
-                          : null
-                      }
-                      formSetter={setLocation}
-                      className={classes.textInput}
-                      helperText={
-                        user.location.description
-                          ? `Your current location is: ${user.location.description}`
-                          : "You haven't set a location yet"
-                      }
-                    />
-                  )}
+                  {/* {user.location.description && ( */}
+                  <GoogleMapsAutoComplete
+                    variant="standard"
+                    label="Location"
+                    name="location"
+                    inputVal={location.description}
+                    defaultValue={
+                      user.location && user.location.description
+                        ? user.location.description
+                        : null
+                    }
+                    formSetter={setLocation}
+                    className={classes.textInput}
+                    helperText={
+                      user.location &&  user.location.description
+                        ? `Your current location is: ${user.location.description}`
+                        : "You haven't set a location yet"
+                    }
+                  />
+                  {/* )} */}
                 </div>
               </div>
               <div className={classes.buttonWrapper}>

@@ -7,7 +7,7 @@ import HotelIcon from "@material-ui/icons/Hotel";
 import GroupIcon from "@material-ui/icons/Group";
 import BathtubIcon from "@material-ui/icons/Bathtub";
 import WifiIcon from "@material-ui/icons/Wifi";
-
+import ContactModal from './ContactModal'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.dark,
     display: "flex",
     justifyContent: "space-between",
+    paddingRight: theme.spacing(1.5)
   },
   price: {
     minWidth: 150,
@@ -109,9 +110,7 @@ export default function ListingCard({listing}){
             <Typography variant="p" component="p" color="textSecondary">
               {overview}
               {" • "}
-              {listing.location.neighborhood
-                ? `${listing.location.neighborhood}, ${listing.location.city}, ${listing.location.country}`
-                : `${listing.location.city}, ${listing.location.country}`}
+              {listing.location.description}
             </Typography>
             <IconButton
               className={classes.heartButton}
@@ -121,9 +120,9 @@ export default function ListingCard({listing}){
             </IconButton>
           </Box>
           <Typography variant="h4" component="h3" className={classes.title}>
-            <Link>{listing.title}</Link>
+            <Link href={`/listings/${listing.id}`}>{listing.title}</Link>
             <Typography variant="h4" component="p" className={classes.price}>
-              {`$ ${listing.price_in_dollars}/mo`}
+              {`$${listing.price}/mo`}
             </Typography>
           </Typography>
           <Box className={classes.chips}>
@@ -153,7 +152,7 @@ export default function ListingCard({listing}){
                 className={classes.chip}
               />
             )}
-            {listing.lgbtq_friendly && (
+            {listing.lgbtq && (
               <Chip label="🏳️‍🌈 LGBTQ+ friendly" className={classes.chip} />
             )}
           </Box>
@@ -172,14 +171,8 @@ export default function ListingCard({listing}){
                 {`${listing.owner.first_name} ${listing.owner.last_name}`}
               </Link>
             </Box>
-            <Button
-            //   className={classes.button}
-              onClick={triggerModal}
-            //   variant="contained"
-            //   color="primary"
-            >
-              Contact {listing.owner.first_name} about this property
-            </Button>
+            {console.log('LISTING OWNER INFO', listing.owner.username)}
+            <ContactModal username={listing.owner.username}/>
           </Box>
         </Box>
       </Paper>

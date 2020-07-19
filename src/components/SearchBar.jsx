@@ -12,10 +12,13 @@ import format from "date-fns/format";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     width: '65%',
-    
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.white,
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: 'rgba(255,255,255,.7)',
+      width: '100%'
+    }
   },
   title: {
     fontFamily: theme.typography.special,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import App from './App';
 import {
   ThemeProvider,
@@ -15,7 +15,7 @@ import loginOnPageLoadFirebase from '../auth/loginOnPageLoad';
 const AppContext = () => {
     const loggedInFromLS = JSON.parse(localStorage.getItem('loggedIn'))
     const [loggedIn, setLoggedIn] = useState(loggedInFromLS);
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({username: ""})
     const [errors, setErrors] = useState([]);
 
     const signUp = async (authResult) => {
@@ -37,14 +37,14 @@ const AppContext = () => {
       setLoggedIn(false);
       localStorage.setItem('loggedIn', false)
     }
-    if(loggedIn){
-      loginOnPageLoadFirebase();
-      // firebase.auth().onAuthStateChanged( async function(user) {
-      //   if (user) {      
-      //     await login()
-      //   } 
-      // });
+    useEffect( ()=>{
+      if(loggedIn){
+      (async ()=> {
+        await loginOnPageLoadFirebase(setUser);
+      })()
     }
+      
+    },[user.username]);   
 
     const context = { user, loggedIn, logIn, logOut, signUp };
 

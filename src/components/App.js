@@ -9,6 +9,7 @@ import Profile from './Profile';
 import ProfileSettings from "./ProfileSettings";
 import CreateListing from './CreateListing';
 import Testing from './Testing';
+import FourOhFour from './FourOhFour';
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
             </Route>
             <Route path="/testing"><Testing/></Route>
             <Route path="*">
-              <p>404...aww snapp</p>
+              <FourOhFour/>
             </Route>
           </Switch>
         </Router>

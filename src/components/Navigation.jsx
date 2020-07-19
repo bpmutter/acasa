@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     position: "relative",
-    zIndex: 1,
+    zIndex: 3,
   },
   appBar: {
     backgroundColor: theme.palette.secondary.main,
@@ -50,7 +50,6 @@ export default function MenuAppBar() {
 
   const { loggedIn } = useContext(appContext)
 
-  console.log(loggedIn)
   return (
     <div className={classes.root}>
       <AppBar position="static">
