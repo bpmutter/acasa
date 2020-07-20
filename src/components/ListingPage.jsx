@@ -17,6 +17,7 @@ import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import PetsIcon from "@material-ui/icons/Pets";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import GavelIcon from "@material-ui/icons/Gavel";
+import ListingMap from './ListingMap';
 
 const useStyles = makeStyles((theme) => ({
   chips: {
@@ -181,6 +182,9 @@ export default function ListingPage(){
                       {listing.location.location_description}
                     </Typography>
                   )}
+                  <div>
+                      <ListingMap placeName="37 Ludlow Dr, Chappaqua, NY 10514"/>
+                  </div>
                 </div>
               </ContentPaper>
             </section>
