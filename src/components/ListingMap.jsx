@@ -7,6 +7,7 @@ import {
 } from "react-google-maps";
 import geocoder from '../google-maps/geocoder';
 import mapTheme from '../map-styling.json'
+import { CircularProgress } from '@material-ui/core';
 
 const MapWithAMarker = withScriptjs(
   withGoogleMap(({ lat, lng }) => (
@@ -20,7 +21,7 @@ const MapWithAMarker = withScriptjs(
   ))
 );
 
-export default function ListingMap({placeName, latLng}){
+export default function ListingMap({placeName, latLng, ...props}){
     const [coords, setCoords] = useState([]);
 
     const getCoords = useCallback(async () => {
@@ -45,14 +46,19 @@ export default function ListingMap({placeName, latLng}){
     
     return (
       <>
-        {coords.length && (
+        {!coords.length ?(
+            <div style={{width: '100%', height: 400, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <CircularProgress size={100}/>
+            </div>
+        ):(
           <MapWithAMarker
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHvxwJqoYbeiJTby6ijIkR74Bia1bJ0s&v=3.exp&libraries=geometry,drawing,places"
             loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `400px` }} />}
+            containerElement={<div style={{ height: 400 }} />}
             mapElement={<div style={{ height: `100%` }} />}
             lat={coords[0]}
             lng={coords[1]}
+            {...props}
           />
         )}{" "}
       </>
