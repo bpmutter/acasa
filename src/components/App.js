@@ -10,6 +10,7 @@ import ProfileSettings from "./ProfileSettings";
 import CreateListing from './CreateListing';
 import Testing from './Testing';
 import FourOhFour from './FourOhFour';
+import ListingPage from './ListingPage';
 
 function App() {
   return (
@@ -21,7 +22,6 @@ function App() {
             <Route path="/" exact>
               <Homepage />
             </Route>
-
             <ProtectedRoute exact path="/profile">
               <Profile />
             </ProtectedRoute>
@@ -34,7 +34,16 @@ function App() {
             <Route path="/users/:username">
               <UserPage />
             </Route>
-            <Route path="/testing"><Testing/></Route>
+            <Route path="/testing">
+              <Switch>
+                <Route path="/testing/listing">
+                  <ListingPage/>
+                </Route>
+                <Route path="/testing/*">
+                  <Testing/>
+                </Route>
+              </Switch>
+            </Route>
             <Route path="*">
               <FourOhFour/>
             </Route>
