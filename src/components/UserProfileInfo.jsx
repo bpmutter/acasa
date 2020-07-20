@@ -9,29 +9,40 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: "flex",
     padding: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
   settingsButton: {
-    position: 'absolute'
+    position: "absolute",
   },
   profilePicture: {
     width: 325,
     height: 325,
+    [theme.breakpoints.down("sm")]: {
+      width: 300,
+      height: 300,
+    },
   },
   mainProfileContent: {
     padding: theme.spacing(2),
     paddingLeft: theme.spacing(4),
     display: "flex",
     flexDirection: "column",
-    width: '100%',
+    width: "100%",
     minHeight: 250,
   },
   progress: {
-    alignSelf: 'center',
-    justifySelf: 'center',
+    alignSelf: "center",
+    justifySelf: "center",
     margin: theme.spacing(10),
   },
-  primaryInfoWrapper: { 
-    display: 'flex', justifyContent: 'space-between', width: '100%'
+  primaryInfoWrapper: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
   },
   title: {
     fontFamily: theme.typography.special,
@@ -40,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   },
   joinDate: {
     fontSize: "1.25rem",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: theme.spacing(1.5),
+    },
   },
   bold: {
     fontWeight: "bold",
@@ -50,11 +64,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     fontFamily: theme.typography.special,
-    display: 'inline-flex',
-    alignItems: 'center',
-    position: 'static',
+    display: "inline-flex",
+    alignItems: "center",
+    position: "static",
     height: 40,
-
+    minWidth: 80,
+    padding: theme.spacing(2)
   },
 }));
 

@@ -13,10 +13,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     minHeight: 250,
-    marginLeft: theme.spacing(10),
-    marginRight: theme.spacing(10),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
   img: {
     backgroundPosition: "center",
@@ -29,32 +30,59 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 400,
     display: "inline-block",
     borderRight: `1px solid #fafafa`,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      minWidth: "100%",
+    },
   },
   mainContent: {
     padding: theme.spacing(2),
     paddingTop: theme.spacing(4),
-    width: "100%",
+    width: "95%",
     minHeight: 225,
+    [theme.breakpoints.down("sm")]: { 
+      paddingTop: theme.spacing(2),
+    },
   },
   topContent: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: 'column-reverse',
+      alignItems: 'flex-start'
+    },
   },
   heartButton: {
     color: pink[500],
+    [theme.breakpoints.down("sm")]: {
+      margin: 0,
+      marginRight: theme.spacing(1),
+
+      alignSelf: 'flex-start'
+    },
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
     display: "flex",
     justifyContent: "space-between",
-    paddingRight: theme.spacing(1.5)
+    paddingRight: theme.spacing(1.5),
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+      // alignItems: 'flex-start',
+    },
   },
   price: {
     minWidth: 150,
     textAlign: "center",
     marginRight: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      alignSelf: "flex-end",
+      marginRight: theme.spacing(.5),
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+    },
   },
   chips: {
     marginTop: theme.spacing(1),
@@ -64,27 +92,36 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.light,
     margin: theme.spacing(1),
     padding: theme.spacing(0.5),
+    [theme.breakpoints.down("xs")]: {
+      margin: theme.spacing(0.25),
+    },
   },
   owner: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: 'center',
     width: "100%",
     marginTop: theme.spacing(4),
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap",
+    },
   },
   ownerInfo: {
     display: "inline-flex",
     justifyContent: "left",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      flexGrow: 1,
+      paddingRight: theme.spacing(2.5),
+      paddingBottom: theme.spacing(1.5)
+    },
   },
-  contactOwner: {
-    display: "inline-block",
-  },
-  button: {
-    fontFamily: theme.typography.special,
-    display: "inline-block",
-    position: "static",
-    height: 40,
+  contactButton: {
+    marginTop: theme.spacing(2),
+    alignSelf: "center",
+    justifySelf: 'center',
+    // paddingRight: theme.spacing(3),
   },
 }));
 
@@ -156,24 +193,26 @@ export default function ListingCard({listing}){
               <Chip label="🏳️‍🌈 LGBTQ+ friendly" className={classes.chip} />
             )}
           </Box>
-          <Box className={classes.owner}>
-            <Box className={classes.ownerInfo}>
+          <div className={classes.owner}>
+            <div className={classes.ownerInfo}>
               <Avatar
                 src={listing.owner.profile_picture}
                 alt={`${listing.owner.first_name} ${listing.owner.last_name}`}
-                style={{ marginRight: 10 }}
+                style={{ marginRight: 5, display: "inline-block" }}
               />
-              Listed by{" "}
+              Listing by{" "}
               <Link
                 href={`/users/${listing.owner.username}`}
                 style={{ marginLeft: 5 }}
               >
                 {`${listing.owner.first_name} ${listing.owner.last_name}`}
               </Link>
-            </Box>
-            {console.log('LISTING OWNER INFO', listing.owner.username)}
-            <ContactModal username={listing.owner.username}/>
-          </Box>
+            </div>
+            <ContactModal
+              username={listing.owner.username}
+              className={classes.contactButton}
+            />
+          </div>
         </Box>
       </Paper>
     );
