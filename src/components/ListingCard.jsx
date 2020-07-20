@@ -76,9 +76,10 @@ const useStyles = makeStyles((theme) => ({
   price: {
     minWidth: 150,
     textAlign: "center",
-    marginRight: theme.spacing(2),
+    marginLeft: theme.spacing(2),
     [theme.breakpoints.down("sm")]: {
       alignSelf: "flex-end",
+      textAlign: 'right',
       marginRight: theme.spacing(.5),
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
