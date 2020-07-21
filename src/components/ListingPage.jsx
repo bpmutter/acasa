@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MainContentWrapper from './MainContentWrapper';
 import ContentPaper from './ContentPaper';
 import ListingHeader from './ListingHeader';
 import ListingPhotos from './ListingPhotos';
 import ContactModal from './ContactModal';
-import {Paper, Box, makeStyles, Typography, IconButton, Link, Chip, 
-    Avatar, Button, Divider, List, ListItem, 
+import {Box, makeStyles, Typography, Link, Chip, 
+    Avatar, Divider, List, ListItem, 
     ListItemIcon, ListItemText} from '@material-ui/core';
 import dateFormatter from '../utils/dateFormatter';
+import {useParams} from 'react-router-dom';
 import HotelIcon from "@material-ui/icons/Hotel";
 import GroupIcon from "@material-ui/icons/Group";
 import BathtubIcon from "@material-ui/icons/Bathtub";
@@ -131,9 +132,18 @@ export default function ListingPage(){
       type: "House",
       price: 500,
     };
+    //TODO: once we get the test data out of here, change name of state variable to just 'listing'
+    const [thisListing, setListing] = useState({
+      owner: {},
+      additional_imgs: [],
+      location: { geometry: {location: {}}},
+      payment_methods: [],
+    })
     const classes = useStyles();
+    const {id} = useParams();
     const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
-    const currentTime = new Date()
+    const currentTime = new Date();
+
 
     return (
       <>

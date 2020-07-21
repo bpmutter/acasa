@@ -34,6 +34,9 @@ function App() {
             <Route path="/users/:username">
               <UserPage />
             </Route>
+            <Route path="/listings/:id">
+              <ListingPage/>
+            </Route>
             <Route path="/testing">
               <Switch>
                 <Route exact path="/testing">
