@@ -17,7 +17,7 @@ function App() {
     <>
       <div style={{ minHeight: "92vh" }}>
         <Router>
-        <Navigation />
+          <Navigation />
           <Switch>
             <Route path="/" exact>
               <Homepage />
@@ -29,23 +29,23 @@ function App() {
               <ProfileSettings />
             </ProtectedRoute>
             <ProtectedRoute path="/create-listing">
-              <CreateListing/>
+              <CreateListing />
             </ProtectedRoute>
             <Route path="/users/:username">
               <UserPage />
             </Route>
             <Route path="/testing">
               <Switch>
-                <Route path="/testing/listing">
-                  <ListingPage/>
+                <Route exact path="/testing">
+                  <Testing />
                 </Route>
-                <Route path="/testing/*">
-                  <Testing/>
+                <Route path="/testing/listing">
+                  <ListingPage />
                 </Route>
               </Switch>
             </Route>
             <Route path="*">
-              <FourOhFour/>
+              <FourOhFour />
             </Route>
           </Switch>
         </Router>
