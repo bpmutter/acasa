@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Modal} from '@material-ui/core';
+import { Paper, Modal, Fade} from '@material-ui/core';
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import ContentPaper from "./ContentPaper";
@@ -70,12 +70,12 @@ function SingleLineGridList({imgs, listingTitle}) {
       <GridList className={classes.gridList} cols={3.5}>
         {imgs.map((src, i) => (
           <GridListTile key={src}>
-            <img src={src} 
-              alt={`${listingTitle} img ${i + 1}`} 
+            <img
+              src={src}
+              alt={`${listingTitle} img ${i + 1}`}
               onClick={handleOpen}
               className={classes.gridImg}
             />
-             
           </GridListTile>
         ))}
       </GridList>
@@ -84,15 +84,18 @@ function SingleLineGridList({imgs, listingTitle}) {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        TransitionComponent={Fade}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <div className={classes.modalFrame}>
-          <img src={modalSrc} alt={modalAlt} className={classes.imgModal}></img>
-        </div>
+        <Fade in={open}>
+            <div className={classes.modalFrame}>
+            <img src={modalSrc} alt={modalAlt} className={classes.imgModal}></img>
+            </div>
+        </Fade>
       </Modal>
     </div>
   );

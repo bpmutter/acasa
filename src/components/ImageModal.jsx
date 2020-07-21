@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, makeStyles} from '@material-ui/core';
+import {Modal, makeStyles, Fade} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -36,27 +36,6 @@ export default function ImageModal({ src, alt, component, className }) {
     setOpen(false);
   };
 
-  
-  if(component === 'img'){
-      return (<>
-        <img src={src} alt={alt}/>
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <div className={classes.modalFrame}>
-              <img src={src} alt={alt} className={classes.imgModal}></img>
-            </div>
-        </Modal>
-      </>);
-  }
 
   return (
     <div className={classes.imgWrapper}>
@@ -73,9 +52,12 @@ export default function ImageModal({ src, alt, component, className }) {
         aria-describedby="simple-modal-description"
         style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
       >
+        <Fade in={open}>
+
         <div className={classes.modalFrame}>
             <img src={src} alt={alt} className={classes.imgModal}></img>
         </div>
+        </Fade>
       </Modal>
     </div>
   );
