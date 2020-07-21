@@ -97,6 +97,14 @@ const useStyles = makeStyles((theme) => ({
 export default function ListingPage(){
     const listing = {
       title: "great home!",
+      primary_img:
+        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
+      additional_imgs: [
+        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
+        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
+        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
+        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
+      ],
       location: {
         description: "Medellin, Colombia",
         location_description:
@@ -121,6 +129,7 @@ export default function ListingPage(){
       bedrooms: 3,
       max_guests: 4,
       type: "House",
+      price: 500,
     };
     const classes = useStyles();
     const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
@@ -128,9 +137,15 @@ export default function ListingPage(){
 
     return (
       <>
-        <ListingHeader />
+        <ListingHeader listing={listing}/>
         <MainContentWrapper>
-          <ListingPhotos />
+          <div>
+            <ListingPhotos 
+              title={listing.title} 
+              primaryImg={listing.primary_img}
+              additionalImgs={listing.additional_imgs}
+            />
+          </div>
           <main className={classes.contentWrapper}>
             <section className={classes.mainContent}>
               <ContentPaper>

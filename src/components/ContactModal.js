@@ -48,7 +48,7 @@ const useStyles = makeStyles( theme => ({
   }
 }));
 
-export default function ContactModal({userToContact, username}){
+export default function ContactModal({userToContact, username, noName}){
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -73,7 +73,9 @@ export default function ContactModal({userToContact, username}){
 
   return (
     <>
-      <ThemeButton onClick={handleOpen} style={{padding: '.5em'}}>Contact {user.first_name}</ThemeButton>
+      <ThemeButton onClick={handleOpen} style={{padding: '.5em'}}>
+        <>Contact {noName ? "Owner" : user.first_name}</>
+      </ThemeButton>
       <Modal
         open={open}
         onClose={handleClose}
