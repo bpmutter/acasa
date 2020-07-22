@@ -2,7 +2,7 @@ import db from "../../config/firestoreDb";
 import firebase from 'firebase';
 
 export default function postListing(listing){
-  const {title, type, active, price, start_date, end_date, location, 
+  const {title, type, description, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img 
                       } = listing;
@@ -20,11 +20,21 @@ export default function postListing(listing){
   timestamp = timestamp.getTime();
   const titleDash = title.split(" ").join("-")
   const id = encodeURI(`${titleDash.slice(0, 25)}-${timestamp}`);
+  let coords;
+  if(location.geometry){
+    debugger;
+    const {lat, lng} = location.geometry.location;
+    console.log({lat,lng});
+    coords = new firebase.firestore.GeoPoint(lat, lng);
+    console.log('coords::',coords)
 
-  const newListing = {title, type, active, price, start_date, end_date, location, 
+  }
+  
+
+  const newListing = {title, type, active, price, start_date, end_date, location, description,
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, id, living_with_host,
-                        created_at: timestamp, updated_at: timestamp, primary_img
+                        created_at: timestamp, updated_at: timestamp, primary_img, coords
                     }
 
   firebase.auth().onAuthStateChanged(async function (user) {

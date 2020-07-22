@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    backgroundImage: '/assets/loading-spinner.gif',
   },
   spacing: {
     margin: theme.spacing(1),

@@ -63,7 +63,7 @@ export default function ContactModal({userToContact, username, noName}){
   };
 
   useEffect(()=>{
-    if(!user.contact.email){
+    if(username && !user.contact.email){
         (async ()=>{
             const userInfo = await getUserByUserName(username);
             setUser(userInfo);
@@ -106,7 +106,7 @@ export default function ContactModal({userToContact, username, noName}){
               <CircularProgress color="secondary" />
             </div>
           )}
-          {user.contact.email && user.uid && (
+          { user && user.contact.email && user.uid && (
             <div className={classes.listWrapper}>
               <List>
                 {user.contact.email && (

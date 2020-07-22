@@ -112,7 +112,6 @@ export default function CreateListing(){
 
     const createListing = async (e) => {
         e.preventDefault();
-        console.log('wasssuppppppp')
         if(!shared){
           setLivingWithHost(false);
           setRoommates("");
@@ -142,7 +141,7 @@ export default function CreateListing(){
         }
 
         const listing = {title: title.value, type, price: priceInt, active: publish_now,
-                        start_date: startDateObj, end_date: endDate,
+                        start_date: startDateObj, end_date: endDate, description: description.value,
                         location, location_description: location_description.value, shared, 
                         roommates: roommatesInt, living_with_host, bedrooms: bedroomsInt, 
                         bathrooms: bathroomsInt, max_guests: maxGuestsInt, wifi_speed: wifiInt, 

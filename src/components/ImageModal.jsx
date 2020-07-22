@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {Modal, makeStyles, Fade} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-
   img: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
     backgroundPosition: "center",
     backgroundSize: "cover",
     // backgroundRepeat: "no-repeat",
@@ -15,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   modalFrame: {
     display: "inline-block",
     outlineColor: theme.palette.secondary.light,
-    backgroundColor: "white",
+    backgroundImage: "/assets/loading-spinner.gif",
   },
   imgModal: {
     maxHeight: 600,

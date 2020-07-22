@@ -21,32 +21,27 @@ const MapWithAMarker = withScriptjs(
   ))
 );
 
-export default function ListingMap({placeName, latLng, ...props}){
-    const [coords, setCoords] = useState([]);
+export default function ListingMap({placeName, lat, lng, ...props}){
+    // const [coords, setCoords] = useState([lat, lng]);
 
-    const getCoords = useCallback(async () => {
-        const {
-          location: { lat, lng },
-        } = await geocoder.geocodeFromAddress(placeName);
-        console.log(lat, lng);
-        setCoords([lat, lng])
-    }, placeName);
+    // const getCoords = useCallback(async () => {
+    //     const {
+    //       location: { lat, lng },
+    //     } = await geocoder.geocodeFromAddress(placeName);
+    //     console.log(lat, lng);
+    //     setCoords([lat, lng])
+    // }, placeName);
 
-    useEffect(()=>{
-        if(latLng){
-            setCoords(latLng);
-        } else {
-            getCoords(placeName);
-        }
-    }, [])
+
+    // console.log('coords:: ', coords)
     //todo: 
     //   get coords from location ID 
     //   add personal google maps key
     //   add custom theme to map
-    
+    console.log('coords::', lat, lng)
     return (
       <>
-        {!coords.length ?(
+        {!lat || !lng ?(
             <div style={{width: '100%', height: 400, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <CircularProgress size={100}/>
             </div>
@@ -56,8 +51,8 @@ export default function ListingMap({placeName, latLng, ...props}){
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: 400 }} />}
             mapElement={<div style={{ height: `100%` }} />}
-            lat={coords[0]}
-            lng={coords[1]}
+            lat={lat}
+            lng={lng}
             {...props}
           />
         )}{" "}

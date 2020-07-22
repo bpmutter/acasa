@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import MainContentWrapper from './MainContentWrapper';
 import ContentPaper from './ContentPaper';
 import ListingHeader from './ListingHeader';
@@ -19,7 +19,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import GavelIcon from "@material-ui/icons/Gavel";
 import ListingMap from './ListingMap';
 import LooksIcon from "@material-ui/icons/Looks";
-
+import getListingById from '../queries/listings/getListingById'
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
     display: "grid",
@@ -79,6 +79,11 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     marginTop: theme.spacing(4),
   },
+  availableNow: {
+    // fontWeight: 'bold',
+    color: theme.palette.secondary.dark,
+    fontFamily: theme.typography.special
+  },
   ownerInfo: {
     display: "inline-flex",
     justifyContent: "left",
@@ -96,62 +101,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ListingPage(){
-    const listing = {
-      title: "great home!",
-      primary_img:
-        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
-      additional_imgs: [
-        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
-        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
-        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
-        "https://firebasestorage.googleapis.com/v0/b/acasa-bd3af.appspot.com/o/listings%2F368f5875-9226-4e51-a7cb-c998fad29db4-bb872026-24a2-48a6-be5c-4b523868f25a.webp?alt=media&token=0b798b40-0b7a-490d-8e47-fe487556ca5e",
-      ],
-      location: {
-        description: "Medellin, Colombia",
-        location_description:
-          "Nice small apartment near party street of the 70, shopping, and many good restaurants.",
-        geometry: {
-          location: { lat: -34.652713, lng: -58.776642 },
-        },
-      },
-      owner: {
-        username: "ben-perlmutter-1594856042049",
-        first_name: "Ben",
-        last_name: "Perlmutter",
-        profile_picture:
-          "https://lh3.googleusercontent.com/a-/AOh14Gg9WbJE0awcv_EPhlqHyIMSTqLbvbSdjzmXOunEcQ",
-      },
-      description: "blah blah blah",
-      payment_methods: ["Bitcoin", "Cash", "Paypal"],
-      wifi_speed: 50,
-      lgbtq: true,
-      shared: false,
-      bathrooms: 3,
-      bedrooms: 3,
-      max_guests: 4,
-      type: "House",
-      price: 500,
-    };
-    //TODO: once we get the test data out of here, change name of state variable to just 'listing'
-    const [thisListing, setListing] = useState({
+
+    const [listing, setListing] = useState({
       owner: {},
       additional_imgs: [],
       location: { geometry: {location: {}}},
       payment_methods: [],
     })
+    const [availableNow, setAvailableNow] = useState(false);
     const classes = useStyles();
     const {id} = useParams();
     const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
-    const currentTime = new Date();
+    
+
+    const getListing = useCallback(async () => {
+      const listing = await getListingById(id);
+      console.log('listing in component', listing)
+      setListing(listing);
+
+      let currentTime = new Date();
+      currentTime = currentTime.getTime();
+      const availableFrom = listing.start_date.toMillis();
+      setAvailableNow(availableFrom <= currentTime)
+
+    }, [id])
+
+    useEffect(()=>{
+      getListing()
+    },[getListing])
 
 
     return (
       <>
-        <ListingHeader listing={listing}/>
+        <ListingHeader listing={listing} />
         <MainContentWrapper>
           <div>
-            <ListingPhotos 
-              title={listing.title} 
+            <ListingPhotos
+              title={listing.title}
               primaryImg={listing.primary_img}
               additionalImgs={listing.additional_imgs}
             />
@@ -160,10 +146,14 @@ export default function ListingPage(){
             <section className={classes.mainContent}>
               <ContentPaper>
                 <div>
-                  <Typography className={classes.title}
-                    component="h3" variant="h5"
-                    align='center'
-                  >{overview}</Typography>
+                  <Typography
+                    className={classes.title}
+                    component="h3"
+                    variant="h5"
+                    align="center"
+                  >
+                    {overview}
+                  </Typography>
                   <Box className={classes.chips}>
                     <Chip
                       icon={<HotelIcon />}
@@ -315,12 +305,14 @@ export default function ListingPage(){
                     <div className={classes.mapWrapper}>
                       <ListingMap
                         placeName={listing.location.description}
-                        latLng={
+                        lat={
                           listing.location.geometry
-                            ? [
-                                listing.location.geometry.location.lat,
-                                listing.location.geometry.location.lng,
-                              ]
+                            ? listing.location.geometry.location.lat
+                            : null
+                        }
+                        lng={
+                          listing.location.geometry
+                            ? listing.location.geometry.location.lng
                             : null
                         }
                       />
@@ -339,19 +331,53 @@ export default function ListingPage(){
                 >
                   Availability
                 </Typography>
-                <div>
-                  <Typography>
-                    <p>
-                      {listing.end_date ? (
-                        <span>
-                          Available until {dateFormatter(listing.end_date)}
-                        </span>
-                      ) : (
-                        <span>No specified end date</span>
-                      )}
-                    </p>
-                  </Typography>
-                </div>
+                <List dense={true}>
+                  <ListItem>
+                    <ListItemText
+                      primary={
+                        <>
+                          <>
+                            {listing.start_date && availableNow && (
+                              <Typography
+                                className={classes.availableNow}
+                                align="center"
+                                variant='h6'
+                              >
+                                Available Now!
+                              </Typography>
+                            )}
+                          </>
+                          <>
+                            {listing.start_date && !availableNow && (
+                              <Typography align="center">
+                                <b>Available from:</b>{" "}
+                                {dateFormatter(listing.start_date)}
+                              </Typography>
+                            )}
+                          </>
+                        </>
+                      }
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary={
+                        <>
+                          {listing.end_date ? (
+                            <Typography align="center">
+                              <b>Available until:</b>{" "}
+                              {dateFormatter(listing.end_date)}
+                            </Typography>
+                          ) : (
+                            <Typography align="center">
+                              No specified end date
+                            </Typography>
+                          )}
+                        </>
+                      }
+                    />
+                  </ListItem>
+                </List>
               </ContentPaper>
             </section>
             <section className={classes.contactOwner}>
@@ -378,7 +404,7 @@ export default function ListingPage(){
                     {`${listing.owner.first_name} ${listing.owner.last_name}`}
                   </Link>
                 </div>
-                <div style={{display:'flex', justifyContent: 'center'}}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <ContactModal
                     username={listing.owner.username}
                     className={classes.contactButton}
