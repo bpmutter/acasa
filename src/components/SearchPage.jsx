@@ -1,14 +1,42 @@
 import React, {useState} from 'react';
 import SearchBar from './SearchBar';
-import {makeStyles} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import queryString from "query-string";
 import dateStringToObj from '../utils/dateStringToObj';
 import MainContentWrapper from './MainContentWrapper';
 import SearchResults from './SearchResults';
-export default function SearchResultsPage(props){
+import locationSearch from "../vector-icons/green/location-search.svg";
+import ContentPaper from './ContentPaper';
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    fontFamily: theme.typography.special,
+    color: theme.palette.primary.dark,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(4),
+  },
+  noQuery: {
+    minWidth: "70vw",
+    minHeight: '60vh'
+  },
+  searchImgWrapper: {
+    display: "flex",
+    width: "100%",
+    JustifyContent: "center",
+    alignItems: "center",
+    paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
+  },
+  searchImg: {
+    maxWidth: 300,
+    display: "inline-block",
+    margin: "0 auto",
+  },
+}));
+export default function SearchResultsPage(props){
+    const classes = useStyles();
     const parsed = queryString.parse(window.location.search);
-    console.log('QS:: ', parsed)
+
     const [query, setQuery] = useState({
         description: parsed.query,
         lat: parseFloat(parsed.lat),
@@ -16,19 +44,38 @@ export default function SearchResultsPage(props){
         homeType: parsed.homeType,
         startDate: (parsed.homeType ? dateStringToObj(parsed.startDate) : ""),
         searchRadiusKm: parsed.searchRadius || 15,
-    })
+    });
+    const [activeQuery, setActiveQuery] = useState(!!parsed.description)
 
-    return(
-    <div>
+    return (
+      <div>
         <MainContentWrapper>
-            <SearchBar/>
-            <SearchResults 
-                locationDescription={query.description}
-                lat={query.lat}
-                lng={query.lng}
-                searchRadiusKm={query.searchRadiusKm}
+          <SearchBar />
+          {!query.description && (
+            <ContentPaper>
+              <div className={classes.noQuery}>
+                <Typography variant="h4" className={classes.title} align="center">
+                    Get searching!
+                </Typography>
+                <div className={classes.searchImgWrapper}>
+                    <img
+                    src={locationSearch}
+                    alt={"woman looking at galaxy with phone vector art"}
+                    className={classes.searchImg}
+                    />
+                </div>
+              </div>
+            </ContentPaper>
+          )}
+          {query.description && (
+            <SearchResults
+              locationDescription={query.description}
+              lat={query.lat}
+              lng={query.lng}
+              searchRadiusKm={query.searchRadiusKm}
             />
-
+          )}
         </MainContentWrapper>
-    </div>)
+      </div>
+    );
 }
