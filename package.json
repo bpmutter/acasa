@@ -17,6 +17,7 @@
     "firebase": "^7.16.0",
     "firebase-admin": "^9.0.0",
     "firebaseui": "^4.5.2",
+    "geofirestore": "^4.2.1",
     "google-gax": "^2.6.3",
     "http2": "^3.3.7",
     "lodash": "^4.17.19",

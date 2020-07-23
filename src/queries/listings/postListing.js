@@ -1,5 +1,6 @@
 import db from "../../config/firestoreDb";
 import firebase from 'firebase';
+import geoListings from '../../config/geofirestore';
 
 export default async function postListing(listing, setRes){
   const {title, type, description, active, price, start_date, end_date, location, 
@@ -22,13 +23,13 @@ export default async function postListing(listing, setRes){
   timestamp = timestamp.getTime();
   const titleDash = title.split(" ").join("-")
   const id = encodeURI(`${titleDash.slice(0, 25)}-${timestamp}`);
-  let coords;
+  let coordinates;
   if(location.geometry){
     debugger;
     const {lat, lng} = location.geometry.location;
     console.log({lat,lng});
-    coords = new firebase.firestore.GeoPoint(lat, lng);
-    console.log('coords::',coords)
+    coordinates = new firebase.firestore.GeoPoint(lat, lng);
+    console.log("coords::", coordinates);
 
   }
   
@@ -36,7 +37,7 @@ export default async function postListing(listing, setRes){
   const newListing = {title, type, active, price, start_date, end_date, location, description,
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, id, living_with_host,
-                        created_at: timestamp, updated_at: timestamp, primary_img, coords,
+                        created_at: timestamp, updated_at: timestamp, primary_img, coordinates,
                         additional_imgs
                     }
 
@@ -55,7 +56,7 @@ export default async function postListing(listing, setRes){
         newListing.owner = owner;
 
         try{ 
-            const res = await db.collection('listings').doc(id).set(newListing);     
+            const res = await geoListings.doc(id).set(newListing);     
             setRes({
               message: {
                 type: "success",
