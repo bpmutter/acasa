@@ -48,7 +48,7 @@ function App() {
                 </Route>
               </Switch>
             </Route>
-            <Route exact to="/search">
+            <Route exact path="/search">
               <SearchPage />
             </Route>
             <Route path="*">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Paper, makeStyles, Typography, IconButton} from '@material-ui/core';
+import {Paper, makeStyles, Typography, IconButton, CircularProgress} from '@material-ui/core';
 import GoogleMapsSearchBox from './GoogleMapsSearchBox';
 import SelectOption from './SelectOption';
 import DateSelector from './DateSelector';
@@ -9,6 +9,7 @@ import MyLocationIcon from "@material-ui/icons/MyLocation";
 import hometypes from "../searchtypes.json";
 import format from "date-fns/format";
 import { Redirect } from 'react-router-dom';
+import getLocation from '../utils/getGeographicLocation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,12 +62,10 @@ const SearchBar = ({setSearch}) => {
     const [location, setLocation] = useState();
     const [homeType, setHomeType] = useState();
     const [startDate, setStartDate] = useState();
-    const [results, setResults] = useState([]);
     const [searchRedirect, setSearchRedirect] = useState(false);
+    const [processingLocation, setProcessingLocation] = useState(false);
     const search = async (e) => {
       e.preventDefault();
-      const query = {location, homeType, startDate};
-      //TODO: create some stuff to process data and query DB with it....
       setSearchRedirect(true);
       if(setSearch){
         setSearch({
@@ -77,9 +76,38 @@ const SearchBar = ({setSearch}) => {
           lng: location.geometry.location.lng,
         });
       }
+    }
+
+    const getBrowserLocation = async (e) => {
+      e.preventDefault();
+      setProcessingLocation(true);
+      try{
+        const res = await getLocation();
+        setLocation({
+          description: "my current location",
+          geometry: {
+            location: {
+              lat: res.latitude,
+              lng: res.longitude,
+            },
+          },
+        });
+        setSearchRedirect(true);
+        if (setSearch) {
+          setSearch({
+            homeType,
+            startDate,
+            description: "my current location",
+            lat: res.latitude,
+            lng: res.longitude,
+          });
+        }
+      }catch(err){
+        setProcessingLocation(false);
+      }
       
-
-
+      
+      setProcessingLocation(false);
     }
     const todayStr = format(Date.now(), "y-MM-d");
     return (<>
@@ -91,9 +119,13 @@ const SearchBar = ({setSearch}) => {
           Find Your Next Home
         </Typography>
         <form className={classes.form} onSubmit={search}>
-          <IconButton>
+          {processingLocation ? ( 
+            <CircularProgress size={20} />
+          ) : (
+            <IconButton onClick={getBrowserLocation}>
             <MyLocationIcon />
           </IconButton>
+          )}
           <GoogleMapsSearchBox formSetter={setLocation} required />
           <span className={classes.dateSelect}>
             <DateSelector
