@@ -5,7 +5,6 @@ import UserListings from "./UserListings";
 import data from "../testData";
 import getUser from "../queries/users/getUserProfileByAuth";
 import db from "../config/firestoreDb";
-import { format } from "date-fns";
 import firebase from 'firebase';
 import dateFormatter from "../utils/dateFormatter";
 const ben = data.ben;

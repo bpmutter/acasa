@@ -68,7 +68,7 @@ const LogIn = () => {
         </div>
         {!loggedIn ? (
           <div>
-            <p>Log in with one of the following methods:</p>
+            <Typography align="center">Log in with one of the following methods</Typography>
             <StyledFirebaseAuth
               uiConfig={uiConfig}
               firebaseAuth={firebase.auth()}
@@ -76,10 +76,10 @@ const LogIn = () => {
           </div>
         ) : (
           <div>
-            <p>
+            <Typography align="center">
               Welcome back! You are now
               signed in!
-            </p>
+            </Typography >
             <div className={classes.buttonWrapper}>
               <Button href="/profile">Go to Profile</Button>
               <Button href="/post">Post a Home</Button>

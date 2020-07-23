@@ -12,6 +12,7 @@ import Testing from './Testing';
 import FourOhFour from './FourOhFour';
 import ListingPage from './ListingPage';
 import SearchPage from './SearchPage';
+import LoginPage from './LoginPage';
 
 function App() {
   return (
@@ -50,6 +51,12 @@ function App() {
             </Route>
             <Route exact path="/search">
               <SearchPage />
+            </Route>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/signup">
+              <LoginPage />
             </Route>
             <Route path="*">
               <FourOhFour />

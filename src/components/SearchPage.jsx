@@ -41,7 +41,7 @@ export default function SearchResultsPage(props){
         description: parsed.query,
         lat: parseFloat(parsed.lat),
         lng: parseFloat(parsed.lng),
-        homeType: parsed.homeType,
+        hometype: parsed.homeType,
         startDate: (parsed.homeType ? dateStringToObj(parsed.startDate) : ""),
         searchRadiusKm: parsed.searchRadius || 15,
     });
@@ -77,6 +77,8 @@ export default function SearchResultsPage(props){
               lat={query.lat}
               lng={query.lng}
               searchRadiusKm={query.searchRadiusKm}
+              startDate={query.startDate}
+              hometype={query.hometype}
             />
           )}
         </MainContentWrapper>

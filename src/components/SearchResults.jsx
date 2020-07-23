@@ -1,10 +1,10 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import ContentPaper from './ContentPaper';
 import {makeStyles, Typography, Divider, CircularProgress} from '@material-ui/core';
 import getNearbyListings from '../queries/listings/getNearbyListings';
 import emptyVoid from "../vector-icons/green/empty-void.svg";
 import Listings from './Listings';
- 
+ import dateFormatter from '../utils/dateFormatter';
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
@@ -40,14 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchResults({locationDescription, lat, lng, searchRadiusKm}){
+export default function SearchResults({locationDescription, lat, lng, hometype, startDate, searchRadiusKm}){
     const classes = useStyles();
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
 
     console.log(locationDescription)
     const getAndSetListings = async () => {
-        const res = await getNearbyListings(lat, lng);
+        const res = await getNearbyListings(lat, lng, searchRadiusKm, hometype, startDate);
         console.log('search res::',res)
         setListings(res.results);
         setLoading(false);
@@ -63,6 +63,8 @@ export default function SearchResults({locationDescription, lat, lng, searchRadi
             <Typography component="h1" variant="h4" className={classes.title}>
               Search results for: {locationDescription}
             </Typography>
+            {startDate && <Typography><b>Start Date: </b>{dateFormatter(startDate)}</Typography>}
+            {hometype && <Typography><b>Home type: </b>{hometype}</Typography>}
             <Divider className={classes.sectionDivider} />
             <section>
               {loading && (
