@@ -11,7 +11,7 @@ import CreateListing from './CreateListing';
 import Testing from './Testing';
 import FourOhFour from './FourOhFour';
 import ListingPage from './ListingPage';
-import SearchResultsPage from './SearchResultsPage';
+import SearchPage from './SearchPage';
 
 function App() {
   return (
@@ -35,11 +35,8 @@ function App() {
             <Route path="/users/:username">
               <UserPage />
             </Route>
-            <Route to="/search">
-              <SearchResultsPage/>
-            </Route>
             <Route path="/listings/:id">
-              <ListingPage/>
+              <ListingPage />
             </Route>
             <Route path="/testing">
               <Switch>
@@ -50,6 +47,9 @@ function App() {
                   <ListingPage />
                 </Route>
               </Switch>
+            </Route>
+            <Route exact to="/search">
+              <SearchPage />
             </Route>
             <Route path="*">
               <FourOhFour />

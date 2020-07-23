@@ -150,7 +150,7 @@ export default function CreateListing(){
         let endDate = "";
         if(end_date){
           endDate = dateParse(
-          start_date,
+          end_date,
           'yyyy-MM-dd',
           new Date()
         );
