@@ -25,6 +25,7 @@ import SelectMultiple from './SelectMultiple';
 import hometypes from "../hometypes.json";
 import postListingToDb from '../queries/listings/postListing';
 import UploadOneImage from './UploadOneImage';
+import UploadManyImgs from "./UploadManyImages";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
+    paddingBottom: theme.spacing(1.5)
   },
   logo: {
     width: 50,
@@ -59,9 +61,21 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  uploadOneImageWrapper: { 
+    display: 'flex',
+    justifyContent: 'center',
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
   submitButton: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(5),
+    marginRight: theme.spacing(5),
     fontFamily: theme.typography.special,
+    width: '100%',
+    padding: theme.spacing(1.5),
+    fontSize: theme.typography.fontSize*2
   },
 }));
 
@@ -107,8 +121,10 @@ export default function CreateListing(){
     const [rules, setRules] = useState([]);
     const [pets, setPets] = useState([]);
     const [lgbtq, setLgbtq] = useState(false);
-    const [primary_img, setPrimaryImage] = useState("")
+    const [primary_img, setPrimaryImage] = useState("");
+    const [additional_imgs, setAdditionalImages] = useState([]);
     const [disableSubmit, setDisableSubmit] = useState(false);
+    const [resMsg, setResMsg] = useState(null);
 
     const createListing = async (e) => {
         e.preventDefault();
@@ -140,28 +156,38 @@ export default function CreateListing(){
         );
         }
 
-        const listing = {title: title.value, type, price: priceInt, active: publish_now,
+        const listing = {
+                        title: title.value, type, price: priceInt, active: publish_now,
                         start_date: startDateObj, end_date: endDate, description: description.value,
                         location, location_description: location_description.value, shared, 
                         roommates: roommatesInt, living_with_host, bedrooms: bedroomsInt, 
                         bathrooms: bathroomsInt, max_guests: maxGuestsInt, wifi_speed: wifiInt, 
-                        rules, pets, lgbtq, primary_img
+                        rules, pets, lgbtq, primary_img, additional_imgs
                       }
-        console.log(listing);
-        const res = await postListingToDb(listing);
-        console.log('res msg::', res);
-        if(res) {
-          setSnackbar({severity: res.message.type, msg: res.message.content})
-          return(
-            <div>
-              <Redirect to={`/listings/${res.id}`}/>
-            </div>
-          )
-        }
+        await postListingToDb(listing, setResMsg);
     }
     
     return (
       <>
+        <>
+          {resMsg && resMsg.message.type === "success" && (
+            <div>
+              <Redirect to={`/listings/${resMsg.redirectId}`} />
+            </div>
+          )}
+        </>
+        <>
+          {resMsg && (
+            <>
+              <Snackbar
+                msgSeverity={resMsg.message.type}
+                msg={resMsg.message.content}
+                onClose={() => setResMsg(null)}
+              />
+            </>
+          )}
+        </>
+
         <MainContentWrapper>
           <ContentPaper>
             <div className={classes.titleLogoWrapper}>
@@ -470,11 +496,36 @@ export default function CreateListing(){
                   component="h3"
                   color="primary"
                   className={classes.title}
+                  style={{ paddingBottom: ".5em" }}
                 >
                   Images
                 </Typography>
-                <UploadOneImage formSetter={setPrimaryImage} required={true}/>
+                <div>
+                  <Typography component="h4" variant="h6">
+                    Select the listing's primary image
+                  </Typography>
+                  <Typography color="textSecondary">
+                    This will be featured prominently throughout the site, so
+                    make you it's a picture you really like!
+                  </Typography>
+                  <div className={classes.uploadOneImageWrapper}>
+                    <UploadOneImage
+                      formSetter={setPrimaryImage}
+                      required={true}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Typography component="h4" variant="h6">
+                    Select additional images
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Add some more photos to help make your listing shine.
+                  </Typography>
+                  <UploadManyImgs formSetter={setAdditionalImages} />
+                </div>
               </div>
+              <Divider className={classes.sectionDivider} />
               <div className={classes.buttonWrapper}>
                 <Button
                   variant="contained"
@@ -489,9 +540,6 @@ export default function CreateListing(){
             </form>
           </ContentPaper>
         </MainContentWrapper>
-        {snackbar.msg && (
-          <Snackbar msgSeverity={snackbar.severity} msg={snackbar.msg} />
-        )}
       </>
     );
 }

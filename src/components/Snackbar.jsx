@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSnackbars({ msgSeverity, msg}) {
+export default function CustomizedSnackbars({ msgSeverity, msg, onClose}) {
   const classes = useStyles();
   const [open, setOpen] = useState(msg ? true : false); 
 
@@ -27,24 +26,22 @@ export default function CustomizedSnackbars({ msgSeverity, msg}) {
     if (reason === "clickaway") {
       return;
     }
+    console.log('close handler entered')
+    console.log(reason)
 
     setOpen(false);
+    if (onClose) {
+      onClose();
+    }
   };
 
-  return (
-    <div className={classes.root}>
-      {/* <Button variant="outlined" onClick={handleClick}>
-        Open success snackbar
-      </Button> */}
+  return (<>
+    {open && <div className={classes.root}>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={msgSeverity}>
           {msg}
         </Alert>
       </Snackbar>
-      {/* <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert> */}
-    </div>
-  );
+    </div>}
+  </>);
 }

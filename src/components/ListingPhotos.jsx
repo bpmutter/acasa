@@ -68,7 +68,7 @@ function SingleLineGridList({imgs, listingTitle}) {
   };
   return (
     <div className={classes.gridListRoot}>
-      <GridList className={classes.gridList} cols={3.5}>
+      <GridList className={classes.gridList} cols={2.5}>
         {imgs.map((src, i) => (
           <GridListTile key={src}>
             <img
@@ -121,7 +121,7 @@ export default function ListingPhotos({primaryImg, additionalImgs, title, ...pro
         </Paper>
         <div className={classes.spacing}>
         </div>
-        {additionalImgs && additionalImgs.length && (
+        {additionalImgs && !!additionalImgs.length && (
           <ContentPaper>
             <SingleLineGridList imgs={additionalImgs} title={title} />
           </ContentPaper>

@@ -1,19 +1,21 @@
 import db from "../../config/firestoreDb";
 import firebase from 'firebase';
 
-export default function postListing(listing){
+export default async function postListing(listing, setRes){
   const {title, type, description, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
-                        max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img 
+                        max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
+                        additional_imgs 
                       } = listing;
   if(!title || !location || !type || !start_date 
     || !bedrooms || !bathrooms || !max_guests || !primary_img){ 
-    return {
+    setRes({
       "message":{
         type: "error", 
         content: "Missing one or more required fields."
       }
-    }
+    });
+    return;
   }
 
   let timestamp = new Date();
@@ -34,10 +36,11 @@ export default function postListing(listing){
   const newListing = {title, type, active, price, start_date, end_date, location, description,
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, id, living_with_host,
-                        created_at: timestamp, updated_at: timestamp, primary_img, coords
+                        created_at: timestamp, updated_at: timestamp, primary_img, coords,
+                        additional_imgs
                     }
 
-  firebase.auth().onAuthStateChanged(async function (user) {
+  const unsubscribe = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
         const uid = firebase.auth().currentUser.uid;
         let user = await db.collection("users").doc(uid).get();
@@ -52,13 +55,13 @@ export default function postListing(listing){
         newListing.owner = owner;
 
         try{ 
-            const res = await db.collection('listings').doc(id).set(newListing);
-            return ({
+            const res = await db.collection('listings').doc(id).set(newListing);     
+            setRes({
               message: {
                 type: "success",
                 content: "Your Listing has been successfully posted.",
               },
-              redirectId: id
+              redirectId: id,
             });
 
         } catch(err){

@@ -4,6 +4,7 @@ import MainContentWrapper from './MainContentWrapper';
 import ContentPaper from './ContentPaper';
 import ContactModal from './ContactModal';
 import ImageModal from './ImageModal';
+import UploadManyImgs from './UploadManyImages';
 
 const useStyles = makeStyles((theme) => ({
   light: {
@@ -33,9 +34,11 @@ export default function Testing(){
     return (
       <MainContentWrapper>
         <ContentPaper style={{ padding: "3em", width: 800, minHeight: 500 }}>
-          <ContactModal userToContact={demoUser} />
-          hello
-          <ImageModal src="https://upload.wikimedia.org/wikipedia/en/0/02/Homer_Simpson_2006.png" />
+          <UploadManyImgs />
+          <img
+            src="https://acasa-bd3af.appspot.com/listings/cfaad2d9-0beb-498b-b956-ba2ed56c326f-art-james-jean-feature.jpg?alt=media"
+            alt="idk anymore"
+          />
         </ContentPaper>
       </MainContentWrapper>
     );

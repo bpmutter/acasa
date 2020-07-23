@@ -11,11 +11,13 @@ export default function uploadFile(file, path, imgSetter, progressSetter) {
   uploadTask.on(
     "state_changed",
     function (snapshot) {
-      const progress = Math.round(
-        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      );
-      // console.log("Upload is " + progress + "% done");
-      if (progressSetter) progressSetter(progress);
+      if(progressSetter){
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        progressSetter(progress);
+      }
+      
     },
     function (error) {
       alert("There was a problem uploading the file. Please try again later.");
@@ -24,7 +26,8 @@ export default function uploadFile(file, path, imgSetter, progressSetter) {
     function () {
       uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
         console.log("File available at", downloadURL);
-        imgSetter(downloadURL);
+        if(imgSetter) imgSetter(downloadURL);
+        else return downloadURL;
       });
     }
   );
