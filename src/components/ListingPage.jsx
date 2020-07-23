@@ -23,7 +23,7 @@ import getListingById from '../queries/listings/getListingById'
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
     display: "grid",
-    maxWidth: 1800,
+    maxWidth: 1200,
     gridTemplateColumns: "2.25fr 1fr",
     gridTemplateRows: "auto auto auto",
   },

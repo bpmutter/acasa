@@ -1,7 +1,7 @@
 import db from "../../config/firestoreDb";
-
+import geoListings from '../../config/geofirestore';
 export default async function getListingById(id){ 
-    const res = await db.collection('listings').doc(id).get();
+    const res = await geoListings.doc(id).get();
     
     if (res.empty) {
       console.log("No matching documents.");

@@ -11,6 +11,7 @@ import CreateListing from './CreateListing';
 import Testing from './Testing';
 import FourOhFour from './FourOhFour';
 import ListingPage from './ListingPage';
+import SearchResultsPage from './SearchResultsPage';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
             </ProtectedRoute>
             <Route path="/users/:username">
               <UserPage />
+            </Route>
+            <Route to="/search">
+              <SearchResultsPage/>
             </Route>
             <Route path="/listings/:id">
               <ListingPage/>
