@@ -8,9 +8,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import hometypes from "../searchtypes.json";
 import format from "date-fns/format";
-import searchNearbyListings from '../queries/listings/getNearbyListings';
-import getNearbyListings from '../queries/listings/getNearbyListings';
 import { Redirect } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const SearchBar = () => {
+const SearchBar = ({setSearch}) => {
     const classes = useStyles();
     const [currentLocation, setCurrentLocation] = useState();
     const [location, setLocation] = useState();
@@ -69,6 +68,15 @@ const SearchBar = () => {
       const query = {location, homeType, startDate};
       //TODO: create some stuff to process data and query DB with it....
       setSearchRedirect(true);
+      if(setSearch){
+        setSearch({
+          homeType,
+          startDate,
+          description: location.description,
+          lat: location.geometry.location.lat,
+          lng: location.geometry.location.lng,
+        });
+      }
       
 
 
@@ -101,7 +109,6 @@ const SearchBar = () => {
             className={classes.hometype}
             options={hometypes}
           />
-          {/* <DateSelector labelText="End Date" formSetter={setEndDate} /> */}
           <Button
             className={classes.searchButton}
             variant="contained"

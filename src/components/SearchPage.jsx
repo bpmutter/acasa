@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   noQuery: {
     minWidth: "70vw",
-    minHeight: '60vh'
+    minHeight: '70vh'
   },
   searchImgWrapper: {
     display: "flex",
@@ -45,12 +45,16 @@ export default function SearchResultsPage(props){
         startDate: (parsed.homeType ? dateStringToObj(parsed.startDate) : ""),
         searchRadiusKm: parsed.searchRadius || 15,
     });
-    const [activeQuery, setActiveQuery] = useState(!!parsed.description)
+    const [rerender, setRerender] = useState(Date.now())
 
+    const refreshResults = (queryObj) => {
+        setQuery(queryObj);
+        setRerender(Date.now());
+    }
     return (
       <div>
         <MainContentWrapper>
-          <SearchBar />
+          <SearchBar setSearch={refreshResults}/>
           {!query.description && (
             <ContentPaper>
               <div className={classes.noQuery}>
@@ -67,7 +71,7 @@ export default function SearchResultsPage(props){
               </div>
             </ContentPaper>
           )}
-          {query.description && (
+          {query.description  && !!rerender && (
             <SearchResults
               locationDescription={query.description}
               lat={query.lat}

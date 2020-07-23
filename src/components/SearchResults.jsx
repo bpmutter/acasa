@@ -45,13 +45,16 @@ export default function SearchResults({locationDescription, lat, lng, searchRadi
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    console.log(locationDescription)
     const getAndSetListings = async () => {
         const res = await getNearbyListings(lat, lng);
         console.log('search res::',res)
         setListings(res.results);
         setLoading(false);
     }
-    useEffect(()=>{(async () => getAndSetListings())()},[])
+    useEffect(()=>{
+        if(locationDescription) (async () => getAndSetListings())()
+    }, [locationDescription])
 
     return (
       <div>
