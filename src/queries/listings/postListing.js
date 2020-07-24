@@ -6,7 +6,7 @@ export default async function postListing(listing, setRes){
   const {title, type, description, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
-                        additional_imgs, payment_methods 
+                        additional_imgs, payment_methods,  
                       } = listing;
   if(!title || !location || !type || !start_date 
     || !bedrooms || !bathrooms || !max_guests || !primary_img){ 

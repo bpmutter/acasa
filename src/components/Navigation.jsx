@@ -14,6 +14,8 @@ import LogInModal from "./LogInModal";
 import MobileNavMenu from './MobileNavMenu';
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import SearchIcon from "@material-ui/icons/Search";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,37 +76,40 @@ export default function MenuAppBar() {
           </Typography>
 
           <div className={classes.rightNav}>
-            {smallScreen ?(
-              <MobileNavMenu/>
-             ):(<>
-
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.menuButton}
-              href="/search"
-            >
-              Discover Homes
-            </Button>
-            {loggedIn ? (
+            {smallScreen ? (
+              <MobileNavMenu />
+            ) : (
               <>
                 <Button
                   variant="contained"
                   color="primary"
                   className={classes.menuButton}
-                  href="/create-listing"
+                  href="/search"
                 >
-                  Create Listing
+                  <SearchIcon style={{ paddingRight: 10 }} />
+                  Discover Homes
                 </Button>
-                <ProfileMenu className={classes.profileMenu} />
-              </>
-            ) : (
-              <>
-                <SignUpModal />
-                <LogInModal />
+                {loggedIn ? (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.menuButton}
+                      href="/create-listing"
+                    >
+                      <AddIcon style={{ paddingRight: 10 }} />
+                      Create Listing
+                    </Button>
+                    <ProfileMenu className={classes.profileMenu} />
+                  </>
+                ) : (
+                  <>
+                    <SignUpModal />
+                    <LogInModal />
+                  </>
+                )}
               </>
             )}
-            </>)}          
           </div>
         </Toolbar>
       </AppBar>

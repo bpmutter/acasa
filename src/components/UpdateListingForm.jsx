@@ -31,6 +31,8 @@ import UploadManyImgs from "./UploadManyImages";
 import getListing from '../queries/listings/getListingById';
 import fBdateToHtmlString from '../utils/dateFbToHTML';
 import context from './Context';
+import updateListingToDb from '../queries/listings/updateListing';
+
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
     display: "flex",
@@ -164,15 +166,16 @@ export default function CreateListing() {
         const {title, type, description, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
-                        additional_imgs, payment_methods 
+                        additional_imgs, payment_methods,
                       } = listing;
         setTitle(title);
+        setDisableSubmit(id)
         setType(type);
         setDescription(description);
         setPublishNow(active);
         setPrice(price);
-        setStartDate(fBdateToHtmlString(start_date)); //TODO: convert to date picker readable
-        setEndDate(fBdateToHtmlString(end_date)); //TODO: convert to date picker readable
+        setStartDate(fBdateToHtmlString(start_date));
+        setEndDate(fBdateToHtmlString(end_date)); 
         setLocation(location);
         setLocationDescription(location_description);
         setShared(shared);
@@ -197,14 +200,14 @@ export default function CreateListing() {
       setLivingWithHost(false);
       setRoommates("");
     }
-    const priceInt = parseInt(price.value);
+    const priceInt = parseInt(price);
     const bathroomsInt = parseInt(bathrooms);
     const bedroomsInt = parseInt(bedrooms);
     const maxGuestsInt = parseInt(max_guests);
     let roommatesInt = "";
     if (roommates) roommatesInt = parseInt(roommates);
     let wifiInt = "";
-    if (wifi_speed.value) wifiInt = parseInt(wifi_speed.value);
+    if (wifi_speed.value) wifiInt = parseInt(wifi_speed);
 
     //TODO add data converters
     const startDateObj = dateParse(start_date, "yyyy-MM-dd", new Date());
@@ -214,15 +217,15 @@ export default function CreateListing() {
     }
 
     const listing = {
-      title: title.value,
+      title: title,
       type,
       price: priceInt,
       active: publish_now,
       start_date: startDateObj,
       end_date: endDate,
-      description: description.value,
+      description: description,
       location,
-      location_description: location_description.value,
+      location_description: location_description,
       shared,
       roommates: roommatesInt,
       living_with_host,
@@ -236,8 +239,10 @@ export default function CreateListing() {
       primary_img,
       additional_imgs,
       payment_methods,
+      id
     };
-    await postListingToDb(listing, setResMsg);
+    console.log('listing is...', listing)
+    await updateListingToDb(listing, setResMsg);
   };
 
   return (
@@ -299,7 +304,6 @@ export default function CreateListing() {
                   Basic Information
                 </Typography>
                 <div>
-                  {console.log("title is...", title)}
                   <TextField
                     name="title"
                     label="Listing Title"
@@ -389,7 +393,7 @@ export default function CreateListing() {
                     formSetter={setStartDate}
                   />
                 )}
-                {end_date && (
+                {end_date !== null && (
                   <DateSelector
                     className={classes.textInput}
                     defaultValue={end_date}
@@ -667,9 +671,6 @@ export default function CreateListing() {
                     Select additional images
                   </Typography>
                   <Typography color="textSecondary">
-                    Add some more photos to help make your listing shine.
-                  </Typography>
-                  <Typography color="textSecondary">
                     <b>NOTE:</b> at this time you can only bulk add photos, so if you
                     want to keep your current photos and add others, you need to
                     add them again.
@@ -688,7 +689,7 @@ export default function CreateListing() {
                   className={classes.submitButton}
                   type="submit"
                 >
-                  Post Listing!
+                  Update Listing!
                 </Button>
               </div>
             </form>

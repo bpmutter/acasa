@@ -1,7 +1,9 @@
-import React from 'react';
-import {makeStyles, Paper, Typography} from '@material-ui/core';
+import React, {useContext} from 'react';
+import {makeStyles, Paper, Typography, Link} from '@material-ui/core';
 import ContactModal from './ContactModal';
 import HeartButton from './HeartButton';
+import Button from './Button';
+import context from './Context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ListingHeader({listing}){
 
     const classes = useStyles();
+    const {user: {uid}} = useContext(context);
     return (
       <>
         <div className={classes.root}>
@@ -61,7 +64,13 @@ export default function ListingHeader({listing}){
               </Typography>
             </div>
             <div className={classes.actionButtons}>
-                <ContactModal username={listing.owner.username} noName={true} />
+
+                {listing.owner.uid !== uid ? (<ContactModal username={listing.owner.username} noName={true} />
+                ):(
+                  <Link href={`/listings/${listing.id}/edit`}>
+                    <Button href={`/listings/${listing.id}/edit`}>Edit Listing</Button>
+                  </Link>
+                )}
               <span className={classes.contactButton}>
                 {/* <HeartButton /> */}
               </span>

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Paper, Box, makeStyles, Typography, IconButton, Link, Chip, Avatar, Button} from '@material-ui/core';
+import React, {useState, useContext} from 'react';
+import {Paper, Box, makeStyles, Typography, IconButton, Link, Chip, Avatar} from '@material-ui/core';
 import pink from '@material-ui/core/colors/pink';
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -7,7 +7,9 @@ import HotelIcon from "@material-ui/icons/Hotel";
 import GroupIcon from "@material-ui/icons/Group";
 import BathtubIcon from "@material-ui/icons/Bathtub";
 import WifiIcon from "@material-ui/icons/Wifi";
-import ContactModal from './ContactModal'
+import ContactModal from './ContactModal';
+import context from './Context';
+import Button from './Button'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -128,6 +130,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListingCard({listing}){
     const classes = useStyles();
+    const {user: {uid}} = useContext(context);
+    
     const [hearted, setHearted] = useState(false);
     const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`
 
@@ -209,10 +213,19 @@ export default function ListingCard({listing}){
                 {`${listing.owner.first_name} ${listing.owner.last_name}`}
               </Link>
             </div>
-            <ContactModal
-              username={listing.owner.username}
-              className={classes.contactButton}
-            />
+            {listing.owner.uid !== uid ? (
+              <ContactModal
+                username={listing.owner.username}
+                className={classes.contactButton}
+              />
+            ) : (
+              <Link href={`/listings/${listing.id}/edit`}>
+                <Button href={`/listings/${listing.id}/edit`}>
+                  Edit Listing
+                </Button>
+              </Link>
+            )}
+            {/* {<ContactModal username={listing.owner.username} />} */}
           </div>
         </Box>
       </Paper>

@@ -66,6 +66,11 @@ export default function UploadManyImgs({formSetter, defaultImages=[]}){
         />
 
         <div className={classes.imgFrame}>
+          <>
+            {!uploadedPics.length && !!defaultImages.length && (
+              <ImageGrid imgs={defaultImages} />
+            )}
+          </>
           {uploadStatus && (
             <div className={classes.imagesLoading}>
               <CircularProgress size={100} className={classes.progress} />
@@ -77,9 +82,7 @@ export default function UploadManyImgs({formSetter, defaultImages=[]}){
               </Typography>
             </div>
           )}
-          {!!uploadedPics.length && <ImageGrid imgs={!!uploadedPics.length ?(
-            uploadedPics
-          ):(defaultImages)} />}
+          <>{!!uploadedPics.length && <ImageGrid imgs={uploadedPics} />}</>
         </div>
       </div>
     );

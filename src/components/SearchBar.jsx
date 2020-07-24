@@ -71,6 +71,10 @@ const SearchBar = ({setSearch}) => {
     const [processingLocation, setProcessingLocation] = useState(false);
     const search = async (e) => {
       e.preventDefault();
+      if(!location) {
+        alert('Please select a location to search.');
+        return;
+      }
       setSearchRedirect(true);
       if(setSearch){
         setSearch({
