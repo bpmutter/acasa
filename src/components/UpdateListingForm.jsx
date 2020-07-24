@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import useInput from '../utils/useInputHook';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import useInput from "../utils/useInputHook";
 import MainContentWrapper from "./MainContentWrapper";
 import logo from "../theme/logo-big.webp";
 import dateParse from "date-fns/parse";
@@ -9,40 +9,53 @@ import {
   Typography,
   Button,
   Divider,
-  FormGroup, InputAdornment
+  FormGroup,
+  InputAdornment,
+  CircularProgress,
 } from "@material-ui/core";
 import WifiIcon from "@material-ui/icons/Wifi";
 import format from "date-fns/format";
-import {Redirect} from 'react-router-dom';
+import { Redirect, useParams } from "react-router-dom";
 import Snackbar from "./Snackbar";
-import Checkbox from './Checkbox';
-import DateSelector from './DateSelector';
-import RadioGroup from './RadioGroup';
-import SelectOption from './SelectOption';
+import Checkbox from "./Checkbox";
+import DateSelector from "./DateSelector";
+import RadioGroup from "./RadioGroup";
+import SelectOption from "./SelectOption";
 import ContentPaper from "./ContentPaper";
 import GoogleMapsAutoComplete from "./GoogleMapsSearchBox";
-import SelectMultiple from './SelectMultiple';
+import SelectMultiple from "./SelectMultiple";
 import hometypes from "../hometypes.json";
-import postListingToDb from '../queries/listings/postListing';
-import UploadOneImage from './UploadOneImage';
+import postListingToDb from "../queries/listings/postListing";
+import UploadOneImage from "./UploadOneImage";
 import UploadManyImgs from "./UploadManyImages";
-
-
+import getListing from '../queries/listings/getListingById';
+import context from './Context';
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'column',
-      paddingBottom: theme.spacing(2),
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingBottom: theme.spacing(2),
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
-    paddingBottom: theme.spacing(1.5)
+    paddingBottom: theme.spacing(1.5),
   },
   logo: {
     width: 50,
     paddingBottom: theme.spacing(1),
+  },
+  progressWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
+    minWidth: 450,
+    [theme.breakpoints.down('sm')]: {
+        maxWidth: '100%',
+    }
+
   },
   form: {
     padding: theme.spacing(1),
@@ -61,9 +74,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  uploadOneImageWrapper: { 
-    display: 'flex',
-    justifyContent: 'center',
+  uploadOneImageWrapper: {
+    display: "flex",
+    justifyContent: "center",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
   },
@@ -73,9 +86,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
     fontFamily: theme.typography.special,
-    width: '100%',
+    width: "100%",
     padding: theme.spacing(1.5),
-    fontSize: theme.typography.fontSize*2
+    fontSize: theme.typography.fontSize * 2,
   },
 }));
 
@@ -93,118 +106,179 @@ const oneToTenOptions = [
   { value: 10, label: "10+" },
 ];
 
-export default function CreateListing(){ 
+export default function CreateListing() {
+  const classes = useStyles();
+  const {id} = useParams();
+  const {user: {uid}} = useContext(context);
 
-    const classes = useStyles();
+  const [snackbar, setSnackbar] = useState({
+    msg: null,
+    severity: null,
+  });
 
-    const [snackbar, setSnackbar] = useState({
-      msg: null,
-      severity: null,
-    });
-    
-    const title = useInput("");
-    const [type, setType] = useState("");
-    const price = useInput("");
-    const [publish_now, setPublishNow] = useState(true);
-    const description = useInput("");
-    const [start_date, setStartDate] = useState(todayStr);
-    const [end_date, setEndDate] = useState("");    
-    const [location, setLocation] = useState({});    
-    const location_description = useInput("");
-    const [shared, setShared] = useState(true);
-    const [living_with_host, setLivingWithHost] = useState(false)
-    const [roommates, setRoommates] = useState("");
-    const [bedrooms, setBedrooms] = useState("");
-    const [bathrooms, setBathrooms] = useState("");
-    const [max_guests, setMaxGuests] = useState("");
-    const wifi_speed = useInput("");
-    const [rules, setRules] = useState([]);
-    const [pets, setPets] = useState([]);
-    const [payment_methods, setPaymentMethods] = useState([]);
-    const [lgbtq, setLgbtq] = useState(false);
-    const [primary_img, setPrimaryImage] = useState("");
-    const [additional_imgs, setAdditionalImages] = useState([]);
-    const [disableSubmit, setDisableSubmit] = useState(false);
-    const [resMsg, setResMsg] = useState(null);
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [price, setPrice] = useState("");
+  const [publish_now, setPublishNow] = useState(true);
+  const [description, setDescription] = useState("");
+  const [start_date, setStartDate] = useState(todayStr);
+  const [end_date, setEndDate] = useState("");
+  const [location, setLocation] = useState({});
+  const [location_description, setLocationDescription] = useState("");
+  const [shared, setShared] = useState(true);
+  const [living_with_host, setLivingWithHost] = useState(false);
+  const [roommates, setRoommates] = useState("");
+  const [bedrooms, setBedrooms] = useState("");
+  const [bathrooms, setBathrooms] = useState("");
+  const [max_guests, setMaxGuests] = useState("");
+  const [wifi_speed, setWifiSpeed] = useState("");
+  const [rules, setRules] = useState([]);
+  const [pets, setPets] = useState([]);
+  const [payment_methods, setPaymentMethods] = useState([]);
+  const [lgbtq, setLgbtq] = useState(false);
+  const [primary_img, setPrimaryImage] = useState("");
+  const [additional_imgs, setAdditionalImages] = useState([]);
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [resMsg, setResMsg] = useState(null);
+  const [redirect, setRedirect] = useState(null);
 
-    const createListing = async (e) => {
-        e.preventDefault();
-        if(!shared){
-          setLivingWithHost(false);
-          setRoommates("");
+  useEffect( ()=>{
+    (async () => {
+    if(uid){
+      const listing = await getListing(id);
+        if (listing.owner.uid !== uid) {
+
+          setRedirect(`/listings/${listing.id}`);
+          return;
         }
-        const priceInt = parseInt(price.value)
-        const bathroomsInt = parseInt(bathrooms);
-        const bedroomsInt = parseInt(bedrooms);
-        const maxGuestsInt = parseInt(max_guests);
-        let roommatesInt = "";
-        if(roommates) roommatesInt = parseInt(roommates)
-        let wifiInt = "";
-        if(wifi_speed.value) wifiInt = parseInt(wifi_speed.value);
-
-        //TODO add data converters
-        const startDateObj = dateParse(
-          start_date,
-          'yyyy-MM-dd',
-          new Date()
-        );
-        let endDate = "";
-        if(end_date){
-          endDate = dateParse(
-          end_date,
-          'yyyy-MM-dd',
-          new Date()
-        );
-        }
-
-        const listing = {
-                        title: title.value, type, price: priceInt, active: publish_now,
-                        start_date: startDateObj, end_date: endDate, description: description.value,
-                        location, location_description: location_description.value, shared, 
-                        roommates: roommatesInt, living_with_host, bedrooms: bedroomsInt, 
-                        bathrooms: bathroomsInt, max_guests: maxGuestsInt, wifi_speed: wifiInt, 
-                        rules, pets, lgbtq, primary_img, additional_imgs, payment_methods
-                      }
-        await postListingToDb(listing, setResMsg);
+        const {title, type, description, active, price, start_date, end_date, location, 
+                        location_description, shared, roommates, bedrooms, bathrooms,
+                        max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
+                        additional_imgs, payment_methods 
+                      } = listing;
+        setTitle(title);
+        setType(type);
+        setDescription(description);
+        setPublishNow(active);
+        setPrice(price);
+        setStartDate(start_date); //TODO: convert to date picker readable
+        setEndDate(end_date); //TODO: convert to date picker readable
+        setLocation(location);
+        setLocationDescription(location_description);
+        setShared(shared);
+        setRoommates(roommates);
+        setBedrooms(bedrooms);
+        setBathrooms(bathrooms);
+        setMaxGuests(max_guests);
+        setWifiSpeed(wifi_speed);
+        setRules(rules);
+        setPets(pets);
+        setLgbtq(lgbtq);
+        setLivingWithHost(living_with_host);
+        setPrimaryImage(primary_img);
+        setAdditionalImages(additional_imgs);
+        setPaymentMethods(payment_methods);
+    }  
+    })();
+  },[uid, id])
+  const updateListing = async (e) => {
+    e.preventDefault();
+    if (!shared) {
+      setLivingWithHost(false);
+      setRoommates("");
     }
-    
-    return (
+    const priceInt = parseInt(price.value);
+    const bathroomsInt = parseInt(bathrooms);
+    const bedroomsInt = parseInt(bedrooms);
+    const maxGuestsInt = parseInt(max_guests);
+    let roommatesInt = "";
+    if (roommates) roommatesInt = parseInt(roommates);
+    let wifiInt = "";
+    if (wifi_speed.value) wifiInt = parseInt(wifi_speed.value);
+
+    //TODO add data converters
+    const startDateObj = dateParse(start_date, "yyyy-MM-dd", new Date());
+    let endDate = "";
+    if (end_date) {
+      endDate = dateParse(end_date, "yyyy-MM-dd", new Date());
+    }
+
+    const listing = {
+      title: title.value,
+      type,
+      price: priceInt,
+      active: publish_now,
+      start_date: startDateObj,
+      end_date: endDate,
+      description: description.value,
+      location,
+      location_description: location_description.value,
+      shared,
+      roommates: roommatesInt,
+      living_with_host,
+      bedrooms: bedroomsInt,
+      bathrooms: bathroomsInt,
+      max_guests: maxGuestsInt,
+      wifi_speed: wifiInt,
+      rules,
+      pets,
+      lgbtq,
+      primary_img,
+      additional_imgs,
+      payment_methods,
+    };
+    await postListingToDb(listing, setResMsg);
+  };
+
+  return (
+    <>
       <>
-        <>
-          {resMsg && resMsg.message.type === "success" && (
-            <div>
-              <Redirect to={`/listings/${resMsg.redirectId}`} />
-            </div>
-          )}
-        </>
-        <>
-          {resMsg && (
-            <>
-              <Snackbar
-                msgSeverity={resMsg.message.type}
-                msg={resMsg.message.content}
-                onClose={() => setResMsg(null)}
-              />
-            </>
-          )}
-        </>
+        {redirect && (
+          <div>
+            {" "}
+            <Redirect to={redirect} />{" "}
+          </div>
+        )}
+      </>
+      <>
+        {resMsg && resMsg.message.type === "success" && (
+          <div>
+            <Redirect to={`/listings/${resMsg.redirectId}`} />
+          </div>
+        )}
+      </>
+      <>
+        {resMsg && (
+          <>
+            <Snackbar
+              msgSeverity={resMsg.message.type}
+              msg={resMsg.message.content}
+              onClose={() => setResMsg(null)}
+            />
+          </>
+        )}
+      </>
 
-        <MainContentWrapper>
-          <ContentPaper>
-            <div className={classes.titleLogoWrapper}>
-              <img src={logo} alt="aCasa logo" className={classes.logo} />
-              <Typography
-                variant="h4"
-                component="h3"
-                color="primary"
-                align="center"
-                className={classes.title}
-              >
-                Create Listing
-              </Typography>
+      <MainContentWrapper>
+        <ContentPaper>
+          <div className={classes.titleLogoWrapper}>
+            <img src={logo} alt="aCasa logo" className={classes.logo} />
+            <Typography
+              variant="h4"
+              component="h3"
+              color="primary"
+              align="center"
+              className={classes.title}
+            >
+              Update Listing
+            </Typography>
+          </div>
+          {!title ? (
+            <div className={classes.progressWrapper}>
+                <CircularProgress size={100} color="primary" />
             </div>
-
-            <form className={classes.form} noValidate onSubmit={createListing}>
+          ) : (
+            <form className={classes.form} noValidate onSubmit={updateListing}>
               <div className={classes.primaryInfo}>
                 <Typography
                   variant="h5"
@@ -220,7 +294,7 @@ export default function CreateListing(){
                     label="Listing Title"
                     color="secondary"
                     defaultValue={title.value}
-                    onChange={title.onChange}
+                    onChange={(e) => setTitle(e.target.value)}
                     className={classes.textInput}
                     required
                   />
@@ -242,7 +316,7 @@ export default function CreateListing(){
                     color="secondary"
                     className={classes.textInput}
                     defaultValue={price.value}
-                    onChange={price.onChange}
+                    onChange={(e) => setPrice(e.target.value)}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
@@ -272,7 +346,7 @@ export default function CreateListing(){
                     name="description"
                     label="Property Description"
                     defaultValue={description.value}
-                    onChange={description.onChange}
+                    onChange={(e) => setDescription(e.target.value)}
                     multiline
                     rows={4}
                     color="secondary"
@@ -315,8 +389,8 @@ export default function CreateListing(){
                 >
                   Location
                 </Typography>
-                {location.description &&(
-                  <div style={{paddingTop: '.5em', paddingBottom: '.5em'}}>
+                {location.description && (
+                  <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
                     <Typography>
                       <b>Your current location is: </b> {location.description}
                     </Typography>
@@ -335,7 +409,7 @@ export default function CreateListing(){
                   label="Location Description"
                   multiline
                   defaultValue={location_description.value}
-                  onChange={location_description.onChange}
+                  onChange={(e) => setLocationDescription(e.target.value)}
                   rows={4}
                   color="secondary"
                   style={{ width: "100%" }}
@@ -543,7 +617,10 @@ export default function CreateListing(){
                   <Typography color="textSecondary">
                     Add some more photos to help make your listing shine.
                   </Typography>
-                  <UploadManyImgs formSetter={setAdditionalImages} />
+                  <UploadManyImgs
+                    formSetter={setAdditionalImages}
+                    defaultImages={additional_imgs}
+                  />
                 </div>
               </div>
               <Divider className={classes.sectionDivider} />
@@ -558,8 +635,9 @@ export default function CreateListing(){
                 </Button>
               </div>
             </form>
-          </ContentPaper>
-        </MainContentWrapper>
-      </>
-    );
+          )}
+        </ContentPaper>
+      </MainContentWrapper>
+    </>
+  );
 }

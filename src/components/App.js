@@ -13,11 +13,12 @@ import FourOhFour from './FourOhFour';
 import ListingPage from './ListingPage';
 import SearchPage from './SearchPage';
 import LoginPage from './LoginPage';
+import UpdateListingForm from './UpdateListingForm';
 
 function App() {
   return (
     <>
-      <div style={{ minHeight: "92vh" }}>
+      <div style={{ minHeight: "94vh" }}>
         <Router>
           <Navigation />
           <Switch>
@@ -36,6 +37,9 @@ function App() {
             <Route path="/users/:username">
               <UserPage />
             </Route>
+            <ProtectedRoute path="/listings/:id/edit">
+              <UpdateListingForm />
+            </ProtectedRoute>
             <Route path="/listings/:id">
               <ListingPage />
             </Route>

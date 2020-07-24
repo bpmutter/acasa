@@ -13,8 +13,8 @@ import Chip from "@material-ui/core/Chip";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 300,
+    minWidth: 250,
+    maxWidth: 350,
   },
   chips: {
     display: "flex",
@@ -52,7 +52,7 @@ function getStyles(option, optionName, theme) {
   };
 }
 
-export default function MultipleSelect({label, name, options, formSetter, defaultValue = []}) {
+export default function MultipleSelect({label, name, options, formSetter, style, defaultValue = []}) {
   const classes = useStyles();
   const theme = useTheme();
   const [optionName, setOptionName] = React.useState([]);
@@ -70,7 +70,7 @@ export default function MultipleSelect({label, name, options, formSetter, defaul
 
   return (
     <div>
-      <FormControl className={classes.formControl} color="secondary">
+      <FormControl className={classes.formControl} style={style} color="secondary">
         <InputLabel>{label}</InputLabel>
         <Select
           multiple

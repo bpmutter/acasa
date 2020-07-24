@@ -9,5 +9,4 @@ export default async function getListingById(id){
     }
     console.log('RES DATA::', res.data());
     return res.data()
-
 }

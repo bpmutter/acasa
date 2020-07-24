@@ -11,9 +11,10 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 export default function CheckboxWithLabel({name, label, formSetter, helperText}) {
   const [checked, setChecked] = React.useState(false);
   const handleChange = e => { 
-    setChecked(!checked);
+    const newVal = !checked;
+    setChecked(newVal);
     if(formSetter){
-        formSetter(checked)
+        formSetter(newVal)
     }
   }
 

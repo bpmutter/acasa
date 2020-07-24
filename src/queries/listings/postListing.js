@@ -6,7 +6,7 @@ export default async function postListing(listing, setRes){
   const {title, type, description, active, price, start_date, end_date, location, 
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
-                        additional_imgs 
+                        additional_imgs, payment_methods 
                       } = listing;
   if(!title || !location || !type || !start_date 
     || !bedrooms || !bathrooms || !max_guests || !primary_img){ 
@@ -38,7 +38,7 @@ export default async function postListing(listing, setRes){
                         location_description, shared, roommates, bedrooms, bathrooms,
                         max_guests, wifi_speed, rules, pets, lgbtq, id, living_with_host,
                         created_at: timestamp, updated_at: timestamp, primary_img, coordinates,
-                        additional_imgs
+                        additional_imgs, payment_methods
                     }
 
   const unsubscribe = firebase.auth().onAuthStateChanged(async function (user) {

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function UploadManyImgs({formSetter}){
+export default function UploadManyImgs({formSetter, defaultImages=[]}){
     const classes = useStyles();
     
     const [uploadedPics, setUploadedPics] = useState([]);
@@ -77,7 +77,9 @@ export default function UploadManyImgs({formSetter}){
               </Typography>
             </div>
           )}
-          {!!uploadedPics.length && <ImageGrid imgs={uploadedPics} />}
+          {!!uploadedPics.length && <ImageGrid imgs={!!uploadedPics.length ?(
+            uploadedPics
+          ):(defaultImages)} />}
         </div>
       </div>
     );

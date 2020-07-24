@@ -78,7 +78,7 @@ const Hero = () => {
             <Button
               variant="contained"
               color="primary"
-              href="#"
+              href="/search"
               className={classes.button}
             >
               Get Started
