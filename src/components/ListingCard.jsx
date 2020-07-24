@@ -154,7 +154,7 @@ export default function ListingCard({listing}){
               className={classes.heartButton}
               onClick={toggleFavorite}
             >
-              {hearted ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {/* {hearted ? <FavoriteIcon /> : <FavoriteBorderIcon />} */}
             </IconButton>
           </Box>
           <Typography variant="h4" component="h3" className={classes.title}>

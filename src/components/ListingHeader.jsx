@@ -63,7 +63,7 @@ export default function ListingHeader({listing}){
             <div className={classes.actionButtons}>
                 <ContactModal username={listing.owner.username} noName={true} />
               <span className={classes.contactButton}>
-                <HeartButton />
+                {/* <HeartButton /> */}
               </span>
             </div>
           </Paper>

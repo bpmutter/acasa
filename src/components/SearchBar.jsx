@@ -15,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(1),
     padding: theme.spacing(2),
-    width: "65%",
+    width: 550,
+    // maxWidth: 450,
     backgroundColor: theme.palette.background.white,
     [theme.breakpoints.down("sm")]: {
       backgroundColor: "rgba(255,255,255,.7)",
-      width: "100%",
+      width: "90%",
       paddingBottom: theme.spacing(5),
     },
   },
@@ -32,9 +33,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     flexWrap: "wrap",
     width: "100%",
+  },
+  formElementWrapper: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
   },
   dateSelect: {
     [theme.breakpoints.down("xs")]: {
@@ -58,10 +63,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 const SearchBar = ({setSearch}) => {
     const classes = useStyles();
-    const [currentLocation, setCurrentLocation] = useState();
-    const [location, setLocation] = useState();
-    const [homeType, setHomeType] = useState();
-    const [startDate, setStartDate] = useState();
+    // const [currentLocation, setCurrentLocation] = useState("");
+    const [location, setLocation] = useState("");
+    const [homeType, setHomeType] = useState("");
+    const [startDate, setStartDate] = useState("");
     const [searchRedirect, setSearchRedirect] = useState(false);
     const [processingLocation, setProcessingLocation] = useState(false);
     const search = async (e) => {
@@ -110,24 +115,35 @@ const SearchBar = ({setSearch}) => {
       setProcessingLocation(false);
     }
     const todayStr = format(Date.now(), "y-MM-d");
-    return (<>
-      {searchRedirect &&(
-        <Redirect to={`/search?lat=${location.geometry.location.lat}&lng=${location.geometry.location.lng}&query=${location.description}&startDate=${startDate || "" }&homeType=${homeType || "" }`} />
-      )}
-      <Paper className={classes.root}>
-        <Typography variant="h5" component="h3" className={classes.title}>
-          Find Your Next Home
-        </Typography>
-        <form className={classes.form} onSubmit={search}>
-          {processingLocation ? ( 
-            <CircularProgress size={20} />
-          ) : (
-            <IconButton onClick={getBrowserLocation}>
-            <MyLocationIcon />
-          </IconButton>
-          )}
-          <GoogleMapsSearchBox formSetter={setLocation} required />
-          <span className={classes.dateSelect}>
+    return (
+      <>
+        {searchRedirect && (
+          <Redirect
+            to={`/search?lat=${location.geometry.location.lat}&lng=${
+              location.geometry.location.lng
+            }&query=${location.description}&startDate=${
+              startDate || ""
+            }&homeType=${homeType || ""}`}
+          />
+        )}
+        <Paper className={classes.root}>
+          <Typography variant="h5" component="h3" className={classes.title}>
+            Find Your Next Home
+          </Typography>
+          <form className={classes.form} onSubmit={search}>
+            <div className={classes.formElementWrapper}>
+              {processingLocation ? (
+                <CircularProgress size={20} />
+              ) : (
+                <IconButton onClick={getBrowserLocation}>
+                  <MyLocationIcon />
+                </IconButton>
+              )}
+            </div>
+            <div className={classes.formElementWrapper}>
+              <GoogleMapsSearchBox formSetter={setLocation} required />
+            </div>
+            {/* <span className={classes.dateSelect}>
             <DateSelector
               labelText="Start Date"
               formSetter={setStartDate}
@@ -140,19 +156,22 @@ const SearchBar = ({setSearch}) => {
             formSetter={setHomeType}
             className={classes.hometype}
             options={hometypes}
-          />
-          <Button
-            className={classes.searchButton}
-            variant="contained"
-            color="primary"
-            href="#"
-            onClick={search}
-          >
-            <SearchIcon />
-          </Button>
-        </form>
-      </Paper>
-    </>);
+          /> */}
+          <div className={classes.formElementWrapper}>
+            <Button
+              className={classes.searchButton}
+              variant="contained"
+              color="primary"
+              href="#"
+              onClick={search}
+            >
+              <SearchIcon />
+            </Button>
+          </div>
+          </form>
+        </Paper>
+      </>
+    );
 }
 
 export default SearchBar;

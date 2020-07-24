@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   heroImg: {
-    // justifySelf: "center",
     width: 500,
     opacity: 0.8,
     height: 300,
@@ -35,14 +34,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
     [theme.breakpoints.down("md")]: {
-      marginBottom: theme.spacing(5),
+      marginBottom: theme.spacing(1),
       height: 250,
       width: 'auto'
     },
 
     [theme.breakpoints.down("sm")]: {
       width: 300,
-      // paddingBottom: theme.spacing(10),
     },
   },
   heroText: {
@@ -87,11 +85,6 @@ const Hero = () => {
             </Button>
           </Box>
           <div className={classes.heroImg} style={{backgroundImage: `url(${womanMountainHome})`}}>
-            {/* <img
-              className={classes.heroImg}
-              src={womanMountainHome}
-              alt="vector art of woman with mountain"
-            /> */}
           </div>
         </Box>
         <Divider />
