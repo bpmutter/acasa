@@ -22,7 +22,7 @@ export default function SelectOption({labelText, name, options, required, formSe
 
   const classes = useStyles();
 
-  const [value, setValue ] = useState(defaultValue);
+  const [value, setValue ] = useState();
   const handleChange = e => {
     e.preventDefault();
     setValue(e.target.value);
@@ -30,7 +30,6 @@ export default function SelectOption({labelText, name, options, required, formSe
       formSetter(e.target.value)
     }
   };
-
   return (
     <div className={classes.root}>
       <FormControl className={classes.formControl} required={required}>
@@ -39,7 +38,7 @@ export default function SelectOption({labelText, name, options, required, formSe
         </InputLabel>
         <Select
           native
-          value={value}
+          value={value || defaultValue}
           onChange={handleChange}
           label={labelText}
           name={name}

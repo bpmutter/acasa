@@ -107,7 +107,7 @@ const ForUsers = () => {
               imgStyling={{ backgroundPosition: "0 -35px " }}
             />
           </Box>
-          <Box className={classes.ownerLearnMoreWrapper}>
+          {/* <Box className={classes.ownerLearnMoreWrapper}>
             <Button
               variant="contained"
               color="primary"
@@ -115,7 +115,7 @@ const ForUsers = () => {
             >
               Learn More
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       </Paper>
     </>

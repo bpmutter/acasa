@@ -8,8 +8,8 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 
-export default function CheckboxWithLabel({name, label, formSetter, helperText}) {
-  const [checked, setChecked] = React.useState(false);
+export default function CheckboxWithLabel({name, label, formSetter, helperText, defaultValue}) {
+  const [checked, setChecked] = React.useState(defaultValue);
   const handleChange = e => { 
     const newVal = !checked;
     setChecked(newVal);

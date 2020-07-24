@@ -29,6 +29,7 @@ import postListingToDb from "../queries/listings/postListing";
 import UploadOneImage from "./UploadOneImage";
 import UploadManyImgs from "./UploadManyImages";
 import getListing from '../queries/listings/getListingById';
+import fBdateToHtmlString from '../utils/dateFbToHTML';
 import context from './Context';
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
@@ -77,8 +78,17 @@ const useStyles = makeStyles((theme) => ({
   uploadOneImageWrapper: {
     display: "flex",
     justifyContent: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+  },
+  currentPrimaryImg: {
+      display: 'block',
+      paddingBottom: theme.spacing(2)
+  },
+  primaryImg: { 
+    maxWidth: 250,
   },
   submitButton: {
     marginTop: theme.spacing(2),
@@ -119,14 +129,14 @@ export default function CreateListing() {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
-  const [publish_now, setPublishNow] = useState(true);
+  const [publish_now, setPublishNow] = useState(null);
   const [description, setDescription] = useState("");
-  const [start_date, setStartDate] = useState(todayStr);
-  const [end_date, setEndDate] = useState("");
+  const [start_date, setStartDate] = useState(null);
+  const [end_date, setEndDate] = useState(null);
   const [location, setLocation] = useState({});
   const [location_description, setLocationDescription] = useState("");
-  const [shared, setShared] = useState(true);
-  const [living_with_host, setLivingWithHost] = useState(false);
+  const [shared, setShared] = useState(null);
+  const [living_with_host, setLivingWithHost] = useState(null);
   const [roommates, setRoommates] = useState("");
   const [bedrooms, setBedrooms] = useState("");
   const [bathrooms, setBathrooms] = useState("");
@@ -135,9 +145,9 @@ export default function CreateListing() {
   const [rules, setRules] = useState([]);
   const [pets, setPets] = useState([]);
   const [payment_methods, setPaymentMethods] = useState([]);
-  const [lgbtq, setLgbtq] = useState(false);
-  const [primary_img, setPrimaryImage] = useState("");
-  const [additional_imgs, setAdditionalImages] = useState([]);
+  const [lgbtq, setLgbtq] = useState(null);
+  const [primary_img, setPrimaryImage] = useState(null);
+  const [additional_imgs, setAdditionalImages] = useState(null);
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [resMsg, setResMsg] = useState(null);
   const [redirect, setRedirect] = useState(null);
@@ -161,8 +171,8 @@ export default function CreateListing() {
         setDescription(description);
         setPublishNow(active);
         setPrice(price);
-        setStartDate(start_date); //TODO: convert to date picker readable
-        setEndDate(end_date); //TODO: convert to date picker readable
+        setStartDate(fBdateToHtmlString(start_date)); //TODO: convert to date picker readable
+        setEndDate(fBdateToHtmlString(end_date)); //TODO: convert to date picker readable
         setLocation(location);
         setLocationDescription(location_description);
         setShared(shared);
@@ -275,7 +285,7 @@ export default function CreateListing() {
           </div>
           {!title ? (
             <div className={classes.progressWrapper}>
-                <CircularProgress size={100} color="primary" />
+              <CircularProgress size={100} color="primary" />
             </div>
           ) : (
             <form className={classes.form} noValidate onSubmit={updateListing}>
@@ -289,11 +299,12 @@ export default function CreateListing() {
                   Basic Information
                 </Typography>
                 <div>
+                  {console.log("title is...", title)}
                   <TextField
                     name="title"
                     label="Listing Title"
                     color="secondary"
-                    defaultValue={title.value}
+                    defaultValue={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className={classes.textInput}
                     required
@@ -306,46 +317,51 @@ export default function CreateListing() {
                     name="type"
                     options={hometypes}
                     formSetter={setType}
+                    defaultValue={type}
                   />
                 </div>
                 <div>
-                  <TextField
-                    name="price"
-                    type="number"
-                    label="Price per Month in Dollars"
-                    color="secondary"
-                    className={classes.textInput}
-                    defaultValue={price.value}
-                    onChange={(e) => setPrice(e.target.value)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">$</InputAdornment>
-                      ),
-                    }}
-                    required
-                    helperText="NOTE: You can negotiate price with guests once they've contacted you. "
-                  />
+                  {price && (
+                    <TextField
+                      name="price"
+                      type="number"
+                      label="Price per Month in Dollars"
+                      color="secondary"
+                      className={classes.textInput}
+                      defaultValue={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">$</InputAdornment>
+                        ),
+                      }}
+                      required
+                      helperText="NOTE: You can negotiate price with guests once they've contacted you. "
+                    />
+                  )}
                 </div>
                 <div>
-                  <RadioGroup
-                    formLabel="Publish Now *"
-                    ariaLabel="publish listing publicly"
-                    name="active"
-                    required={true}
-                    defaultValue="true"
-                    formSetter={setPublishNow}
-                    className={classes.textInput}
-                    options={[
-                      { value: "true", label: "Yes" },
-                      { value: "false", label: "Not Right Now" },
-                    ]}
-                  />
+                  {publish_now !== null && (
+                    <RadioGroup
+                      formLabel="Publish Now *"
+                      ariaLabel="publish listing publicly"
+                      name="active"
+                      required={true}
+                      defaultValue={JSON.stringify(publish_now)}
+                      formSetter={setPublishNow}
+                      className={classes.textInput}
+                      options={[
+                        { value: "true", label: "Yes" },
+                        { value: "false", label: "Not Right Now" },
+                      ]}
+                    />
+                  )}
                 </div>
                 <div>
                   <TextField
                     name="description"
                     label="Property Description"
-                    defaultValue={description.value}
+                    defaultValue={description}
                     onChange={(e) => setDescription(e.target.value)}
                     multiline
                     rows={4}
@@ -364,20 +380,25 @@ export default function CreateListing() {
                 >
                   Dates
                 </Typography>
-                <DateSelector
-                  className={classes.textInput}
-                  labelText="Start Date"
-                  defaultValue={todayStr}
-                  required={true}
-                  formSetter={setStartDate}
-                />
-                <DateSelector
-                  className={classes.textInput}
-                  labelText="End Date"
-                  required={false}
-                  helperText="Only include if there is a fixed end date for the availability"
-                  formSetter={setEndDate}
-                />
+                {start_date && (
+                  <DateSelector
+                    className={classes.textInput}
+                    labelText="Start Date"
+                    defaultValue={start_date}
+                    required={true}
+                    formSetter={setStartDate}
+                  />
+                )}
+                {end_date && (
+                  <DateSelector
+                    className={classes.textInput}
+                    defaultValue={end_date}
+                    labelText="End Date"
+                    required={false}
+                    helperText="Only include if there is a fixed end date for the availability"
+                    formSetter={setEndDate}
+                  />
+                )}
               </div>
               <Divider className={classes.sectionDivider} />
               <div className={classes.location}>
@@ -408,7 +429,7 @@ export default function CreateListing() {
                   name="location_description"
                   label="Location Description"
                   multiline
-                  defaultValue={location_description.value}
+                  defaultValue={location_description}
                   onChange={(e) => setLocationDescription(e.target.value)}
                   rows={4}
                   color="secondary"
@@ -426,19 +447,21 @@ export default function CreateListing() {
                   Occupancy
                 </Typography>
                 <div>
-                  <RadioGroup
-                    formLabel="Shared *"
-                    ariaLabel="apartment is shared option"
-                    name="shared"
-                    required={true}
-                    defaultValue="true"
-                    className={classes.textInput}
-                    formSetter={setShared}
-                    options={[
-                      { value: "true", label: "Yes" },
-                      { value: "false", label: "No" },
-                    ]}
-                  />
+                  {shared !== null && (
+                    <RadioGroup
+                      formLabel="Shared *"
+                      ariaLabel="apartment is shared option"
+                      name="shared"
+                      required={true}
+                      defaultValue={JSON.stringify(shared)}
+                      className={classes.textInput}
+                      formSetter={setShared}
+                      options={[
+                        { value: "true", label: "Yes" },
+                        { value: "false", label: "No" },
+                      ]}
+                    />
+                  )}
                 </div>
                 {shared === true && (
                   <FormGroup
@@ -450,18 +473,22 @@ export default function CreateListing() {
                         required={true}
                         labelText={"Roommates"}
                         name="roommates"
+                        defaultValue={roommates}
                         formSetter={setRoommates}
                         options={oneToTenOptions}
                         className={classes.textInput}
                       />
                     </div>
                     <div>
-                      <Checkbox
-                        label={"Living with Host"}
-                        name="living_with_host"
-                        formSetter={setLivingWithHost}
-                        className={classes.textInput}
-                      />
+                      {living_with_host !== null && (
+                        <Checkbox
+                          label={"Living with Host"}
+                          name="living_with_host"
+                          formSetter={setLivingWithHost}
+                          className={classes.textInput}
+                          defaultValue={living_with_host}
+                        />
+                      )}
                     </div>
                   </FormGroup>
                 )}
@@ -473,6 +500,7 @@ export default function CreateListing() {
                       name="bedrooms"
                       formSetter={setBedrooms}
                       options={oneToTenOptions}
+                      defaultValue={bedrooms}
                     />
                   </div>
                   <div>
@@ -482,6 +510,7 @@ export default function CreateListing() {
                       name="bathrooms"
                       formSetter={setBathrooms}
                       options={oneToTenOptions}
+                      defaultValue={bathrooms}
                     />
                   </div>
                   <div>
@@ -491,6 +520,7 @@ export default function CreateListing() {
                       name="max_guests"
                       formSetter={setMaxGuests}
                       options={oneToTenOptions}
+                      defaultValue={max_guests}
                     />
                   </div>
                 </FormGroup>
@@ -511,22 +541,24 @@ export default function CreateListing() {
                 </Typography>
                 <FormGroup row>
                   <div>
-                    <TextField
-                      name="wifi_speed"
-                      type="number"
-                      label="Wifi speed (Mbps)"
-                      color="secondary"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <WifiIcon color="secondary" />
-                          </InputAdornment>
-                        ),
-                      }}
-                      className={classes.textInput}
-                      defaultValue={wifi_speed.value}
-                      onChange={wifi_speed.onChange}
-                    />
+                    {wifi_speed && (
+                      <TextField
+                        name="wifi_speed"
+                        type="number"
+                        label="Wifi speed (Mbps)"
+                        color="secondary"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <WifiIcon color="secondary" />
+                            </InputAdornment>
+                          ),
+                        }}
+                        className={classes.textInput}
+                        defaultValue={wifi_speed}
+                        onChange={wifi_speed.onChange}
+                      />
+                    )}
                   </div>
                   <div>
                     <SelectMultiple
@@ -538,6 +570,7 @@ export default function CreateListing() {
                       ]}
                       label="House Rules"
                       formSetter={setRules}
+                      defaultValue={rules}
                     />
                   </div>
                 </FormGroup>
@@ -559,6 +592,7 @@ export default function CreateListing() {
                       ]}
                       label="Pets"
                       formSetter={setPets}
+                      defaultValue={pets}
                     />
                   </div>
                   <div>
@@ -573,14 +607,18 @@ export default function CreateListing() {
                       ]}
                       label="Payment Methods"
                       formSetter={setPaymentMethods}
+                      defaultValue={payment_methods}
                     />
                   </div>
                   <div style={{ paddingTop: 12 }}>
-                    <Checkbox
-                      label={"LGBTQ+ Friendly"}
-                      name="lgbtq"
-                      formSetter={setLgbtq}
-                    />
+                    {lgbtq !== null && (
+                      <Checkbox
+                        label={"LGBTQ+ Friendly"}
+                        name="lgbtq"
+                        formSetter={setLgbtq}
+                        defaultValue={lgbtq}
+                      />
+                    )}
                   </div>
                 </FormGroup>
               </div>
@@ -604,10 +642,24 @@ export default function CreateListing() {
                     make you it's a picture you really like!
                   </Typography>
                   <div className={classes.uploadOneImageWrapper}>
-                    <UploadOneImage
-                      formSetter={setPrimaryImage}
-                      required={true}
-                    />
+                    {primary_img && (
+                      <>
+                        <div className={classes.currentPrimaryImg}>
+                          <Typography component="p" variant="h6" align="center">
+                            Current Primary Image
+                          </Typography>
+                          <img
+                            src={primary_img}
+                            alt={primary_img}
+                            className={classes.primaryImg}
+                          />
+                        </div>
+                        <UploadOneImage
+                          formSetter={setPrimaryImage}
+                          required={true}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
                 <div>
@@ -617,10 +669,15 @@ export default function CreateListing() {
                   <Typography color="textSecondary">
                     Add some more photos to help make your listing shine.
                   </Typography>
-                  <UploadManyImgs
+                  <Typography color="textSecondary">
+                    <b>NOTE:</b> at this time you can only bulk add photos, so if you
+                    want to keep your current photos and add others, you need to
+                    add them again.
+                  </Typography>
+                  {additional_imgs !== null && <UploadManyImgs
                     formSetter={setAdditionalImages}
                     defaultImages={additional_imgs}
-                  />
+                  />}
                 </div>
               </div>
               <Divider className={classes.sectionDivider} />

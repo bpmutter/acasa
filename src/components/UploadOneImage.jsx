@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UploadOneImage({multiple, required, formSetter}){
+export default function UploadOneImage({multiple, required, formSetter , preview}){
     const id = uuid();
     const [imgUrl, setImgUrl] = useState("");
     const [progress, setProgress] = useState(0);
@@ -72,7 +72,7 @@ export default function UploadOneImage({multiple, required, formSetter}){
 
         <div className={classes.imgWrapper}>
           {imgUrl === "loading" && <CircularProgress value={progress} />}
-          {imgUrl && imgUrl !== "loading" && (
+          {imgUrl && (imgUrl !== "loading") && preview &&  (
             <div
               className={classes.imgPreview}
               style={{ backgroundImage: `url(${imgUrl})` }}

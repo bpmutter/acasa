@@ -28,7 +28,7 @@ export default function RadioButtonsGroup({defaultValue, formLabel, ariaLabel, n
       <RadioGroup
         aria-label={ariaLabel}
         name={name}
-        value={value}
+        value={value || JSON.stringify(defaultValue)}
         onChange={handleChange}
         required={required}
         row
