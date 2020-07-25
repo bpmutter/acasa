@@ -11,28 +11,34 @@ import payment from '../vector-icons/green/transfer-money.svg'
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: theme.spacing(1.5),
-    padding: "1em",
+    padding: theme.spacing(2),
     maxWidth: "90vw",
     backgroundColor: theme.palette.background.default,
   },
   sectionWrapper: {
-    padding: "1em",
+    padding: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      padding: 0,
+    },
   },
   cardWrapper: {
     display: "flex",
     justifyContent: "space-evenly",
     flexDirection: "row",
     padding: "1rem",
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
+    [theme.breakpoints.down("sm")]: {
+      padding: 0,
+    },
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
   },
   ownerLearnMoreWrapper: {
-    width: '1005',
-    display: 'flex',
-    justifyContent: 'center',
+    width: "1005",
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 

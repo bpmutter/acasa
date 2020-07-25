@@ -11,8 +11,12 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 325,
-    height: 250,
-    margin: "1em",
+    minHeight: 250,
+    margin: theme.spacing(1),
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 0,
+      marginRight: 0,
+    }
   },
   title: {
     fontFamily: theme.typography.special,
