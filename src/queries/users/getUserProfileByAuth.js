@@ -8,7 +8,6 @@ export default async function getUserByUidAuth(stateSetterCb) {
       const uid = firebase.auth().currentUser.uid;
       const res = await db.collection("users").doc(uid).get();
       if (res.empty) {
-        console.log("No matching documents.");
         stateSetterCb(null)
       }
       stateSetterCb(res.data())

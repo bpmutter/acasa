@@ -184,7 +184,7 @@ export default function ListingCard({listing}){
             />
             <Chip
               icon={<BathtubIcon />}
-              label={`${listing.max_guests} bath`}
+              label={`${listing.bathrooms} bath`}
               className={classes.chip}
             />
             {listing.wifi_speed && (

@@ -171,7 +171,7 @@ export default function ListingPage(){
                     />
                     <Chip
                       icon={<BathtubIcon />}
-                      label={`${listing.max_guests} bath`}
+                      label={`${listing.bathrooms} bath`}
                       className={classes.chip}
                     />
                   </Box>

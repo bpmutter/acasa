@@ -9,45 +9,43 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import context from './Context';
 import fourOhFourImg from "../vector-icons/green/hiding-in-trees.svg";
 
-const useStyles = makeStyles(theme => {
-    console.log(theme)
-    return {
-      pageWrapper: {
-        width: "75vw",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        paddingTop: theme.spacing(12),
-        paddingBottom: theme.spacing(12),
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
-        [theme.breakpoints.down("sm")]: {
-          flexDirection: "column-reverse",
-          paddingTop: theme.spacing(6),
-          paddingBottom: theme.spacing(6),
-        },
-      },
-      title: {
-        fontFamily: theme.typography.special,
-        color: theme.palette.primary.dark,
-        paddingBottom: theme.spacing(2),
-        [theme.breakpoints.down("sm")]: {
-          paddingTop: theme.spacing(3),
-        },
-      },
-      subtitle: {
-        fontSize: theme.typography.fontSize * 1.5,
-        color: theme.palette.text.secondary,
-        paddingBottom: theme.spacing(2),
-      },
-      img: {
-        maxWidth: 450,
-        [theme.breakpoints.down("sm")]: { 
-            width: '90%'
-        }
-      },
-    };});
+const useStyles = makeStyles(theme => ({
+  pageWrapper: {
+    width: "75vw",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(12),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse",
+      paddingTop: theme.spacing(6),
+      paddingBottom: theme.spacing(6),
+    },
+  },
+  title: {
+    fontFamily: theme.typography.special,
+    color: theme.palette.primary.dark,
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(3),
+    },
+  },
+  subtitle: {
+    fontSize: theme.typography.fontSize * 1.5,
+    color: theme.palette.text.secondary,
+    paddingBottom: theme.spacing(2),
+  },
+  img: {
+    maxWidth: 450,
+    [theme.breakpoints.down("sm")]: { 
+        width: '90%'
+    }
+  },    
+}));
 
 export default function FourOhFour(){
     const classes = useStyles();

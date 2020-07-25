@@ -31,10 +31,6 @@ export default function UserPage(){
       })();
     }, [username]);
 
-    // useEffect(() => {
-    //     console.log('USERNAME IN CONTEXT IS::', usernameContext)
-    // }, [usernameContext]);
-
     if(username === usernameContext){
         return(
             <div>

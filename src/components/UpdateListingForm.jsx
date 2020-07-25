@@ -241,7 +241,6 @@ export default function CreateListing() {
       payment_methods,
       id
     };
-    console.log('listing is...', listing)
     await updateListingToDb(listing, setResMsg);
   };
 

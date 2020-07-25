@@ -26,7 +26,6 @@ export default function UserListings({user}){
     const getListings = useCallback(async ()=>{
       if(user.username){
         const userListings = await getUserListings(user.username);
-        console.log('USER LISTINGS::',userListings)
         setListings(userListings);
       }
     }, [user.username])

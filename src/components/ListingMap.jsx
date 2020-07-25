@@ -22,23 +22,6 @@ const MapWithAMarker = withScriptjs(
 );
 
 export default function ListingMap({placeName, lat, lng, ...props}){
-    // const [coords, setCoords] = useState([lat, lng]);
-
-    // const getCoords = useCallback(async () => {
-    //     const {
-    //       location: { lat, lng },
-    //     } = await geocoder.geocodeFromAddress(placeName);
-    //     console.log(lat, lng);
-    //     setCoords([lat, lng])
-    // }, placeName);
-
-
-    // console.log('coords:: ', coords)
-    //todo: 
-    //   get coords from location ID 
-    //   add personal google maps key
-    //   add custom theme to map
-    console.log('coords::', lat, lng)
     return (
       <>
         {!lat || !lng ?(

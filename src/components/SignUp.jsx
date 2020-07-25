@@ -44,7 +44,6 @@ const SignUp = () => {
     callbacks: {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        console.log('auth result::', authResult)
         signUp(authResult);
         return false;
       }

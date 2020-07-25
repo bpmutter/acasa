@@ -7,7 +7,6 @@ export default async function createUserInDb(authResult){
         additionalUserInfo: { isNewUser, profile},
       } = authResult;
 
-      console.log('SIGN UP INFOOO::', authResult);
       const uid = firebase.auth().currentUser.uid;
       const newUser = {};
 
@@ -39,23 +38,12 @@ export default async function createUserInDb(authResult){
 
       let userId = null;
       if(isNewUser){
-          console.log('if entered....')
         try{ 
-
             const res = await db.collection("users").doc(uid).set(newUser);
-            console.log('res is....', res)
-        }catch(err){ console.error(err)
+        }catch(err){ 
+          console.error(err)
         }
-        userId = uid;
-
-        
+        userId = uid;    
       }
-      console.log('user id before return', userId)
       return userId;
-
-
-      // Add a new document in collection "cities" with ID 'LA'
-      
-      // [END set_document]
-
 }

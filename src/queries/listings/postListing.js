@@ -29,8 +29,6 @@ export default async function postListing(listing, setRes){
     const {lat, lng} = location.geometry.location;
     console.log({lat,lng});
     coordinates = new firebase.firestore.GeoPoint(lat, lng);
-    console.log("coords::", coordinates);
-
   }
   
 

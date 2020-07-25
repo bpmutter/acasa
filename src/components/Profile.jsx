@@ -28,7 +28,6 @@ export default function UserPage() {
       const uid = firebase.auth().currentUser.uid;
       const res = await db.collection("users").doc(uid).get();
       if (res.empty) {
-        console.log("No matching documents.");
         setUser(null);
         return unsubscribe();
       }
@@ -41,9 +40,8 @@ export default function UserPage() {
   });
   }, []);
 
-  const userVal = user;
-  // console.log('user val::',userVal.date_added.toDateString())
-  
+  const userVal = user; 
+   
   return (
     <MainContentWrapper>
       <UserProfileInfo user={userVal} profile/>

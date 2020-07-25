@@ -50,9 +50,7 @@ export default function UploadManyImgs({formSetter, defaultImages=[]}){
 
     }
 
-    useEffect(() => {
-        console.log('uploaded::',uploadedPics )
-    }, [uploadedPics, uploadedPics.length]);
+    
 
     return (
       <div>

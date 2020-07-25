@@ -25,7 +25,6 @@ export default function uploadFile(file, path, imgSetter, progressSetter) {
     },
     function () {
       uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-        console.log("File available at", downloadURL);
         if(imgSetter) imgSetter(downloadURL);
         else return downloadURL;
       });

@@ -7,7 +7,7 @@ export default async function login(){
     const userRef = db.collection('users').doc(uid);
     const doc = await userRef.get();
     if (!doc.exists) {
-        console.log('No such document!');
+        return;
     } else {
         const docData = doc.data()
         return docData;

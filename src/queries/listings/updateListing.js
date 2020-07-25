@@ -52,9 +52,7 @@ export default async function postListing(listing, setRes) {
   if (location.geometry) {
     debugger;
     const { lat, lng } = location.geometry.location;
-    console.log({ lat, lng });
     coordinates = new firebase.firestore.GeoPoint(lat, lng);
-    console.log("coords::", coordinates);
   }
 
   const newListing = {
@@ -77,7 +75,6 @@ export default async function postListing(listing, setRes) {
     rules,
     pets,
     lgbtq,
-    id,
     living_with_host,
     created_at: timestamp,
     updated_at: timestamp,
@@ -86,7 +83,6 @@ export default async function postListing(listing, setRes) {
     additional_imgs,
     payment_methods,
   };
-  console.log('updated listing is...', newListing)
   const unsubscribe = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
       const uid = firebase.auth().currentUser.uid;

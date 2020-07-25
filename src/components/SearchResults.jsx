@@ -45,10 +45,8 @@ export default function SearchResults({locationDescription, lat, lng, hometype, 
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    console.log(locationDescription)
     const getAndSetListings = async () => {
         const res = await getNearbyListings(lat, lng, searchRadiusKm, hometype, startDate);
-        console.log('search res::',res)
         setListings(res.results);
         setLoading(false);
     }
