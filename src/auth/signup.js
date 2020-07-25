@@ -7,7 +7,7 @@ export default async function createUserInDb(authResult){
         additionalUserInfo: { isNewUser, profile},
       } = authResult;
 
-      const uid = firebase.auth().currentUser.uid;
+      const uid = await firebase.auth().currentUser.uid;
       const newUser = {};
 
       //create unique username with timestamp

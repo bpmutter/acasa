@@ -25,9 +25,7 @@ export default async function postListing(listing, setRes){
   const id = encodeURI(`${titleDash.slice(0, 25)}-${timestamp}`);
   let coordinates;
   if(location.geometry){
-    debugger;
     const {lat, lng} = location.geometry.location;
-    console.log({lat,lng});
     coordinates = new firebase.firestore.GeoPoint(lat, lng);
   }
   

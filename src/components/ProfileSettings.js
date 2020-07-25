@@ -80,7 +80,6 @@ export default function EditProfile(){
         const uid = firebase.auth().currentUser.uid;
         const res = await db.collection("users").doc(uid).get();
         if (res.empty) {
-          console.log("No matching documents.");
           setUser(null);
           return;
         }
@@ -94,7 +93,6 @@ export default function EditProfile(){
         setWebsite(thisUser.contact.website);
         setWhatsapp(thisUser.contact.whatsapp);
         setBio(thisUser.bio);
-        // console.log('langs::',languages, website, firstName)
         setLocation(thisUser.location || {});
         return deactivate();
       }
@@ -143,13 +141,11 @@ export default function EditProfile(){
     const res = await updateUserAccountInfo({
       firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid
     });
-    console.log(res.message);
     setSnackbar({ msg: res.message.content, severity: res.message.type });
   }
 
   return (
     <>
-      {console.log(languages, firstName, lastName)}
       <MainContentWrapper>
         <ContentPaper>
           <Typography

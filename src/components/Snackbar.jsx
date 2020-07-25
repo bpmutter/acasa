@@ -26,8 +26,6 @@ export default function CustomizedSnackbars({ msgSeverity, msg, onClose}) {
     if (reason === "clickaway") {
       return;
     }
-    console.log('close handler entered')
-    console.log(reason)
 
     setOpen(false);
     if (onClose) {

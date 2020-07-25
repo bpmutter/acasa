@@ -113,10 +113,8 @@ export default function ListingPage(){
     const {id} = useParams();
     const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
     
-
     const getListing = useCallback(async () => {
       const listing = await getListingById(id);
-      console.log('listing in component', listing)
       setListing(listing);
 
       let currentTime = new Date();
@@ -129,7 +127,6 @@ export default function ListingPage(){
     useEffect(()=>{
       getListing()
     },[getListing])
-
 
     return (
       <>
