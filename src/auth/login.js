@@ -3,7 +3,6 @@ import firebase from 'firebase';
 
 export default async function login(){
     const uid = await firebase.auth().currentUser.uid;
-    console.log('UID IS...', uid);
     
     const userRef = await db.collection('users').doc(uid);
     const doc = await userRef.get();

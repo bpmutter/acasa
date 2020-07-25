@@ -1,5 +1,6 @@
 import db from "../../config/firestoreDb";
 import firebase from 'firebase';
+import accents from "remove-accents";
 import geoListings from '../../config/geofirestore';
 
 export default async function postListing(listing, setRes){
@@ -22,7 +23,7 @@ export default async function postListing(listing, setRes){
   let timestamp = new Date();
   timestamp = timestamp.getTime();
   const titleDash = title.split(" ").join("-")
-  const id = encodeURI(`${titleDash.slice(0, 25)}-${timestamp}`);
+  const id = encodeURI(`${accents.remove(titleDash.slice(0, 25))}-${timestamp}`);
   let coordinates;
   if(location.geometry){
     const {lat, lng} = location.geometry.location;
@@ -39,7 +40,8 @@ export default async function postListing(listing, setRes){
 
   const unsubscribe = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
-        const uid = firebase.auth().currentUser.uid;
+        const uid = await firebase.auth().currentUser.uid;
+        console.log('uid::', uid)
         let user = await db.collection("users").doc(uid).get();
         user = user.data();
         const owner = { 
@@ -52,7 +54,8 @@ export default async function postListing(listing, setRes){
         newListing.owner = owner;
 
         try{ 
-            const res = await geoListings.doc(id).set(newListing);     
+            const res = await geoListings.doc(id)
+            .set(newListing);     
             setRes({
               message: {
                 type: "success",

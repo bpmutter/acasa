@@ -4,10 +4,15 @@ service cloud.firestore {
 
 
     match /listings/{listingid} {
+
+      function canWriteAndUpdate() {
+        return request.auth.uid != null 
+          && request.resource.data.owner.uid == request.auth.uid;
+      }
       //anyone can read any listing
       allow read: if true;
       // Only the authenticated user who authored the document can write
-      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.owner.uid;
+      allow write: if canWriteAndUpdate(); 
     }
     match /users/{userId} {
       allow read: if true;

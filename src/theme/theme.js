@@ -17,7 +17,7 @@ let themeLight = createMuiTheme({
     }
   },
   typography: {
-    special: "'Fredoka One', cursive",
+    special: "'Fredoka One', Roboto, Arial, sans-serif",
   },
 });
 themeLight = responsiveFontSizes(themeLight);
