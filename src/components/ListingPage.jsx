@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 1200,
     gridTemplateColumns: "2.25fr 1fr",
     gridTemplateRows: "auto auto auto",
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+    },
   },
   mainContent: {
     margin: theme.spacing(1),
@@ -49,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
   chips: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   },
   chip: {
     backgroundColor: theme.palette.secondary.light,
@@ -58,12 +62,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5),
     [theme.breakpoints.down("xs")]: {
       margin: theme.spacing(0.25),
+      padding: theme.spacing(0.25),
+      fontSize: theme.typography.fontSize * 0.75,
     },
   },
   listingDescription: {
-      marginTop: theme.spacing(2),
-      paddingLeft: theme.spacing(5),
-      paddingRight: theme.spacing(5),
+    marginTop: theme.spacing(2),
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
   },
   sectionDivider: {
     marginTop: theme.spacing(2),
@@ -82,12 +88,12 @@ const useStyles = makeStyles((theme) => ({
   availableNow: {
     // fontWeight: 'bold',
     color: theme.palette.secondary.dark,
-    fontFamily: theme.typography.special
+    fontFamily: theme.typography.special,
   },
   ownerInfo: {
     display: "inline-flex",
     justifyContent: "left",
-    alignItems: "center", 
+    alignItems: "center",
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
     paddingLeft: theme.spacing(1.5),
@@ -96,7 +102,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     alignSelf: "center",
     justifySelf: "center",
-    // paddingRight: theme.spacing(3),
   },
 }));
 

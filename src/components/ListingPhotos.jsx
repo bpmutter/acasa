@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundImage: '/assets/loading-spinner.gif',
+    [theme.breakpoints.down("sm")]: { 
+      width: 300,
+    }
   },
   spacing: {
     margin: theme.spacing(1),

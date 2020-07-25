@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 2,
+    [theme.breakpoints.down("sm")]: {
+      position: "static",
+    },
   },
   mainContent: {
     display: "inline-flex",
@@ -26,8 +29,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     boxSizing: "border-box",
-    width: "100%",
+    width: 800,
     backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    },
   },
   title: {
     fontFamily: theme.typography.special,
@@ -38,10 +45,17 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "flex-end",
+    },
   },
   contactButton: {
     marginLeft: theme.spacing(1.5),
     marginRight: theme.spacing(1.5),
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: theme.spacing(0),
+      marginRight: theme.spacing(0),
+    },
   },
 }));
 export default function ListingHeader({listing}){

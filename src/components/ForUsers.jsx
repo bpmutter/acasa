@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
+  divider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const ForUsers = () => {
@@ -79,7 +83,7 @@ const ForUsers = () => {
             />
           </Box>
         </Box>
-        <Divider />
+        <Divider className={classes.divider} />
         <Box className={classes.sectionWrapper}>
           <Typography variant="h4" component="h3" className={classes.title}>
             For Owners
