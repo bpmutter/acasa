@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   img: {
     backgroundPosition: "center",
     //TODO: add a better default img
-    backgroundImage: `url(https://r-cf.bstatic.com/images/hotel/max1024x768/365/36548015.jpg)`,
+    // backgroundImage: `url(https://r-cf.bstatic.com/images/hotel/max1024x768/365/36548015.jpg)`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     minHeight: 225,
@@ -141,12 +141,13 @@ export default function ListingCard({listing}){
     const triggerModal = () => {
         //TODO add modal for contacting host 
     }
+    console.log('background img::', listing.primary_img)
     return (
       <Paper className={classes.root} elevation={2}>
-        <div
+        {listing.primary_img && <div
           className={classes.img}
           style={{ backgroundImage: `url(${listing.primary_img})` }}
-        ></div>
+        ></div>}
         <Box className={classes.mainContent}>
           <Box className={classes.topContent}>
             <Typography variant="p" component="p" color="textSecondary">

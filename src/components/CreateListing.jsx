@@ -30,15 +30,15 @@ import UploadManyImgs from "./UploadManyImages";
 
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'column',
-      paddingBottom: theme.spacing(2),
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    paddingBottom: theme.spacing(2),
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.main,
-    paddingBottom: theme.spacing(1.5)
+    paddingBottom: theme.spacing(1.5),
   },
   logo: {
     width: 50,
@@ -61,11 +61,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
-  uploadOneImageWrapper: { 
-    display: 'flex',
-    justifyContent: 'center',
+  uploadOneImageWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+  },
+  currentPrimaryImg: {
+    display: "block",
+    paddingBottom: theme.spacing(2),
+  },
+  primaryImg: {
+    maxWidth: 250,
   },
   submitButton: {
     marginTop: theme.spacing(2),
@@ -73,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
     fontFamily: theme.typography.special,
-    width: '100%',
+    width: "100%",
     padding: theme.spacing(1.5),
-    fontSize: theme.typography.fontSize*2
+    fontSize: theme.typography.fontSize * 2,
   },
 }));
 
@@ -315,8 +324,8 @@ export default function CreateListing(){
                 >
                   Location
                 </Typography>
-                {location.description &&(
-                  <div style={{paddingTop: '.5em', paddingBottom: '.5em'}}>
+                {location.description && (
+                  <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
                     <Typography>
                       <b>Your current location is: </b> {location.description}
                     </Typography>
@@ -530,6 +539,20 @@ export default function CreateListing(){
                     make you it's a picture you really like!
                   </Typography>
                   <div className={classes.uploadOneImageWrapper}>
+                    {primary_img && (
+                      
+                        <div className={classes.currentPrimaryImg}>
+                          <Typography component="p" variant="h6" align="center">
+                            Current Primary Image
+                          </Typography>
+                          <img
+                            src={primary_img}
+                            alt={primary_img}
+                            className={classes.primaryImg}
+                          />
+                        </div>
+                      
+                    )}
                     <UploadOneImage
                       formSetter={setPrimaryImage}
                       required={true}

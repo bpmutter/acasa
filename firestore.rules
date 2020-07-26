@@ -9,6 +9,14 @@ service cloud.firestore {
         return request.auth.uid != null 
           && request.resource.data.owner.uid == request.auth.uid;
       }
+
+      //TODO: TEST AND IMPLEMENT
+      function canReadIfPublicOrOwnListing(){
+        return request.auth.uid != null
+          && resource.data.active == true
+          || resource.data.owner.uid == request.auth.uid   
+      }
+      
       //anyone can read any listing
       allow read: if true;
       // Only the authenticated user who authored the document can write

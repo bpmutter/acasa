@@ -16,6 +16,8 @@ import GoogleMapsAutoComplete from './GoogleMapsSearchBox';
 import SelectMultiple from './SelectMultiple';
 import updateUserAccountInfo from '../auth/updateUserAccountInfo';
 import languageList from '../languages.json';
+import {useHistory} from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
@@ -52,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditProfile(){
     const classes = useStyles();
+    const history = useHistory();
+
     const [user, setUser] = useState({
       contact: {},
       location: {},
@@ -142,6 +146,11 @@ export default function EditProfile(){
       firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid
     });
     setSnackbar({ msg: res.message.content, severity: res.message.type });
+    if(res.message.type){
+      setTimeout(()=>{
+        history.push('/profile')
+      }, 100)
+    }
   }
 
   return (
@@ -297,7 +306,13 @@ export default function EditProfile(){
                   />
                 </div>
                 <div>
-                  {/* {user.location.description && ( */}
+                  {location.description && (
+                    <div style={{ paddingTop: ".5em", paddingBottom: ".5em" }}>
+                      <Typography>
+                        <b>Your current location is: </b> {location.description}
+                      </Typography>
+                    </div>
+                  )}
                   <GoogleMapsAutoComplete
                     variant="standard"
                     label="Location"
@@ -310,11 +325,6 @@ export default function EditProfile(){
                     }
                     formSetter={setLocation}
                     className={classes.textInput}
-                    helperText={
-                      user.location &&  user.location.description
-                        ? `Your current location is: ${user.location.description}`
-                        : "You haven't set a location yet"
-                    }
                   />
                   {/* )} */}
                 </div>

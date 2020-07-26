@@ -13,6 +13,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonIcon from "@material-ui/icons/Person";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import {useHistoy, useHistory} from 'react-router-dom';
+
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -37,6 +39,8 @@ const StyledMenu = withStyles({
 export default function CustomizedMenus(buttonStyles) {
 
   const { logOut } = useContext(AppContext);
+  const history = useHistory();
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -46,6 +50,11 @@ export default function CustomizedMenus(buttonStyles) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const logOutUser = () => {
+    logOut();
+    history.push('/');
+  }
 
   
 
@@ -98,7 +107,7 @@ export default function CustomizedMenus(buttonStyles) {
           </ListItemIcon>
           <ListItemText primary="Messages" />
         </MenuItem> */}
-        <MenuItem onClick={logOut}>
+        <MenuItem onClick={logOutUser}>
           <ListItemIcon>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
