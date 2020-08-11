@@ -14,7 +14,8 @@ import ListingPage from './ListingPage';
 import SearchPage from './SearchPage';
 import LoginPage from './LoginPage';
 import UpdateListingForm from './UpdateListingForm';
-
+import PersonalContactModal from './PersonalContactModal';
+import AboutModal from './AboutModal';
 function App() {
   return (
     <>
@@ -67,6 +68,8 @@ function App() {
             </Route>
           </Switch>
         </Router>
+        <AboutModal/>
+        <PersonalContactModal/>
       </div>
       <Footer />
     </>

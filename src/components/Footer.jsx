@@ -8,13 +8,16 @@ const useStyles = makeStyles(theme=>({
     //add styles
     root: {
         backgroundColor: theme.palette.secondary.light,
-        flexFlow: 'column',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
         // minHeight: 60,
     },
     contact: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         height: '100%',
         
     },
