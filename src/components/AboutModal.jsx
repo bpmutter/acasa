@@ -7,7 +7,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import WebIcon from "@material-ui/icons/Web";
-
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
@@ -129,14 +129,18 @@ export default function AboutModal() {
             <p>
               aCasa was made with a React frontend and a Firebase serverless
               backend. Learn more and view the source code on{" "}
-              <Link href="https://github.com/bpmutter/acasa" target="_blank">
+              <Link
+                href="https://github.com/bpmutter/acasa"
+                target="_blank"
+                rel="noopener"
+              >
                 Github
               </Link>
               .
             </p>
 
             <Typography color="textSecondary" align="center">
-              {"Made with 💜 by "}
+              {"Made with ❤️ by "}
               Ben Perlmutter, {new Date().getFullYear()}
             </Typography>
             <Typography
@@ -145,30 +149,38 @@ export default function AboutModal() {
               align="center"
               className={classes.icons}
             >
-              <Link
-                color="inherit"
+              <IconButton
+                color="secondary"
                 href="https://ben.perlmutter.io/"
                 target="_blank"
                 rel="noopener"
               >
                 <WebIcon className={classes.contactIcon} />
-              </Link>
-              <Link
-                color="inherit"
+              </IconButton>
+              <IconButton
+                color="secondary"
                 href="https://github.com/bpmutter"
                 target="_blank"
                 rel="noopener"
               >
                 <GitHubIcon className={classes.contactIcon} />
-              </Link>
-              <Link
-                color="inherit"
+              </IconButton>
+              <IconButton
+                color="secondary"
+                href="https://linkedin.com/in/ben-perlmutter"
+                target="_blank"
+                rel="noopener"
+              >
+                <LinkedInIcon className={classes.contactIcon} />
+              </IconButton>
+              <IconButton
+                color="secondary"
                 href="https://twitter.com/bpmutter"
                 target="_blank"
                 rel="noopener"
               >
                 <TwitterIcon className={classes.contactIcon} />
-              </Link>
+              </IconButton>
             </Typography>
           </div>
         </div>
