@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.special,
     marginBottom: theme.spacing(3),
   },
+  aboutInfo: {
+      fontSize: theme.typography.fontSize*1.25
+  },
   contactIcon: {
       fontSize: theme.typography.fontSize*1.5,
       margin: theme.spacing(1),
@@ -111,47 +114,63 @@ export default function AboutModal() {
           >
             About aCasa
           </Typography>
-          <p>aCasa is a medium-term listing platform.</p>
-          <p>
-            Home seekers can browse homes based on location, view home info
-            relevant to medium-term stays, and contact the owners to continue
-            the conversation on other mediums.
-          </p>
-          <p>
-            Homeowners can post, update, and delete listings. They also have a
-            dedicated profile page that they can update and share to build their business.
-          </p>
+          <div className={classes.aboutInfo}>
+            <p>aCasa is a medium-term listing platform.</p>
+            <p>
+              Home seekers can browse homes based on location, view home info
+              relevant to medium-term stays, and contact the owners to continue
+              the conversation on other mediums.
+            </p>
+            <p>
+              Homeowners can post, update, and delete listings. They also have a
+              dedicated profile page that they can update and share to build
+              their business.
+            </p>
+            <p>
+              aCasa was made with a React frontend and a Firebase serverless
+              backend. Learn more and view the source code on{" "}
+              <Link href="https://github.com/bpmutter/acasa" target="_blank">
+                Github
+              </Link>
+              .
+            </p>
 
-          <Typography  color="textSecondary" align="center">
-            {"Made with 💜 by "}
-            Ben Perlmutter, {new Date().getFullYear()}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" align="center" className={classes.icons}>
-            <Link
-              color="inherit"
-              href="https://ben.perlmutter.io/"
-              target="_blank"
-              rel="noopener"
+            <Typography color="textSecondary" align="center">
+              {"Made with 💜 by "}
+              Ben Perlmutter, {new Date().getFullYear()}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              align="center"
+              className={classes.icons}
             >
-              <WebIcon className={classes.contactIcon} />
-            </Link>
-            <Link
-              color="inherit"
-              href="https://github.com/bpmutter"
-              target="_blank"
-              rel="noopener"
-            >
-              <GitHubIcon className={classes.contactIcon} />
-            </Link>
-            <Link
-              color="inherit"
-              href="https://twitter.com/bpmutter"
-              target="_blank"
-              rel="noopener"
-            >
-              <TwitterIcon className={classes.contactIcon} />
-            </Link>
-          </Typography>
+              <Link
+                color="inherit"
+                href="https://ben.perlmutter.io/"
+                target="_blank"
+                rel="noopener"
+              >
+                <WebIcon className={classes.contactIcon} />
+              </Link>
+              <Link
+                color="inherit"
+                href="https://github.com/bpmutter"
+                target="_blank"
+                rel="noopener"
+              >
+                <GitHubIcon className={classes.contactIcon} />
+              </Link>
+              <Link
+                color="inherit"
+                href="https://twitter.com/bpmutter"
+                target="_blank"
+                rel="noopener"
+              >
+                <TwitterIcon className={classes.contactIcon} />
+              </Link>
+            </Typography>
+          </div>
         </div>
       </Dialog>
     </div>
