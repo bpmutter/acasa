@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Paper, makeStyles, Typography, IconButton, CircularProgress} from '@material-ui/core';
 import GoogleMapsSearchBox from './GoogleMapsSearchBox';
 import SelectOption from './SelectOption';
@@ -8,7 +8,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import hometypes from "../searchtypes.json";
 import format from "date-fns/format";
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import getLocation from '../utils/getGeographicLocation';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,20 +74,25 @@ const demoSearch =
 const SearchBar = ({setSearch}) => {
     const classes = useStyles();
     const browserLocation = useLocation();
+    const history = useHistory();
     const [location, setLocation] = useState("");
     const [homeType, setHomeType] = useState("");
     const [startDate, setStartDate] = useState("");
-    const [searchRedirect, setSearchRedirect] = useState(false);
     const [processingLocation, setProcessingLocation] = useState(false);
 
-    
     const search = async (e) => {
       e.preventDefault();
       if(!location) {
         alert('Please select a location to search.');
         return;
       }
-      setSearchRedirect(true);
+      history.push(
+          `/search?lat=${location.geometry.location.lat}&lng=${
+            location.geometry.location.lng
+          }&query=${location.description}&startDate=${
+            startDate || ""
+          }&homeType=${homeType || ""}`
+        );
       if(setSearch){
         setSearch({
           homeType,
@@ -113,7 +118,13 @@ const SearchBar = ({setSearch}) => {
             },
           },
         });
-        setSearchRedirect(true);
+        history.push(
+          `/search?lat=${location.geometry.location.lat}&lng=${
+            location.geometry.location.lng
+          }&query=${location.description}&startDate=${
+            startDate || ""
+          }&homeType=${homeType || ""}`
+        );
         if (setSearch) {
           setSearch({
             homeType,
@@ -130,18 +141,9 @@ const SearchBar = ({setSearch}) => {
       
       setProcessingLocation(false);
     }
-    const todayStr = format(Date.now(), "y-MM-d");
+    // const todayStr = format(Date.now(), "y-MM-d");
     return (
       <>
-        {searchRedirect && (
-          <Redirect
-            to={`/search?lat=${location.geometry.location.lat}&lng=${
-              location.geometry.location.lng
-            }&query=${location.description}&startDate=${
-              startDate || ""
-            }&homeType=${homeType || ""}`}
-          />
-        )}
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3" className={classes.title}>
             Find Your Next Home
