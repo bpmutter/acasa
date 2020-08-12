@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 2,
+    zIndex: 500,
     [theme.breakpoints.down("sm")]: {
       position: "static",
     },
