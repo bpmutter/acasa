@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-
+import dateJStoHTML from '../utils/dateJStoHTML';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "inline-block",
@@ -12,21 +15,24 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
 }));
-export default function DatePickers({labelText, formSetter, required, defaultValue, helperText}) {
+export default function DatePickers({labelText, formSetter, required, defaultValue, helperText, disablePast}) {
   const classes = useStyles();
-  
-  const changeHandler = e => {
-    e.preventDefault();
-    formSetter(e.target.value)
+  const [date, setDate] = useState(defaultValue || null)
+  const changeHandler = (date, value) => {
+    // e.preventDefault();
+    setDate(date);
+    const dateStr = dateJStoHTML(date);
+    formSetter(dateStr);
   }
+  console.log("default value is..." , defaultValue)
   return (
-    <form className={classes.container} noValidate>
-      <TextField
+    <div className={classes.container}>
+      <KeyboardDatePicker
         label={labelText}
-        type="date"
         color="secondary"
+        disablePast={disablePast}
         required={required}
-        defaultValue={defaultValue}
+        value={date}
         helperText={helperText}
         onChange={changeHandler}
         className={classes.textField}
@@ -34,6 +40,6 @@ export default function DatePickers({labelText, formSetter, required, defaultVal
           shrink: true,
         }}
       />
-    </form>
+    </div>
   );
 }

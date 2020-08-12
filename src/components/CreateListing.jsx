@@ -302,14 +302,16 @@ export default function CreateListing(){
                 <DateSelector
                   className={classes.textInput}
                   labelText="Start Date"
-                  defaultValue={todayStr}
+                  defaultValue={new Date()}
                   required={true}
+                  disablePast={true}
                   formSetter={setStartDate}
                 />
                 <DateSelector
                   className={classes.textInput}
                   labelText="End Date"
                   required={false}
+                  disablePast={true}
                   helperText="Only include if there is a fixed end date for the availability"
                   formSetter={setEndDate}
                 />
@@ -540,18 +542,16 @@ export default function CreateListing(){
                   </Typography>
                   <div className={classes.uploadOneImageWrapper}>
                     {primary_img && (
-                      
-                        <div className={classes.currentPrimaryImg}>
-                          <Typography component="p" variant="h6" align="center">
-                            Current Primary Image
-                          </Typography>
-                          <img
-                            src={primary_img}
-                            alt={primary_img}
-                            className={classes.primaryImg}
-                          />
-                        </div>
-                      
+                      <div className={classes.currentPrimaryImg}>
+                        <Typography component="p" variant="h6" align="center">
+                          Current Primary Image
+                        </Typography>
+                        <img
+                          src={primary_img}
+                          alt={primary_img}
+                          className={classes.primaryImg}
+                        />
+                      </div>
                     )}
                     <UploadOneImage
                       formSetter={setPrimaryImage}

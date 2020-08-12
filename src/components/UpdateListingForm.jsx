@@ -397,6 +397,7 @@ export default function CreateListing() {
                     className={classes.textInput}
                     defaultValue={end_date}
                     labelText="End Date"
+                    disablePast={true}
                     required={false}
                     helperText="Only include if there is a fixed end date for the availability"
                     formSetter={setEndDate}
@@ -670,14 +671,16 @@ export default function CreateListing() {
                     Select additional images
                   </Typography>
                   <Typography color="textSecondary">
-                    <b>NOTE:</b> at this time you can only bulk add photos, so if you
-                    want to keep your current photos and add others, you need to
-                    add them again.
+                    <b>NOTE:</b> at this time you can only bulk add photos, so
+                    if you want to keep your current photos and add others, you
+                    need to add them again.
                   </Typography>
-                  {additional_imgs !== null && <UploadManyImgs
-                    formSetter={setAdditionalImages}
-                    defaultImages={additional_imgs}
-                  />}
+                  {additional_imgs !== null && (
+                    <UploadManyImgs
+                      formSetter={setAdditionalImages}
+                      defaultImages={additional_imgs}
+                    />
+                  )}
                 </div>
               </div>
               <Divider className={classes.sectionDivider} />

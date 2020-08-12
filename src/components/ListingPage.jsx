@@ -76,17 +76,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   locationTopContent: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingBottom: theme.spacing(3),
+    paddingBottom: theme.spacing(1.5),
+  },
+  locationDescription: { 
+    marginTop: theme.spacing(1.5)
   },
   mapWrapper: {
     margin: theme.spacing(2),
     marginTop: theme.spacing(4),
   },
   availableNow: {
-    // fontWeight: 'bold',
     color: theme.palette.secondary.dark,
     fontFamily: theme.typography.special,
   },
@@ -116,12 +115,17 @@ export default function ListingPage(){
     const [availableNow, setAvailableNow] = useState(false);
     const classes = useStyles();
     const {id} = useParams();
-    const overview = listing.roommates ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
+    const overview = listing.shared ? `Room in shared ${listing.type}` : `Whole ${listing.type}`;
     
+    //make sure goes to top of window on page load
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
     const getListing = useCallback(async () => {
       const listing = await getListingById(id);
       setListing(listing);
-
+      console.log('LISTING IS::',listing)
       let currentTime = new Date();
       currentTime = currentTime.getTime();
       const availableFrom = listing.start_date.toMillis();
@@ -147,7 +151,7 @@ export default function ListingPage(){
           <main className={classes.contentWrapper}>
             <section className={classes.mainContent}>
               <ContentPaper>
-                <div>
+                {listing.title  && <div>
                   <Typography
                     className={classes.title}
                     component="h3"
@@ -159,25 +163,33 @@ export default function ListingPage(){
                   <Box className={classes.chips}>
                     <Chip
                       icon={<HotelIcon />}
-                      label={`${listing.bedrooms} bedroom`}
+                      label={
+                        listing.bedrooms >= 10
+                          ? `${listing.bedrooms}+ bedroom`
+                          : `${listing.bedrooms} bedroom`
+                      }
                       className={classes.chip}
                     />
                     <Chip
                       icon={<GroupIcon />}
                       label={
-                        listing.max_guests > 1
-                          ? `${listing.max_guests} guests`
-                          : `${listing.max_guests} guest`
+                        listing.max_guests >= 10
+                          ? `${listing.max_guests}+ guest(s)`
+                          : `${listing.max_guests} guest(s)`
                       }
                       className={classes.chip}
                     />
                     <Chip
                       icon={<BathtubIcon />}
-                      label={`${listing.bathrooms} bath`}
+                      label={
+                        listing.bathrooms >= 10
+                          ? `${listing.bathrooms}+ bathroom`
+                          : `${listing.bathrooms} bathroom`
+                      }
                       className={classes.chip}
                     />
                   </Box>
-                </div>
+                </div>}
                 {listing.description && (
                   <>
                     <div>
@@ -294,15 +306,10 @@ export default function ListingPage(){
                     >
                       Location
                     </Typography>
-                    <Typography component="p" variant="h6">
-                      {listing.location.description}
+                    <Typography component="p" variant="p" className={classes.locationDescription}>
+                      {listing.location_description}
                     </Typography>
                   </div>
-                  {listing.location.location_description && (
-                    <Typography>
-                      {listing.location.location_description}
-                    </Typography>
-                  )}
                   <div>
                     <div className={classes.mapWrapper}>
                       <ListingMap
@@ -343,7 +350,7 @@ export default function ListingPage(){
                               <Typography
                                 className={classes.availableNow}
                                 align="center"
-                                variant='h6'
+                                variant="h6"
                               >
                                 Available Now!
                               </Typography>
