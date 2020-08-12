@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ContentPaper from './ContentPaper';
-import {makeStyles, Typography, Divider, CircularProgress} from '@material-ui/core';
+import {makeStyles, Typography, Divider, CircularProgress, Link} from '@material-ui/core';
 import getNearbyListings from '../queries/listings/getNearbyListings';
 import emptyVoid from "../vector-icons/green/empty-void.svg";
 import Listings from './Listings';
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  resultsWrapper: {
+    minHeight: "60vh",
+  },
   progressWrapper: {
     display: "flex",
     justifyContent: "center",
@@ -35,10 +38,17 @@ const useStyles = makeStyles((theme) => ({
   },
   noResultsImg: {
     maxWidth: 300,
-    display: 'inline-block',
-    margin: '0 auto',
+    display: "inline-block",
+    margin: "0 auto",
+  },
+  demoSearch: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
 }));
+
+const demoSearch =
+  "/search?lat=40.7127753&lng=-74.0059728&query=New%20York,%20NY,%20USA&startDate=&homeType=";
 
 export default function SearchResults({locationDescription, lat, lng, hometype, startDate, searchRadiusKm}){
     const classes = useStyles();
@@ -61,10 +71,20 @@ export default function SearchResults({locationDescription, lat, lng, hometype, 
             <Typography component="h1" variant="h4" className={classes.title}>
               Search results for: {locationDescription}
             </Typography>
-            {startDate && <Typography><b>Start Date: </b>{dateFormatter(startDate)}</Typography>}
-            {hometype && <Typography><b>Home type: </b>{hometype}</Typography>}
+            {startDate && (
+              <Typography>
+                <b>Start Date: </b>
+                {dateFormatter(startDate)}
+              </Typography>
+            )}
+            {hometype && (
+              <Typography>
+                <b>Home type: </b>
+                {hometype}
+              </Typography>
+            )}
             <Divider className={classes.sectionDivider} />
-            <section>
+            <section className={classes.resultsWrapper}>
               {loading && (
                 <div className={classes.progressWrapper}>
                   <CircularProgress size={100} color="primary" />
@@ -72,9 +92,7 @@ export default function SearchResults({locationDescription, lat, lng, hometype, 
               )}
               {!loading ? (
                 !!listings.length ? (
-                    <Listings 
-                        listings={listings}
-                    />
+                  <Listings listings={listings} />
                 ) : (
                   <div>
                     <Typography
@@ -88,6 +106,10 @@ export default function SearchResults({locationDescription, lat, lng, hometype, 
                     <Typography color="textSecondary" align="center">
                       No listings match your search parameters. Please try
                       another search.
+                    </Typography>
+                    <Typography align="center" className={classes.demoSearch}>
+                      Don't know where to start? Try{" "}
+                      <Link href={demoSearch}>New York, NY</Link>
                     </Typography>
                     <div className={classes.noResultsImgWrapper}>
                       <img

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SearchBar from './SearchBar';
-import {makeStyles, Typography} from '@material-ui/core';
+import {makeStyles, Typography, Link} from '@material-ui/core';
 import queryString from "query-string";
 import dateStringToObj from '../utils/dateStringToObj';
 import MainContentWrapper from './MainContentWrapper';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   noQuery: {
     minWidth: "70vw",
-    minHeight: '70vh'
+    minHeight: "70vh",
   },
   searchImgWrapper: {
     display: "flex",
@@ -32,7 +32,15 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-block",
     margin: "0 auto",
   },
+  demoSearch: {
+    // marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
 }));
+
+const demoSearch =
+  "/search?lat=40.7127753&lng=-74.0059728&query=New%20York,%20NY,%20USA&startDate=&homeType=";
+
 export default function SearchResultsPage(props){
     const classes = useStyles();
     const parsed = queryString.parse(window.location.search);
@@ -54,24 +62,32 @@ export default function SearchResultsPage(props){
     return (
       <div>
         <MainContentWrapper>
-          <SearchBar setSearch={refreshResults}/>
+          <SearchBar setSearch={refreshResults} />
           {!query.description && (
             <ContentPaper>
               <div className={classes.noQuery}>
-                <Typography variant="h4" className={classes.title} align="center">
-                    Get searching!
+                <Typography
+                  variant="h4"
+                  className={classes.title}
+                  align="center"
+                >
+                  Get searching!
+                </Typography>
+                <Typography align="center" className={classes.demoSearch}>
+                  Don't know where to start? Try{" "}
+                  <Link href={demoSearch}>New York, NY</Link>
                 </Typography>
                 <div className={classes.searchImgWrapper}>
-                    <img
+                  <img
                     src={locationSearch}
                     alt={"woman looking at galaxy with phone vector art"}
                     className={classes.searchImg}
-                    />
+                  />
                 </div>
               </div>
             </ContentPaper>
           )}
-          {query.description  && !!rerender && (
+          {query.description && !!rerender && (
             <SearchResults
               locationDescription={query.description}
               lat={query.lat}

@@ -112,7 +112,7 @@ export default function ContactModal({userToContact, username, noName}){
                 {user.contact.email && (
                   <ListItem>
                     <ListItemIcon>
-                      <MailIcon color="secondary" />
+                      <MailIcon />
                     </ListItemIcon>
                     <ListItemText
                       primary={
@@ -129,7 +129,7 @@ export default function ContactModal({userToContact, username, noName}){
                 {user.contact.phone && (
                   <ListItem>
                     <ListItemIcon>
-                      <PhoneAndroidIcon color="secondary" />
+                      <PhoneAndroidIcon />
                     </ListItemIcon>
                     <ListItemText
                       primary={
@@ -143,7 +143,7 @@ export default function ContactModal({userToContact, username, noName}){
                 {user.contact.whatsapp && (
                   <ListItem>
                     <ListItemIcon>
-                      <WhatsAppIcon color="secondary" />
+                      <WhatsAppIcon />
                     </ListItemIcon>
                     <ListItemText
                       primary={
@@ -157,7 +157,7 @@ export default function ContactModal({userToContact, username, noName}){
                 {user.contact.website && (
                   <ListItem>
                     <ListItemIcon>
-                      <LanguageIcon color="secondary" />
+                      <LanguageIcon />
                     </ListItemIcon>
                     <ListItemText
                       primary={

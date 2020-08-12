@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {Paper, makeStyles, Typography, IconButton, CircularProgress} from '@material-ui/core';
 import GoogleMapsSearchBox from './GoogleMapsSearchBox';
 import SelectOption from './SelectOption';
 import DateSelector from './DateSelector';
-import { Button } from "@material-ui/core";
+import { Button, Link } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import hometypes from "../searchtypes.json";
 import format from "date-fns/format";
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import getLocation from '../utils/getGeographicLocation';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,15 +63,24 @@ const useStyles = makeStyles((theme) => ({
       // width: 150,
     },
   },
+  demoSearch: {
+    marginTop: theme.spacing(2)
+  }
 }));
+
+const demoSearch =
+  "/search?lat=40.7127753&lng=-74.0059728&query=New%20York,%20NY,%20USA&startDate=&homeType=";
+
 const SearchBar = ({setSearch}) => {
     const classes = useStyles();
-    // const [currentLocation, setCurrentLocation] = useState("");
+    const browserLocation = useLocation();
     const [location, setLocation] = useState("");
     const [homeType, setHomeType] = useState("");
     const [startDate, setStartDate] = useState("");
     const [searchRedirect, setSearchRedirect] = useState(false);
     const [processingLocation, setProcessingLocation] = useState(false);
+
+    
     const search = async (e) => {
       e.preventDefault();
       if(!location) {
@@ -176,6 +185,10 @@ const SearchBar = ({setSearch}) => {
             </Button>
           </div>
           </form>
+          {browserLocation.pathname === "/" && 
+          <Typography align="center" className={classes.demoSearch}>
+            Don't know where to start? Try <Link href={demoSearch}>New York, NY</Link>
+          </Typography>}
         </Paper>
       </>
     );
