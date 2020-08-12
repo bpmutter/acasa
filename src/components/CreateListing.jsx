@@ -142,7 +142,7 @@ export default function CreateListing(){
           setLivingWithHost(false);
           setRoommates("");
         }
-        const priceInt = parseInt(price.value)
+        const priceInt = parseInt(price.value);
         const bathroomsInt = parseInt(bathrooms);
         const bedroomsInt = parseInt(bedrooms);
         const maxGuestsInt = parseInt(max_guests);
@@ -253,6 +253,7 @@ export default function CreateListing(){
                     defaultValue={price.value}
                     onChange={price.onChange}
                     InputProps={{
+                      inputProps: { min: 1},
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
                       ),

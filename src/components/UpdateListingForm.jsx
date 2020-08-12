@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import WifiIcon from "@material-ui/icons/Wifi";
 import format from "date-fns/format";
-import { Redirect, useParams } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import Snackbar from "./Snackbar";
 import Checkbox from "./Checkbox";
 import DateSelector from "./DateSelector";
@@ -32,6 +32,7 @@ import getListing from '../queries/listings/getListingById';
 import fBdateToHtmlString from '../utils/dateFbToHTML';
 import context from './Context';
 import updateListingToDb from '../queries/listings/updateListing';
+import DeleteListingModal from "./DeleteListingModal";
 
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
@@ -121,6 +122,7 @@ const oneToTenOptions = [
 export default function CreateListing() {
   const classes = useStyles();
   const {id} = useParams();
+  const history = useHistory();
   const {user: {uid}} = useContext(context);
 
   const [snackbar, setSnackbar] = useState({
@@ -152,7 +154,7 @@ export default function CreateListing() {
   const [additional_imgs, setAdditionalImages] = useState(null);
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [resMsg, setResMsg] = useState(null);
-  const [redirect, setRedirect] = useState(null);
+  const [listing, setListing] = useState({});
 
   useEffect( ()=>{
     (async () => {
@@ -160,7 +162,8 @@ export default function CreateListing() {
       const listing = await getListing(id);
         if (listing.owner.uid !== uid) {
 
-          setRedirect(`/listings/${listing.id}`);
+          // setRedirect(`/listings/${listing.id}`);
+          history.push(`/listings/${listing.id}`);
           return;
         }
         const {title, type, description, active, price, start_date, end_date, location, 
@@ -168,6 +171,7 @@ export default function CreateListing() {
                         max_guests, wifi_speed, rules, pets, lgbtq, living_with_host, primary_img,
                         additional_imgs, payment_methods,
                       } = listing;
+        setListing(listing)
         setTitle(title);
         setDisableSubmit(id)
         setType(type);
@@ -246,14 +250,14 @@ export default function CreateListing() {
 
   return (
     <>
-      <>
+      {/* <>
         {redirect && (
           <div>
             {" "}
             <Redirect to={redirect} />{" "}
           </div>
         )}
-      </>
+      </> */}
       <>
         {resMsg && resMsg.message.type === "success" && (
           <div>
@@ -694,6 +698,7 @@ export default function CreateListing() {
                   Update Listing!
                 </Button>
               </div>
+              {listing.title && <DeleteListingModal listing={listing} />}
             </form>
           )}
         </ContentPaper>

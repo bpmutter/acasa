@@ -10,7 +10,7 @@ export default async function postListing(listing, setRes){
                         additional_imgs, payment_methods,  
                       } = listing;
   if(!title || !location || !type || !start_date 
-    || !bedrooms || !bathrooms || !max_guests || !primary_img){ 
+    || !bedrooms || !bathrooms || !max_guests || !primary_img || price < 1){ 
     setRes({
       "message":{
         type: "error", 

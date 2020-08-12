@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MyModal() {
+export default function LoginModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
