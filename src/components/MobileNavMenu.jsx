@@ -97,10 +97,10 @@ export default function SearchAppBar(props) {
             <MenuItem onClick={handleClose} component={Link} to={"/search"}>
               Search
             </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} to={"/sign-up"}>
+            <MenuItem onClick={handleClose} component={Link} to={"/signup"}>
               Sign Up
             </MenuItem>
-            <MenuItem onClick={handleClose} component={Link} to={"/log-in"}>
+            <MenuItem onClick={handleClose} component={Link} to={"/login"}>
               Log In
             </MenuItem>
           </>
