@@ -51,7 +51,7 @@ const AppContext = () => {
           await loginOnPageLoadFirebase(setUser);
         })()
       }
-    },[loggedIn, user.username]);   
+    },[loggedIn]);   
 
     const context = { user, loggedIn, logIn, logOut, signUp, demoLogin };
 
