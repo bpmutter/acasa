@@ -50,12 +50,15 @@ export default async function createUserInDb({uid, firstName, lastName, email, p
       first_name: firstName, last_name: lastName, uid, username, 
       profile_picture: profilePicture || ""
     }
-    await forEach(userListings, listing => {
-        geoListings.doc(listing.id).update({
-          owner: newUserInfo
-        })
-    })
-    //TODO: UPDATE OWNER TO THE NEW INFO FOR LISTINGS
+
+    if(userListings && userListings.length){
+      await forEach(userListings, listing => {
+          geoListings.doc(listing.id).update({
+            owner: newUserInfo
+          })
+      })
+    }
+    
     return {
       message: {
         type: "success",

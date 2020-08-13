@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DeleteAccountModal({ user }) {
+export default function DeleteAccountModal({ user, disabled }) {
   const classes = useStyles();
   const history = useHistory();
   const {logOut} = useContext(context);
@@ -82,7 +82,7 @@ export default function DeleteAccountModal({ user }) {
 
   return (
     <>
-      <MuiButton className={classes.deleteButton} onClick={handleOpen}>
+      <MuiButton className={classes.deleteButton} onClick={handleOpen} disabled={disabled}>
         <DeleteIcon />
         {"  "}Delete Account
       </MuiButton>

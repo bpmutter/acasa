@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     maxWidth: 500
   },
+  demoInfo: {
+    maxWidth: 500,
+  },
   textInput: {
     width: 300
   },
@@ -169,6 +172,11 @@ export default function EditProfile(){
           >
             Edit Account Info
           </Typography>
+          {email === "acasademo@gmail.com" && <div className={classes.demoInfo}>
+            <Typography color="secondary" component="p" variant="h6">
+              <b>Note:</b> Certain functionality has been disabled because you're signed in as the demo user.
+            </Typography>
+          </div>}
           {!user.uid ? (
             <div className={classes.progressWrapper}>
               <CircularProgress size={100} />
@@ -186,6 +194,7 @@ export default function EditProfile(){
                     defaultValue={user.first_name}
                     className={classes.textInput}
                     onChange={inputChangeHandler}
+                    disabled={email === "acasademo@gmail.com"}
                     required
                   />
                 </div>
@@ -199,6 +208,7 @@ export default function EditProfile(){
                     defaultValue={user.last_name}
                     className={classes.textInput}
                     onChange={inputChangeHandler}
+                    disabled={email === "acasademo@gmail.com"}
                     required
                   />
                 </div>
@@ -228,6 +238,7 @@ export default function EditProfile(){
                     className={classes.textInput}
                     onChange={inputChangeHandler}
                     helperText="This email is just for guests to contact you. It will not affect your login account."
+                    disabled={email === "acasademo@gmail.com"}
                     required
                   />
                 </div>
@@ -347,7 +358,10 @@ export default function EditProfile(){
               {/* this will take some config with the DB to do in a non-hacky way */}
               {/* gotta present race conditions and all that */}
               {/* <TextField id="standard-basic" label="Username"/> */}
-              <DeleteAccountModal user={user} />
+              <DeleteAccountModal
+                user={user}
+                disabled={email === "acasademo@gmail.com"}
+              />
             </form>
           )}
         </ContentPaper>
