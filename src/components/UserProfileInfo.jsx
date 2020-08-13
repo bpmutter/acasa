@@ -134,7 +134,7 @@ export default function UserProfileInfo({user, profile, username}){
                     {user.location.description}
                   </Typography>
                 )}
-                {user.languages && user.languages.length && (
+                {!!user.languages && !!user.languages.length && (
                   <Typography
                     variant="p"
                     component="p"

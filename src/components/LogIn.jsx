@@ -39,14 +39,21 @@ const LogIn = () => {
     // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      //   firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      {
+        provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        scopes: ["public_profile", "email"],
+        customParameters: {
+          // Forces password re-entry.
+          auth_type: "reauthenticate",
+        },
+      },
     ],
     callbacks: {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: (authResult, redirectUrl) => {
         logIn(authResult);
         return false;
-      }
+      },
     },
   };
 
