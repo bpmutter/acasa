@@ -18,11 +18,13 @@ import updateUserAccountInfo from '../queries/users/updateUserAccountInfo';
 import languageList from '../languages.json';
 import {useHistory} from 'react-router-dom';
 import DeleteAccountModal from './DeleteAccountModal';
+import UpdateProfilePicture from './UpdateProfilePicture';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.special,
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    marginBottom: theme.spacing(1),
   },
   progressWrapper: {
     display: 'flex',
@@ -38,7 +40,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
   textInput: {
-    width: 300
+    width: 300,
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
   sectionDivider: {
     marginTop: theme.spacing(2),
@@ -172,18 +176,32 @@ export default function EditProfile(){
           >
             Edit Account Info
           </Typography>
-          {email === "acasademo@gmail.com" && <div className={classes.demoInfo}>
-            <Typography color="secondary" component="p" variant="h6">
-              <b>Note:</b> Certain functionality has been disabled because you're signed in as the demo user.
-            </Typography>
-          </div>}
+          {email === "acasademo@gmail.com" && (
+            <div className={classes.demoInfo}>
+              <Typography color="secondary" component="p" variant="h6">
+                <b>Note:</b> Certain functionality has been disabled because
+                you're signed in as the demo user.
+              </Typography>
+            </div>
+          )}
           {!user.uid ? (
             <div className={classes.progressWrapper}>
               <CircularProgress size={100} />
             </div>
           ) : (
             <form className={classes.form} noValidate onSubmit={updateProfile}>
+              <Divider className={classes.sectionDivider} />
+              <UpdateProfilePicture user={user} />
+              <Divider className={classes.sectionDivider} />
               <div className={classes.primaryInfo}>
+                <Typography
+                  variant="h5"
+                  component="h3"
+                  color="primary"
+                  className={classes.title}
+                >
+                  Name
+                </Typography>
                 <div>
                   <TextField
                     id="first-name"
@@ -223,7 +241,12 @@ export default function EditProfile(){
                 >
                   Contact Information
                 </Typography>
-                <Typography variant="p" component="p" color="textSecondary">
+                <Typography
+                  variant="p"
+                  component="p"
+                  color="textSecondary"
+                  style={{ marginBottom: ".5em" }}
+                >
                   Prospective guests can use these methods to contact you.{" "}
                 </Typography>
                 <div>
@@ -292,7 +315,12 @@ export default function EditProfile(){
                 >
                   Additional Information
                 </Typography>
-                <Typography variant="p" component="p" color="textSecondary">
+                <Typography
+                  variant="p"
+                  component="p"
+                  color="textSecondary"
+                  style={{ marginBottom: ".5em" }}
+                >
                   Add a bit more information for prospective guests to have a
                   better idea of who you are and why they should stay with you.
                 </Typography>
