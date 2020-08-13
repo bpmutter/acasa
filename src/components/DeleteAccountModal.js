@@ -1,12 +1,20 @@
-import React, {useState, useEffect} from "react";
-import { useHistory } from 'react-router-dom';
-import { makeStyles, Link, Typography, CircularProgress, Button as MuiButton} from "@material-ui/core";
-import Button from './Button';
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import {
+  makeStyles,
+  Link,
+  Typography,
+  CircularProgress,
+  Button as MuiButton,
+} from "@material-ui/core";
+import Button from "./Button";
 import Modal from "@material-ui/core/Modal";
 import DeleteIcon from "@material-ui/icons/Delete";
 import red from "@material-ui/core/colors/red";
 import CloseIcon from "@material-ui/icons/Close";
-import deleteListing from '../queries/listings/deleteListing';
+import deleteUser from "../queries/users/deleteUser";
+import context from './Context';
+
 const useStyles = makeStyles((theme) => ({
   modalContent: {
     position: "absolute",
@@ -21,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
     outlineColor: theme.palette.secondary.light,
   },
   buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     marginTop: theme.spacing(1.5),
     marginBottom: theme.spacing(1.5),
   },
@@ -31,27 +39,27 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.special,
     color: red[500],
     cursor: "pointer",
-    display: 'inline-flex',
-    alignItems: 'center',
+    display: "inline-flex",
+    alignItems: "center",
   },
   title: {
     fontFamily: theme.typography.special,
     color: theme.palette.primary.dark,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   progress: {
-      display: 'flex',
-      justifyContent: 'center',
-  }
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
-export default function DeleteListingModal({listing}) {
+export default function DeleteAccountModal({ user }) {
   const classes = useStyles();
   const history = useHistory();
+  const {logOut} = useContext(context);
   const [open, setOpen] = useState(false);
-  const [res, setRes] = useState({message: {}})
-  const [mainContent, setMainContent] = useState("START")
-
+  const [res, setRes] = useState({ message: {} });
+  const [mainContent, setMainContent] = useState("START");
 
   const handleOpen = () => {
     setOpen(true);
@@ -63,60 +71,62 @@ export default function DeleteListingModal({listing}) {
 
   const handleDelete = async () => {
     setMainContent("LOADING");
-    await deleteListing(listing.id, setRes);
-    setTimeout(()=>{
-        history.push('/profile');
-    }, 3000)
-  }
+    await deleteUser(user, setRes);
+    logOut();
+    // setTimeout(() => {
+    //   history.push("/");
+    // }, 3000);
+  };
 
-  useEffect(()=>{
-    if(res.message.type === "success"){
-
-    }
-  },[res.message])
-
-
+ 
 
   return (
     <>
-      <MuiButton className={classes.deleteButton} onClick={handleOpen}>        
-          <DeleteIcon />{"  "}Delete Listing
+      <MuiButton className={classes.deleteButton} onClick={handleOpen}>
+        <DeleteIcon />
+        {"  "}Delete Account
       </MuiButton>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="delete listing"
-        aria-describedby="delete your listing here"
+        aria-labelledby="delete your aCasa account"
+        aria-describedby="delete your aCasa account here"
         disableAutoFocus={true}
       >
         <div className={classes.modalContent}>
           <div>
             <CloseIcon onClick={handleClose} />
           </div>
-          <Typography component="h4" variant="h4" align="center" className={classes.title} color="primary">
-            Delete Listing
+          <Typography
+            component="h4"
+            variant="h4"
+            align="center"
+            className={classes.title}
+            color="primary"
+          >
+            Delete Account
           </Typography>
           {mainContent === "START" && !res.message.type && (
             <div>
               <Typography>
-                <b>Warning:</b> Deletion of listings is permanent, and once you
-                click delete below, you won't be able to recover the listing.
+                <b>Warning:</b> Deletion of accounts is permanent. It will also delete all listings you've created.
+                Once you click delete below, you won't be able to recover the listing.
               </Typography>
               <div className={classes.buttonWrapper}>
-                <Button onClick={handleDelete}>Delete</Button>
+                <Button onClick={handleDelete}>Delete Account</Button>
               </div>
             </div>
           )}
           {mainContent === "LOADING" && !res.message.type && (
             <div className={classes.progress}>
               <CircularProgress size={100} />
-              <p>Deleting your listing...</p>
+              <p>Deleting your account...</p>
             </div>
           )}
           {res.message.type && (
             <div>
               <Typography>
-                {res.message.content} You'll be redirected to your profile in a
+                {res.message.content} You'll be redirected to the homepage in a
                 moment.
               </Typography>
             </div>

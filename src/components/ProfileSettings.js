@@ -14,9 +14,10 @@ import db from "../config/firestoreDb";
 import ContentPaper from './ContentPaper';
 import GoogleMapsAutoComplete from './GoogleMapsSearchBox';
 import SelectMultiple from './SelectMultiple';
-import updateUserAccountInfo from '../auth/updateUserAccountInfo';
+import updateUserAccountInfo from '../queries/users/updateUserAccountInfo';
 import languageList from '../languages.json';
 import {useHistory} from 'react-router-dom';
+import DeleteAccountModal from './DeleteAccountModal';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -102,7 +103,6 @@ export default function EditProfile(){
       }
     });
   },[]);
-
     
   const inputChangeHandler = e => {
     switch(e.target.name){
@@ -339,11 +339,12 @@ export default function EditProfile(){
                   Update Profile
                 </Button>
               </div>
-
+              <Divider className={classes.sectionDivider} />
               {/* TODO: change username functionality */}
               {/* this will take some config with the DB to do in a non-hacky way */}
               {/* gotta present race conditions and all that */}
               {/* <TextField id="standard-basic" label="Username"/> */}
+              <DeleteAccountModal user={user} />
             </form>
           )}
         </ContentPaper>

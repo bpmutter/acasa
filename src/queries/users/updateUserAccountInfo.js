@@ -1,4 +1,4 @@
-import db from "../config/firestoreDb";
+import db from "../../config/firestoreDb";
 import firebase from "firebase";
 
 export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location}) {
