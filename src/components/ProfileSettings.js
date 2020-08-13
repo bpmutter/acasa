@@ -69,6 +69,7 @@ export default function EditProfile(){
     const [website, setWebsite] = useState("");
     const [whatsapp, setWhatsapp] = useState("");
     const [bio, setBio] = useState("");
+    const [profilePicture, setProfilePicture] = useState("");
     const [languages, setLanguages] = useState([])
     const [location, setLocation] = useState({});
     const [snackbar, setSnackbar] = useState({
@@ -97,6 +98,7 @@ export default function EditProfile(){
         setPhone(thisUser.contact.phone);
         setWebsite(thisUser.contact.website);
         setWhatsapp(thisUser.contact.whatsapp);
+        setProfilePicture(user.profile_picture);
         setBio(thisUser.bio);
         setLocation(thisUser.location || {});
         return deactivate();
@@ -143,7 +145,7 @@ export default function EditProfile(){
   const updateProfile = async () => {
     const uid = user.uid;
     const res = await updateUserAccountInfo({
-      firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid
+      firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid, profilePicture
     });
     setSnackbar({ msg: res.message.content, severity: res.message.type });
     if(res.message.type){

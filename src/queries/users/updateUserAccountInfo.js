@@ -1,7 +1,10 @@
 import db from "../../config/firestoreDb";
 import firebase from "firebase";
+import {forEach} from 'p-iteration';
+import getListingsByHostUsername from '../listings/getListingsByHostUsername';
+import geoListings from "../../config/geofirestore";
 
-export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location}) {
+export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location, profilePicture}) {
   if(!firstName || !lastName || !email){
     return {
       "message":{
@@ -10,7 +13,10 @@ export default async function createUserInDb({uid, firstName, lastName, email, p
       }
     }
   }
-  const uidAuth = firebase.auth().currentUser.uid;
+  
+  const {currentUser} = firebase.auth();
+  const uidAuth = currentUser.uid;
+  const {username} = currentUser;
   if(uidAuth !== uid){
     return {
       "message":{
@@ -40,7 +46,16 @@ export default async function createUserInDb({uid, firstName, lastName, email, p
  
   try {
     const res = await db.collection("users").doc(uid).update(user);
-    //const listingRes = await db.collection('listings').where('owner.uid', '==', uid);
+    const userListings = await getListingsByHostUsername(username);
+    const newUserInfo = { 
+      first_name: firstName, last_name: lastName, uid, username, 
+      profile_picture: profilePicture || ""
+    }
+    await forEach(userListings, listing => {
+        geoListings.doc(listing.id).update({
+          owner: newUserInfo
+        })
+    })
     //TODO: UPDATE OWNER TO THE NEW INFO FOR LISTINGS
     return {
       message: {
