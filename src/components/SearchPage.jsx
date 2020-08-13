@@ -62,7 +62,7 @@ export default function SearchResultsPage(props){
     return (
       <div>
         <MainContentWrapper>
-          <SearchBar setSearch={refreshResults} />
+          <SearchBar setSearchResults={refreshResults} />
           {!query.description && (
             <ContentPaper>
               <div className={classes.noQuery}>

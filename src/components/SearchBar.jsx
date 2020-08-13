@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 const demoSearch =
   "/search?lat=40.7127753&lng=-74.0059728&query=New%20York,%20NY,%20USA&startDate=&homeType=";
 
-const SearchBar = ({setSearch}) => {
+const SearchBar = ({setSearchResults}) => {
     const classes = useStyles();
     const browserLocation = useLocation();
     const history = useHistory();
@@ -80,64 +80,50 @@ const SearchBar = ({setSearch}) => {
     const [startDate, setStartDate] = useState("");
     const [processingLocation, setProcessingLocation] = useState(false);
 
+    const queryLocation = (lat, lng, description, startDate, homeType) => {
+      history.push(
+        `/search?lat=${lat}&lng=${lng}&query=${description}&startDate=${
+          startDate || ""
+        }&homeType=${homeType || ""}`
+      );
+      if(setSearchResults) setSearchResults({lat, lng, description, startDate, hometype: homeType});
+    }; 
+
     const search = async (e) => {
       e.preventDefault();
-      if(!location) {
-        alert('Please select a location to search.');
-        return;
-      }
-      history.push(
-          `/search?lat=${location.geometry.location.lat}&lng=${
-            location.geometry.location.lng
-          }&query=${location.description}&startDate=${
-            startDate || ""
-          }&homeType=${homeType || ""}`
-        );
-      if(setSearch){
-        setSearch({
-          homeType,
+      
+      if (!location) {
+      setTimeout(()=>{
+          if(!location) return alert("Please select a location to search.");
+          else{ 
+            queryLocation(
+              location.geometry.location.lat,
+              location.geometry.location.lng,
+              location.description,
+              startDate,
+              homeType
+            );
+          }
+        }, 500)
+      } else {
+        queryLocation(
+          location.geometry.location.lat,
+          location.geometry.location.lng,
+          location.description,
           startDate,
-          description: location.description,
-          lat: location.geometry.location.lat,
-          lng: location.geometry.location.lng,
-        });
+          homeType
+        );
       }
+      
     }
 
-    const getBrowserLocation = async (e) => {
+    const searchCurrentLocation = async (e) => {
       e.preventDefault();
       setProcessingLocation(true);
       try{
         const res = await getLocation();
-        setLocation({
-          description: "my current location",
-          geometry: {
-            location: {
-              lat: res.latitude,
-              lng: res.longitude,
-            },
-          },
-        });
-        history.push(
-          `/search?lat=${location.geometry.location.lat}&lng=${
-            location.geometry.location.lng
-          }&query=${location.description}&startDate=${
-            startDate || ""
-          }&homeType=${homeType || ""}`
-        );
-        if (setSearch) {
-          setSearch({
-            homeType,
-            startDate,
-            description: "my current location",
-            lat: res.latitude,
-            lng: res.longitude,
-          });
-        }
-      }catch(err){
-        setProcessingLocation(false);
-      }
-      
+        queryLocation(res.latitude, res.longitude, "My current location", startDate, homeType)
+      }catch(err){}
       
       setProcessingLocation(false);
     }
@@ -153,7 +139,7 @@ const SearchBar = ({setSearch}) => {
               {processingLocation ? (
                 <CircularProgress size={20} />
               ) : (
-                <IconButton onClick={getBrowserLocation}>
+                <IconButton onClick={searchCurrentLocation}>
                   <MyLocationIcon />
                 </IconButton>
               )}
