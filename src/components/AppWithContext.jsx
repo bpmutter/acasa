@@ -11,6 +11,7 @@ import signupFirebase from '../auth/signup';
 import '../config/firebaseApp'
 import loginFirebase from '../auth/login';
 import loginOnPageLoadFirebase from '../auth/loginOnPageLoad';
+import demoLoginFirebase from "../auth/demoLoginFirebase";
 
 const AppContext = () => {
     const loggedInFromLS = JSON.parse(localStorage.getItem('loggedIn'))
@@ -32,21 +33,27 @@ const AppContext = () => {
         setLoggedIn(true);
         localStorage.setItem('loggedIn', true);
     }
+    const demoLogin = async () => {
+      const user = await demoLoginFirebase();
+      setUser(user);
+      setLoggedIn(true);
+      localStorage.setItem("loggedIn", true);
+    }
     const logOut = () => {
       logoutFirebase()
       setLoggedIn(false);
+      setUser({ username: "" });
       localStorage.setItem('loggedIn', false)
     }
     useEffect( ()=>{
       if(loggedIn){
-      (async ()=> {
-        await loginOnPageLoadFirebase(setUser);
-      })()
-    }
-      
-    },[user.username]);   
+        (async ()=> {
+          await loginOnPageLoadFirebase(setUser);
+        })()
+      }
+    },[loggedIn, user.username]);   
 
-    const context = { user, loggedIn, logIn, logOut, signUp };
+    const context = { user, loggedIn, logIn, logOut, signUp, demoLogin };
 
     return (
       <Context.Provider value={context}>

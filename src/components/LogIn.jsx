@@ -5,6 +5,7 @@ import firebase from "firebase";
 import logo from "../theme/logo-big.webp";
 import {Link, Box, Typography, makeStyles, Button} from '@material-ui/core';
 import context from './Context';
+import DemoLogin from "./DemoLogin";
 
 const useStyles = makeStyles((theme) => ({
   titleWrapper: {
@@ -78,6 +79,7 @@ const LogIn = () => {
               uiConfig={uiConfig}
               firebaseAuth={firebase.auth()}
             />
+            <DemoLogin/>
           </div>
         ) : (
           <div>
