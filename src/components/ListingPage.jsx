@@ -125,7 +125,6 @@ export default function ListingPage(){
     const getListing = useCallback(async () => {
       const listing = await getListingById(id);
       setListing(listing);
-      console.log('LISTING IS::',listing)
       let currentTime = new Date();
       currentTime = currentTime.getTime();
       const availableFrom = listing.start_date.toMillis();

@@ -24,7 +24,6 @@ export default function DatePickers({labelText, formSetter, required, defaultVal
     const dateStr = dateJStoHTML(date);
     formSetter(dateStr);
   }
-  console.log("default value is..." , defaultValue)
   return (
     <div className={classes.container}>
       <KeyboardDatePicker

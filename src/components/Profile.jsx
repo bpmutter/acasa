@@ -19,6 +19,11 @@ export default function UserPage() {
     contact: {}
   });
 
+  //make sure goes to top of window on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
   //   TODO: refactor to put in another component...just throwing code elsewhere
   // was causing problems...i think it might have to do w fact that this uses

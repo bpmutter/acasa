@@ -41,7 +41,6 @@ export default async function postListing(listing, setRes){
   const unsubscribe = firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
         const uid = await firebase.auth().currentUser.uid;
-        console.log('uid::', uid)
         let user = await db.collection("users").doc(uid).get();
         user = user.data();
         const owner = { 

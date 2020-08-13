@@ -4,7 +4,7 @@ import {forEach} from 'p-iteration';
 import getListingsByHostUsername from '../listings/getListingsByHostUsername';
 import geoListings from "../../config/geofirestore";
 
-export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location, profilePicture}) {
+export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location, profilePicture, username}) {
   if(!firstName || !lastName || !email){
     return {
       "message":{
@@ -14,9 +14,8 @@ export default async function createUserInDb({uid, firstName, lastName, email, p
     }
   }
   
-  const {currentUser} = firebase.auth();
+  const {currentUser} = await firebase.auth();
   const uidAuth = currentUser.uid;
-  const {username} = currentUser;
   if(uidAuth !== uid){
     return {
       "message":{

@@ -141,7 +141,6 @@ export default function ListingCard({listing}){
     const triggerModal = () => {
         //TODO add modal for contacting host 
     }
-    console.log('background img::', listing.primary_img)
     return (
       <Paper className={classes.root} elevation={2}>
         {listing.primary_img && <div

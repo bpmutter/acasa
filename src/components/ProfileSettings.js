@@ -64,6 +64,7 @@ export default function EditProfile(){
     });
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [username, setUsername] = useState("")
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [website, setWebsite] = useState("");
@@ -93,12 +94,13 @@ export default function EditProfile(){
         setUser(thisUser);
         setLanguages(thisUser.languages);
         setFirstName(thisUser.first_name);
+        setUsername(thisUser.username)
         setLastName(thisUser.last_name);
         setEmail(thisUser.contact.email);
         setPhone(thisUser.contact.phone);
         setWebsite(thisUser.contact.website);
         setWhatsapp(thisUser.contact.whatsapp);
-        setProfilePicture(user.profile_picture);
+        setProfilePicture(thisUser.profile_picture);
         setBio(thisUser.bio);
         setLocation(thisUser.location || {});
         return deactivate();
@@ -145,13 +147,13 @@ export default function EditProfile(){
   const updateProfile = async () => {
     const uid = user.uid;
     const res = await updateUserAccountInfo({
-      firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid, profilePicture
+      firstName, lastName, email, phone, website, whatsapp, bio, location, languages, uid, profilePicture, username
     });
     setSnackbar({ msg: res.message.content, severity: res.message.type });
     if(res.message.type){
       setTimeout(()=>{
         history.push('/profile')
-      }, 100)
+      }, 1000)
     }
   }
 
@@ -301,7 +303,6 @@ export default function EditProfile(){
                   <SelectMultiple
                     name="languages"
                     label="Languages"
-                    // value={languages}
                     defaultValue={languages}
                     options={languageList}
                     formSetter={setLanguages}
