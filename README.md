@@ -44,8 +44,8 @@ To address the first point of creating an elegant design at low cost (time-wise 
 
 The frontend is a fairly straightforward React application made using `create-react-app`. I leveraged the Material UI library as much as possible to streamline the development, so I could focus more on the functionality and less on how it looks—while also keeping it quite good looking. 
 
+###### The homepage encapsulates the Material UI/unDraw UX of of aCasa
 ![aCasa homepage](/readme-assets/homepage.png)
-*The homepage encapsulates the Material UI/unDraw UX of of aCasa* 
 
 #### Styling
 For styling, I made extensive use of the the Material UI `makeStyles` function and it's built in `theme` object to create all the styles. This provides some pretty interesting functionality, like the ability to change the theme colors for the entire site with one line of code in the config file and dynamic resizing of elements based on screen size. 
@@ -65,8 +65,8 @@ Creating forms was by far the most time intensive part of this project. The form
 
 I'd estimate that creating the 'create listing' and all it's component inputs (which were then recycled throughout the site) took approximately 24 hours of coding time. 
 
+###### Just a few of the many form fields on the add listing page
 ![add listing form feilds](/readme-assets/add-listing-form.png)
-*Just a few of the many form fields on the add listing page*
 
 By their nature, creating big forms takes time, but I think the process could have been streamlined by using some 3rd-party React form library like `react-form`. In my next project I plan to implement a library like this from the get go. 
 
