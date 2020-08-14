@@ -28,6 +28,7 @@
     "react-firebaseui": "^4.1.0",
     "react-geocode": "^0.2.1",
     "react-google-maps": "^9.4.5",
+    "react-helmet": "^6.1.0",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",

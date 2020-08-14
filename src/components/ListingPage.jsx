@@ -13,13 +13,14 @@ import HotelIcon from "@material-ui/icons/Hotel";
 import GroupIcon from "@material-ui/icons/Group";
 import BathtubIcon from "@material-ui/icons/Bathtub";
 import WifiIcon from "@material-ui/icons/Wifi";
-import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import PetsIcon from "@material-ui/icons/Pets";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import GavelIcon from "@material-ui/icons/Gavel";
 import ListingMap from './ListingMap';
 import LooksIcon from "@material-ui/icons/Looks";
 import getListingById from '../queries/listings/getListingById'
+import Head from './Head';
+
 const useStyles = makeStyles((theme) => ({
   contentWrapper: {
     display: "grid",
@@ -138,6 +139,13 @@ export default function ListingPage(){
 
     return (
       <>
+        {!!listing.title && (
+          <Head
+            title={listing.title}
+            img={listing.primary_img}
+            description={listing.description || ""}
+          />
+        )}
         <ListingHeader listing={listing} />
         <MainContentWrapper>
           <div>
@@ -150,45 +158,47 @@ export default function ListingPage(){
           <main className={classes.contentWrapper}>
             <section className={classes.mainContent}>
               <ContentPaper>
-                {listing.title  && <div>
-                  <Typography
-                    className={classes.title}
-                    component="h3"
-                    variant="h5"
-                    align="center"
-                  >
-                    {overview}
-                  </Typography>
-                  <Box className={classes.chips}>
-                    <Chip
-                      icon={<HotelIcon />}
-                      label={
-                        listing.bedrooms >= 10
-                          ? `${listing.bedrooms}+ bedroom`
-                          : `${listing.bedrooms} bedroom`
-                      }
-                      className={classes.chip}
-                    />
-                    <Chip
-                      icon={<GroupIcon />}
-                      label={
-                        listing.max_guests >= 10
-                          ? `${listing.max_guests}+ guest(s)`
-                          : `${listing.max_guests} guest(s)`
-                      }
-                      className={classes.chip}
-                    />
-                    <Chip
-                      icon={<BathtubIcon />}
-                      label={
-                        listing.bathrooms >= 10
-                          ? `${listing.bathrooms}+ bathroom`
-                          : `${listing.bathrooms} bathroom`
-                      }
-                      className={classes.chip}
-                    />
-                  </Box>
-                </div>}
+                {listing.title && (
+                  <div>
+                    <Typography
+                      className={classes.title}
+                      component="h3"
+                      variant="h5"
+                      align="center"
+                    >
+                      {overview}
+                    </Typography>
+                    <Box className={classes.chips}>
+                      <Chip
+                        icon={<HotelIcon />}
+                        label={
+                          listing.bedrooms >= 10
+                            ? `${listing.bedrooms}+ bedroom`
+                            : `${listing.bedrooms} bedroom`
+                        }
+                        className={classes.chip}
+                      />
+                      <Chip
+                        icon={<GroupIcon />}
+                        label={
+                          listing.max_guests >= 10
+                            ? `${listing.max_guests}+ guest(s)`
+                            : `${listing.max_guests} guest(s)`
+                        }
+                        className={classes.chip}
+                      />
+                      <Chip
+                        icon={<BathtubIcon />}
+                        label={
+                          listing.bathrooms >= 10
+                            ? `${listing.bathrooms}+ bathroom`
+                            : `${listing.bathrooms} bathroom`
+                        }
+                        className={classes.chip}
+                      />
+                    </Box>
+                  </div>
+                )}
                 {listing.description && (
                   <>
                     <div>
@@ -305,7 +315,11 @@ export default function ListingPage(){
                     >
                       Location
                     </Typography>
-                    <Typography component="p" variant="p" className={classes.locationDescription}>
+                    <Typography
+                      component="p"
+                      variant="p"
+                      className={classes.locationDescription}
+                    >
                       {listing.location_description}
                     </Typography>
                   </div>
