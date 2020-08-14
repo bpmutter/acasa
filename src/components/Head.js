@@ -9,6 +9,7 @@ export default function HelmetHead({title, description, img, additionalNodes, ..
         {!!description && <meta name="description" content={description} />}
 
         {/* SOCIAL STUFF */}
+        {/* NOTE: ONLY WORKS FOR SERVERSIDE RENDERING */}
         {!!title && <meta property="og:title" content={`${title} - aCasa`} />}
         {!!title && <meta property="twitter:title" content={`${title} - aCasa`} />}
         {!!description && <meta property="og:description" content={description} />}

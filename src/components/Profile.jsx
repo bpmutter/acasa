@@ -7,8 +7,7 @@ import getUser from "../queries/users/getUserProfileByAuth";
 import db from "../config/firestoreDb";
 import firebase from 'firebase';
 import dateFormatter from "../utils/dateFormatter";
-
-
+import Head from '/Head';
 
 export default function UserPage() {
 
@@ -48,8 +47,15 @@ export default function UserPage() {
    
   return (
     <MainContentWrapper>
-      <UserProfileInfo user={userVal} profile/>
-      <UserListings user={userVal}/>
+      {!!user.firstName && (
+        <Head
+          title="Profile"
+          img={user.profile_picture}
+          description={user.bio || ""}
+        />
+      )}
+      <UserProfileInfo user={userVal} profile />
+      <UserListings user={userVal} />
     </MainContentWrapper>
   );
 }
