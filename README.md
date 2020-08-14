@@ -2,11 +2,11 @@
 *Created by <a href="https://ben.perlmutter.io" target="_blank">Ben Perlmutter</a> - **<a target="_blank" href="acasa-bd3af.web.app">Live Site</a>***
 
 #### Table of Contents
-* [Non-Technical Overview](/non-technical-overview)
-* [Technical Overview](/technical-overview)
-* [Frontend](/frontend)
-* [Backend](/backend)
-* [Conclusion](/conclusion)
+* [Non-Technical Overview](#non-technical-overview)
+* [Technical Overview](#technical-overview)
+* [Frontend](#frontend)
+* [Backend](#backend)
+* [Conclusion](#conclusion)
 
 ## Non-Technical Overview
 aCasa is a platform for medium term furnished rentals. It's designed for when you're staying somewhere than a month, but you're not ready (or able) to find a real lease. 
@@ -29,7 +29,7 @@ With this MVP mindset, I focused on the following considerations:
 1. Design elegant UX without having a designer by leveraging open source UI libraries
 2. Create scalable backend that could carry the application in it's current form until it would get enough revenue to hire a backend engineering team 
 
-In the end, I used a React frontend and <a target="_blank" href="http://firebase.google.com/">Firebase</a> serverless backend to accomplish these goals. I elaborate on how I addressed these concerns in the following [Frontend](/frontend) and [Backend](/backend) sections.
+In the end, I used a React frontend and <a target="_blank" href="http://firebase.google.com/">Firebase</a> serverless backend to accomplish these goals. I elaborate on how I addressed these concerns in the following [Frontend](#frontend) and [Backend](#backend) sections.
 
 #### Technologies Used at a Glance: 
 * **React**: Frontend built using React in a `create-react-app` application. 
