@@ -11,10 +11,11 @@ let themeLight = createMuiTheme({
       main: "#1de9b6",
     },
     gradients: {
-      primary: "linear-gradient(90deg, rgba(142,36,170,1) 0%, rgba(254,102,197,1) 100%)",
-      secondary: "linear-gradient(90deg, rgba(29,233,182,1) 20%, rgba(34,193,195,1) 100%)",
-
-    }
+      primary:
+        "linear-gradient(90deg, rgba(142,36,170,1) 0%, rgba(254,102,197,1) 100%)",
+      secondary:
+        "linear-gradient(90deg, rgba(29,233,182,1) 20%, rgba(34,193,195,1) 100%)",
+    },
   },
   typography: {
     special: "'Fredoka One', Roboto, Arial, sans-serif",

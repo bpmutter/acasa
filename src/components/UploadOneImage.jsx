@@ -5,7 +5,8 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import storage from '../config/firebaseStorage';
 import { v4 as uuid } from 'uuid'
 import {makeStyles} from '@material-ui/core';
-import uploadFile from '../utils/uploadFile'
+import uploadFile from '../utils/uploadFileAndGetURL'
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 
 
@@ -35,12 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UploadOneImage({multiple, required, formSetter , preview}){
+export default function UploadOneImage({multiple, required, formSetter, urlSetter, preview, noPreview, disabled, setCustomLoading, ...props}){
     const id = uuid();
     const [imgUrl, setImgUrl] = useState("");
     const [progress, setProgress] = useState(0);
     const classes = useStyles();
     const fileHandler = async e => {
+        if(setCustomLoading) setCustomLoading();
         const file = e.currentTarget.files[0];
         const setter = inputVal => {
           setImgUrl(inputVal);
@@ -48,7 +50,9 @@ export default function UploadOneImage({multiple, required, formSetter , preview
         }
         if(file){ 
           setImgUrl('loading')
-          await uploadFile(file, "listings", setter, setProgress);
+          const fileURL = await uploadFile(file, "listings", setter, setProgress);
+          if(urlSetter) urlSetter(fileURL);
+
         }
     }        
         
@@ -64,21 +68,28 @@ export default function UploadOneImage({multiple, required, formSetter , preview
             multiple={multiple}
             type="file"
             onChange={fileHandler}
+            disabled={disabled}
+            {...props}
           />
           <label htmlFor={`upload-img-${id}`}>
-            <ThemeButton>Upload Image{required ? "*" : null}</ThemeButton>
+            <ThemeButton>
+              <PhotoCameraIcon style={{ marginRight: 10 }} />
+              Upload{required ? "*" : null}
+            </ThemeButton>
           </label>
         </div>
 
-        <div className={classes.imgWrapper}>
-          {imgUrl === "loading" && <CircularProgress value={progress} />}
-          {imgUrl && (imgUrl !== "loading") && preview &&  (
-            <div
-              className={classes.imgPreview}
-              style={{ backgroundImage: `url(${imgUrl})` }}
-            ></div>
+        {!noPreview &&( 
+          <div className={classes.imgWrapper}>
+            {imgUrl === "loading" && <CircularProgress value={progress} />}
+            {imgUrl && imgUrl !== "loading" && preview && (
+              <div
+                className={classes.imgPreview}
+                style={{ backgroundImage: `url(${imgUrl})` }}
+              ></div>
           )}
         </div>
+        )}
       </div>
     );
 }

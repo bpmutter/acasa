@@ -4,7 +4,7 @@ import {forEach} from 'p-iteration';
 import getListingsByHostUsername from '../listings/getListingsByHostUsername';
 import geoListings from "../../config/geofirestore";
 
-export default async function createUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location, profilePicture, username}) {
+export default async function updateUserInDb({uid, firstName, lastName, email, phone, website, whatsapp, bio, languages, location, profilePicture, username}) {
   if(!firstName || !lastName || !email){
     return {
       "message":{
