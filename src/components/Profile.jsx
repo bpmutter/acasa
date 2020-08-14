@@ -7,7 +7,7 @@ import getUser from "../queries/users/getUserProfileByAuth";
 import db from "../config/firestoreDb";
 import firebase from 'firebase';
 import dateFormatter from "../utils/dateFormatter";
-import Head from '/Head';
+import Head from './Head';
 
 export default function UserPage() {
 
