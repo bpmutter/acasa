@@ -7,6 +7,7 @@ import MainContentWrapper from './MainContentWrapper';
 import SearchResults from './SearchResults';
 import locationSearch from "../vector-icons/green/location-search.svg";
 import ContentPaper from './ContentPaper';
+import Head from './Head';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -61,6 +62,10 @@ export default function SearchResultsPage(props){
     }
     return (
       <div>
+          <Head
+            title={query.description || ""}
+          />
+
         <MainContentWrapper>
           <SearchBar setSearchResults={refreshResults} />
           {!query.description && (

@@ -8,7 +8,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import context from './Context';
 import fourOhFourImg from "../vector-icons/green/hiding-in-trees.svg";
-
+import Head from './Head';
 const useStyles = makeStyles(theme => ({
   pageWrapper: {
     width: "75vw",

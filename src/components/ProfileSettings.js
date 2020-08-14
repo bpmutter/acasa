@@ -19,6 +19,7 @@ import languageList from '../languages.json';
 import {useHistory} from 'react-router-dom';
 import DeleteAccountModal from './DeleteAccountModal';
 import UpdateProfilePicture from './UpdateProfilePicture';
+import Head from './Head';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -167,6 +168,7 @@ export default function EditProfile(){
   return (
     <>
       <MainContentWrapper>
+        <Head title="Account Settings" description={"Edit your aCasa account settings here."} />
         <ContentPaper>
           <Typography
             variant="h4"

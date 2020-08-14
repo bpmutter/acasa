@@ -33,6 +33,7 @@ import fBdateToHtmlString from '../utils/dateFbToHTML';
 import context from './Context';
 import updateListingToDb from '../queries/listings/updateListing';
 import DeleteListingModal from "./DeleteListingModal";
+import Head from './Head';
 
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
@@ -250,14 +251,10 @@ export default function CreateListing() {
 
   return (
     <>
-      {/* <>
-        {redirect && (
-          <div>
-            {" "}
-            <Redirect to={redirect} />{" "}
-          </div>
-        )}
-      </> */}
+      {!!title && <Head
+          title={`Edit ${title}`}
+          description={`Edit your aCasa listing ${title}.`}
+        />}
       <>
         {resMsg && resMsg.message.type === "success" && (
           <div>

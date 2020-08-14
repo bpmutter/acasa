@@ -26,7 +26,7 @@ import hometypes from "../hometypes.json";
 import postListingToDb from '../queries/listings/postListing';
 import UploadOneImage from './UploadOneImage';
 import UploadManyImgs from "./UploadManyImages";
-
+import Head from './Head';
 
 const useStyles = makeStyles((theme) => ({
   titleLogoWrapper: {
@@ -179,6 +179,7 @@ export default function CreateListing(){
     
     return (
       <>
+        <Head title="Create Listing" description={"Create an aCasa listing here."} />
         <>
           {resMsg && resMsg.message.type === "success" && (
             <div>
@@ -253,7 +254,7 @@ export default function CreateListing(){
                     defaultValue={price.value}
                     onChange={price.onChange}
                     InputProps={{
-                      inputProps: { min: 1},
+                      inputProps: { min: 1 },
                       startAdornment: (
                         <InputAdornment position="start">$</InputAdornment>
                       ),

@@ -47,7 +47,7 @@ export default function UserPage(){
 
     return (
       <MainContentWrapper>
-        {!!user.firstName && <Head 
+        {!!user.first_name && <Head 
             title={`${user.first_name} ${user.last_name}`}
             img={user.profile_picture}
             description={user.bio || ""}
