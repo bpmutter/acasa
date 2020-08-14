@@ -52,7 +52,11 @@ export default function FourOhFour(){
     const {loggedIn} = useContext(context);
 
     return (
-      <MainContentWrapper>
+      <MainContentWrapper>  
+        <Head
+          title="404"
+          description={"Requested resource not found"}
+        />
         <ContentPaper className={classes.root}>
           <div className={classes.pageWrapper}>
             <div>
