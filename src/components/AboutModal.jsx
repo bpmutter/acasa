@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     [theme.breakpoints.down("xs")]: {
       width: "90%",
+      padding: theme.spacing(1.5),
     },
   },
   iconButton: {
@@ -50,21 +51,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  
+
   title: {
     color: theme.palette.primary.dark,
     fontFamily: theme.typography.special,
     marginBottom: theme.spacing(3),
   },
   aboutInfo: {
-      fontSize: theme.typography.fontSize*1.25
+    fontSize: theme.typography.fontSize * 1.25,
   },
   contactIcon: {
-      fontSize: theme.typography.fontSize*1.5,
-      margin: theme.spacing(1),
-
-  }
-  
+    fontSize: theme.typography.fontSize * 1.5,
+    margin: theme.spacing(1),
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -140,8 +139,7 @@ export default function AboutModal() {
             </p>
 
             <Typography color="textSecondary" align="center">
-              {"Made with ❤️ by "}
-              Ben Perlmutter, {new Date().getFullYear()}
+              Made with 💜<span style={{paddingRight: 4}}> </span>by Ben Perlmutter, {new Date().getFullYear()}
             </Typography>
             <Typography
               variant="body2"
