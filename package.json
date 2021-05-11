@@ -20,7 +20,7 @@
     "geofirestore": "^4.2.1",
     "google-gax": "^2.6.3",
     "http2": "^3.3.7",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "p-iteration": "^1.1.8",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
