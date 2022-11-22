@@ -31,7 +31,7 @@
     "react-helmet": "^6.1.0",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "remove-accents": "^0.4.2",
     "uuid": "^8.2.0"
   },
